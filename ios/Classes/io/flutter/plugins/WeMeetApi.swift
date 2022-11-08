@@ -167,6 +167,8 @@ protocol WeMeetApi {
   func joinMeeting(joinParam: DartTMJoinParam)
   func leaveMeeting()
   func releaseWeMeet()
+  /// 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。
+  func logout()
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -225,6 +227,16 @@ class WeMeetApiSetup {
       }
     } else {
       releaseWeMeetChannel.setMessageHandler(nil)
+    }
+    /// 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。
+    let logoutChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.logout", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      logoutChannel.setMessageHandler { _, reply in
+        api.logout()
+        reply(nil)
+      }
+    } else {
+      logoutChannel.setMessageHandler(nil)
     }
   }
 }

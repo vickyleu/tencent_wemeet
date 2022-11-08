@@ -26,6 +26,9 @@ public class SwiftTencentWemeetPlugin: NSObject, FlutterPlugin, WeMeetApi {
     func releaseWeMeet() {
         WeMeetController.instance.deAttach()
     }
+
+    func logout() {
+    }
 }
 
 func toSwift(_ p:DartInitParams)->TMInitParam {

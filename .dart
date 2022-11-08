@@ -70,4 +70,7 @@ abstract class WeMeetApi {
   void leaveMeeting();
 
   void releaseWeMeet();
+
+  /// 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。
+  void logout();
 }

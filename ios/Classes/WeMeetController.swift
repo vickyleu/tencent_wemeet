@@ -8,35 +8,39 @@
 import Foundation
 import TencentMeetingSDK
 class WeMeetController: NSObject,TMSDKProtocol, TMPreMeetingProtocol,TMInMeetingProtocol,TMAuthenticationProtocol{
-
+    
     private var isLoginWeMeet = false
-
+    
     func attach(_ param:TMInitParam){
         TencentMeetingSDK.instance().initialize(param, delegate: self)
         TencentMeetingSDK.instance().getInMeetingService().enableInviteCallback(true, show: true)
         TencentMeetingSDK.instance().getInMeetingService().enableMeetingInfoCallback(true, show: true)
     }
-
-
+    
+    
     func deAttach(){
         uninit()
     }
     func uninit() {
-//        TencentMeetingSDK.instance().deinit()
+        //        TencentMeetingSDK.instance().deinit()
     }
-
-
+    
+    
     func login(_ ssoUrl:String) {
         TencentMeetingSDK.instance().getAccountService().setDelegate(self)
         TencentMeetingSDK.instance().getAccountService().login(ssoUrl, forceKickOtherDevice: true)
     }
-
+    
     func join(_ joinParam: TMJoinParam) {
         TencentMeetingSDK.instance().getPreMeetingService().joinMeeting(joinParam)
     }
-
+    
     func leave() {
         TencentMeetingSDK.instance().getInMeetingService().leaveMeeting(true)
+    }
+    
+    func logout() {
+        TencentMeetingSDK.instance().getAccountService().logout()
     }
 
 
@@ -44,11 +48,13 @@ class WeMeetController: NSObject,TMSDKProtocol, TMPreMeetingProtocol,TMInMeeting
     func onLogin(_ code: TMSDKResult, msg: String) {
         if code == .errorSuccess{
             isLoginWeMeet=true
+            debugPrint("登录成功!")
         }
     }
 
     func onLogout(_ type: TMLogoutType, code: TMSDKResult, msg: String) {
         isLoginWeMeet=false
+        debugPrint("退出登录成功!")
     }
 
     func onJumpUrl(withLoginStatus code: TMSDKResult, msg: String) {

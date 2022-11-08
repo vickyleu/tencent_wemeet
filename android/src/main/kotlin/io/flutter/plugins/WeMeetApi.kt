@@ -146,6 +146,8 @@ interface WeMeetApi {
   fun joinMeeting(joinParam: DartTMJoinParam)
   fun leaveMeeting()
   fun releaseWeMeet()
+  /** 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。 */
+  fun logout()
 
   companion object {
     /** The codec used by WeMeetApi. */
@@ -236,6 +238,23 @@ interface WeMeetApi {
             val wrapped = hashMapOf<String, Any?>()
             try {
               api.releaseWeMeet()
+              wrapped["result"] = null
+            } catch (exception: Error) {
+              wrapped["error"] = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.logout", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            val wrapped = hashMapOf<String, Any?>()
+            try {
+              api.logout()
               wrapped["result"] = null
             } catch (exception: Error) {
               wrapped["error"] = wrapError(exception)

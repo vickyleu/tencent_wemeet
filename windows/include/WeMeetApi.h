@@ -192,6 +192,8 @@ class WeMeetApi {
   virtual std::optional<FlutterError> JoinMeeting(const DartTMJoinParam& join_param) = 0;
   virtual std::optional<FlutterError> LeaveMeeting() = 0;
   virtual std::optional<FlutterError> ReleaseWeMeet() = 0;
+  // 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。
+  virtual std::optional<FlutterError> Logout() = 0;
 
   // The codec used by WeMeetApi.
   static const flutter::StandardMessageCodec& GetCodec();

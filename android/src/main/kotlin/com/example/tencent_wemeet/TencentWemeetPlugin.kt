@@ -37,6 +37,10 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi {
         WeMeetController.get().deAttach()
     }
 
+    override fun logout() {
+        WeMeetController.get().logout()
+    }
+
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
             releaseWeMeet()
     }

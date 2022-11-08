@@ -54,6 +54,10 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback {
         TMSDK.getInMeetingService().leaveMeeting(true)
     }
 
+    fun logout() {
+        TMSDK.getAccountService().logout()
+    }
+
     companion object {
         private var instance: WeMeetController? = null
             get() {
