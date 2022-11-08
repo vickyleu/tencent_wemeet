@@ -384,13 +384,15 @@
 	"image-setting-vbkg-selected-s": "res/app/platform/setting/icon_id_selected.png",
 	"image-setting-handsup-normal-s": "res/app/platform/setting/handsup.png",
 	"image-setting-handsup-selected-s": "res/app/platform/setting/handsup.png",
-	"image-logo-tencent_doc-normal-s": "res/uikit/platform/logo/tencent_doc_logo.png",
-	"image-logo-tencent_doc-selected-s": "res/uikit/platform/logo/tencent_doc_logo.png",
 	"image-inform-close-normal-s": "res/uikit/platform/message/icon_close_normal.png",
 	"image-inform-close-hover-s": "res/uikit/platform/message/icon_close_hover.png",
 	"image-inform-close-click-s": "res/uikit/platform/message/icon_close_click.png",
 	"image-inform-close-disable-s": "res/uikit/platform/message/icon_close_normal.png",
 	"tag_blue":"res/uikit/platform/tag/tag_blue@3x.png",
 	"tag_gray":"res/uikit/platform/tag/tag_gray@3x.png",
-	"table_right_arrow":"res/uikit/platform/table/rightarrow@3x.png"
+	"table_right_arrow":"res/uikit/platform/table/rightarrow@3x.png",
+	"image-setting-keyboard-normal-s": "res/app/platform/setting/icon_keyboard_normal.png",
+	"image-setting-keyboard-selected-s": "res/app/platform/setting/icon_keyboard_selected.png",
+	"image-setting-keyboard-normal": "res/app/platform/setting/icon_keyboard_normal@2x.png",
+	"image-setting-keyboard-selected": "res/app/platform/setting/icon_keyboard_selected@2x.png"
 }

@@ -1,1 +1,49 @@
-{"name":"tm_sdk","path":"tm_sdk_module","version":"3.6.200.20","dependencies":{"runtime":"3.6.200.20"},"schemes":[],"commands":["SDK_CallFuncGetSDKInMeetingConfig"],"ioswrapper":"WMTmSdkModuleWrapper","contributes":{},"description":"私有化sdk、SaaS sdk","activation_events":["on_startup_finished"]}
+{
+  "name": "tm_sdk",
+  "path": "tm_sdk_module",
+  "version": "3.12.401.5",
+  "dependencies": {
+    "runtime": "3.12.401.5"
+  },
+  "schemes": [
+    {
+      "name": "wemeet://page/tm_sdk",
+      "exported": true
+    }
+  ],
+  "commands": [
+    "SDK_CallFuncGetSDKInMeetingConfig"
+  ],
+  "ioswrapper": "WMTmSdkModuleWrapper",
+  "contributes": {},
+  "exclude_build": [
+    {
+      "channel": [
+        "App",
+        "Overseas",
+        "Private"
+      ],
+      "platform": [
+        "Android",
+        "OSX",
+        "Windows"
+      ]
+    },
+    {
+      "channel": [
+        "App",
+        "Overseas",
+        "Private",
+        "Sdk"
+      ],
+      "platform": [
+        "iOS",
+        "Linux"
+      ]
+    }
+  ],
+  "description": "私有化sdk、SaaS sdk",
+  "activation_events": [
+    "on_startup_finished"
+  ]
+}

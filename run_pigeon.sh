@@ -1,7 +1,7 @@
 mkdir -p android/src/main/kotlin/io/flutter/plugins/ &&\
 mkdir -p ios/Classes/io/flutter/plugins/ &&\
 \
-flutter pub run pigeon \
+dart run pigeon \
 \
 --input                                .dart \
 \

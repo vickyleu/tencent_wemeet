@@ -7,30 +7,55 @@ import 'dart:typed_data' show Float64List, Int32List, Int64List, Uint8List;
 import 'package:flutter/foundation.dart' show ReadBuffer, WriteBuffer;
 import 'package:flutter/services.dart';
 
+/// 错误码
+enum DartErrorCode {
+  success(0),
+  serverConfigFail(-1001),
+  invalidAuthCode(-1002),
+  logoutInMeeting(-1003),
+  unknown(-1005),
+  userNotAuthorized(-1006),
+  userInMeeting(-1007),
+  invalidParam(-1008),
+  invalidMeetingCode(-1009),
+  invalidNickname(-1010),
+  duplicateInitCall(-1011),
+  accountAlreadyLogin(-1012),
+  sdkNotInitialized(-1013),
+  syncCallTimeout(-1014),
+  notInMeeting(-1015),
+  cancelJoin(-1016),
+  isLogining(-1017),
+  loginNetError(-1018),
+  tokenVerifyFailed(-1019),
+  childProcessCrash(-1020),
+  multiAccountLoginConflict(-1021),
+  joinMeetingServiceFailed(-1022),
+  invalidJsonString(-1024),
+  proxySetFailed(-1025);
+  const DartErrorCode(this.value);
+  final num value;
+}
+
 class DartInitParams {
   DartInitParams({
     required this.sdkId,
     required this.sdkToken,
     required this.appName,
-    required this.serverAddress,
-    required this.serverDomain,
-    required this.envName,
-    required this.envId,
-    required this.envDomain,
-    required this.envDebugMode,
-    required this.preferLanguage,
+    this.serverAddress,
+    this.serverDomain,
+    this.preferLanguage,
   });
 
+  /// sdk的id
   String sdkId;
+  /// sdk的token,不是登录的idToken
   String sdkToken;
+  /// 应用名称
   String appName;
-  String serverAddress;
-  String serverDomain;
-  String envName;
-  String envId;
-  String envDomain;
-  bool envDebugMode;
-  String preferLanguage;
+  String? serverAddress;
+  String? serverDomain;
+  String? preferLanguage;
 
   Object encode() {
     final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
@@ -39,10 +64,6 @@ class DartInitParams {
     pigeonMap['appName'] = appName;
     pigeonMap['serverAddress'] = serverAddress;
     pigeonMap['serverDomain'] = serverDomain;
-    pigeonMap['envName'] = envName;
-    pigeonMap['envId'] = envId;
-    pigeonMap['envDomain'] = envDomain;
-    pigeonMap['envDebugMode'] = envDebugMode;
     pigeonMap['preferLanguage'] = preferLanguage;
     return pigeonMap;
   }
@@ -53,13 +74,66 @@ class DartInitParams {
       sdkId: pigeonMap['sdkId']! as String,
       sdkToken: pigeonMap['sdkToken']! as String,
       appName: pigeonMap['appName']! as String,
-      serverAddress: pigeonMap['serverAddress']! as String,
-      serverDomain: pigeonMap['serverDomain']! as String,
-      envName: pigeonMap['envName']! as String,
-      envId: pigeonMap['envId']! as String,
-      envDomain: pigeonMap['envDomain']! as String,
-      envDebugMode: pigeonMap['envDebugMode']! as bool,
-      preferLanguage: pigeonMap['preferLanguage']! as String,
+      serverAddress: pigeonMap['serverAddress'] as String?,
+      serverDomain: pigeonMap['serverDomain'] as String?,
+      preferLanguage: pigeonMap['preferLanguage'] as String?,
+    );
+  }
+}
+
+class DartJoinParam {
+  DartJoinParam({
+    required this.meetingCode,
+    required this.userDisplayName,
+    required this.password,
+    required this.inviteUrl,
+    required this.micOn,
+    required this.cameraOn,
+    required this.speakerOn,
+    required this.faceBeautyOn,
+  });
+
+  /// 会议号
+  String meetingCode;
+  /// 用户名
+  String userDisplayName;
+  /// 会议密码
+  String password;
+  /// 邀请链接
+  String inviteUrl;
+  /// 是否开启麦克风
+  bool micOn;
+  /// 是否开启摄像头
+  bool cameraOn;
+  /// 是否开启扬声器
+  bool speakerOn;
+  /// 是否开启美颜
+  bool faceBeautyOn;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['meetingCode'] = meetingCode;
+    pigeonMap['userDisplayName'] = userDisplayName;
+    pigeonMap['password'] = password;
+    pigeonMap['inviteUrl'] = inviteUrl;
+    pigeonMap['micOn'] = micOn;
+    pigeonMap['cameraOn'] = cameraOn;
+    pigeonMap['speakerOn'] = speakerOn;
+    pigeonMap['faceBeautyOn'] = faceBeautyOn;
+    return pigeonMap;
+  }
+
+  static DartJoinParam decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return DartJoinParam(
+      meetingCode: pigeonMap['meetingCode']! as String,
+      userDisplayName: pigeonMap['userDisplayName']! as String,
+      password: pigeonMap['password']! as String,
+      inviteUrl: pigeonMap['inviteUrl']! as String,
+      micOn: pigeonMap['micOn']! as bool,
+      cameraOn: pigeonMap['cameraOn']! as bool,
+      speakerOn: pigeonMap['speakerOn']! as bool,
+      faceBeautyOn: pigeonMap['faceBeautyOn']! as bool,
     );
   }
 }
@@ -72,6 +146,10 @@ class _WeMeetApiCodec extends StandardMessageCodec{
       buffer.putUint8(128);
       writeValue(buffer, value.encode());
     } else 
+    if (value is DartJoinParam) {
+      buffer.putUint8(129);
+      writeValue(buffer, value.encode());
+    } else 
 {
       super.writeValue(buffer, value);
     }
@@ -81,6 +159,9 @@ class _WeMeetApiCodec extends StandardMessageCodec{
     switch (type) {
       case 128:       
         return DartInitParams.decode(readValue(buffer)!);
+      
+      case 129:       
+        return DartJoinParam.decode(readValue(buffer)!);
       
       default:      
         return super.readValueOfType(type, buffer);
@@ -98,32 +179,53 @@ class WeMeetApi {
 
   static const MessageCodec<Object?> codec = _WeMeetApiCodec();
 
-  Future<void> init(DartInitParams arg_param) async {
+  /// 初始化SDK并设置回调代理，通过SDKCallback.onSDKInitializeResult回调来返回初始化结果。
+  /// 初始化成功后，重复调用无效。
+  /// 除getSDKVersion之外，在调用的所有接口函数之前，必须第一个先调用该函数。
+  /// 按照个保法要求，App需要在用户同意了隐私协议之后才可以调用该初始化函数。
+  Future<void> initWeMeet(DartInitParams arg_param) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WeMeetApi.init', codec, binaryMessenger: _binaryMessenger);
-    final Map<Object?, Object?>? replyMap =
-        await channel.send(<Object?>[arg_param]) as Map<Object?, Object?>?;
-    if (replyMap == null) {
-      throw PlatformException(
-        code: 'channel-error',
-        message: 'Unable to establish connection on channel.',
-      );
-    } else if (replyMap['error'] != null) {
-      final Map<Object?, Object?> error = (replyMap['error'] as Map<Object?, Object?>?)!;
-      throw PlatformException(
-        code: (error['code'] as String?)!,
-        message: error['message'] as String?,
-        details: error['details'],
-      );
-    } else {
-      return;
-    }
+        'dev.flutter.pigeon.WeMeetApi.initWeMeet', codec, binaryMessenger: _binaryMessenger);
+     await ((channel.send(<Object?>[arg_param]))..catchError((error){
+			throw PlatformException(
+				code: (error['code'] as String?)!,
+				message: error['message'] as String?,
+				details: error['details'],
+			);
+     })) as Map<Object?, Object?>?;
   }
 
-  Future<void> release() async {
+  /// 跳转历史会议界面
+  Future<void> jumpToHistory() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WeMeetApi.release', codec, binaryMessenger: _binaryMessenger);
-    final Map<Object?, Object?>? replyMap =
+        'dev.flutter.pigeon.WeMeetApi.jumpToHistory', codec, binaryMessenger: _binaryMessenger);
+     await ((channel.send(null))..catchError((error){
+			throw PlatformException(
+				code: (error['code'] as String?)!,
+				message: error['message'] as String?,
+				details: error['details'],
+			);
+     })) as Map<Object?, Object?>?;
+  }
+
+  /// 通知android隐私协议已授权
+  Future<void> notifyPrivacyGranted() async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.notifyPrivacyGranted', codec, binaryMessenger: _binaryMessenger);
+     await ((channel.send(null))..catchError((error){
+			throw PlatformException(
+				code: (error['code'] as String?)!,
+				message: error['message'] as String?,
+				details: error['details'],
+			);
+     })) as Map<Object?, Object?>?;
+  }
+
+  /// 判断是否已初始化SDK成功
+  Future<bool> isInitialized() async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.isInitialized', codec, binaryMessenger: _binaryMessenger);
+                final Map<Object?, Object?>? replyMap =
         await channel.send(null) as Map<Object?, Object?>?;
     if (replyMap == null) {
       throw PlatformException(
@@ -137,8 +239,358 @@ class WeMeetApi {
         message: error['message'] as String?,
         details: error['details'],
       );
+                
+    } else if (replyMap['result'] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
     } else {
-      return;
+      return (replyMap['result'] as bool?)!;
+    }
+  }
+
+  /// 发起登录请求，登录结果会在回调AuthenticationCallback.onLogin返回。
+  Future<void> loginWeMeet(String arg_ssoUrl) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.loginWeMeet', codec, binaryMessenger: _binaryMessenger);
+     await ((channel.send(<Object?>[arg_ssoUrl]))..catchError((error){
+			throw PlatformException(
+				code: (error['code'] as String?)!,
+				message: error['message'] as String?,
+				details: error['details'],
+			);
+     })) as Map<Object?, Object?>?;
+  }
+
+  /// 判断是否已登录
+  Future<bool> isLoggedIn() async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.isLoggedIn', codec, binaryMessenger: _binaryMessenger);
+                final Map<Object?, Object?>? replyMap =
+        await channel.send(null) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error = (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+                
+    } else if (replyMap['result'] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (replyMap['result'] as bool?)!;
+    }
+  }
+
+  /// 发起入会请求，结果会在回调PreMeetingCallback.onJoinMeeting返回。登录完成后，才可调用。
+  /// 如果想使用JoinParam参数中缺省的默认值，请使用joinMeetingByJSON函数
+  Future<void> joinMeeting(DartJoinParam arg_joinParam) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.joinMeeting', codec, binaryMessenger: _binaryMessenger);
+     await ((channel.send(<Object?>[arg_joinParam]))..catchError((error){
+			throw PlatformException(
+				code: (error['code'] as String?)!,
+				message: error['message'] as String?,
+				details: error['details'],
+			);
+     })) as Map<Object?, Object?>?;
+  }
+
+  /// 发起离会请求，结果会在回调InMeetingCallback.onLeaveMeeting返回
+  Future<void> leaveMeeting() async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.leaveMeeting', codec, binaryMessenger: _binaryMessenger);
+     await ((channel.send(null))..catchError((error){
+			throw PlatformException(
+				code: (error['code'] as String?)!,
+				message: error['message'] as String?,
+				details: error['details'],
+			);
+     })) as Map<Object?, Object?>?;
+  }
+
+  /// 释放资源
+  Future<void> releaseWeMeet() async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.releaseWeMeet', codec, binaryMessenger: _binaryMessenger);
+     await ((channel.send(null))..catchError((error){
+			throw PlatformException(
+				code: (error['code'] as String?)!,
+				message: error['message'] as String?,
+				details: error['details'],
+			);
+     })) as Map<Object?, Object?>?;
+  }
+
+  /// 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。
+  Future<void> logout() async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.logout', codec, binaryMessenger: _binaryMessenger);
+     await ((channel.send(null))..catchError((error){
+			throw PlatformException(
+				code: (error['code'] as String?)!,
+				message: error['message'] as String?,
+				details: error['details'],
+			);
+     })) as Map<Object?, Object?>?;
+  }
+
+  /// 更新SDK Token，替换掉过期或快过期的SDK Token。
+  Future<int> refreshSDKToken(String arg_newSdkToken) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.refreshSDKToken', codec, binaryMessenger: _binaryMessenger);
+                final Map<Object?, Object?>? replyMap =
+        await channel.send(<Object?>[arg_newSdkToken]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error = (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+                
+    } else if (replyMap['result'] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (replyMap['result'] as int?)!;
+    }
+  }
+
+  /// 显示某一个具体会议的界面。
+  /// 登陆完成后，才可调用。
+  /// 如果输入错误的meeting_id或者current_sub_meeting_id，会议页面中有的字段则会显示’-‘；
+  /// 如果输入错误的start_time可能导致页面加载失败，设置准确的start_time参数接口执行效率更高；
+  Future<void> showMeetingDetailView(String arg_meetingId, String arg_currentSubMeetingId, String arg_startTime, bool arg_isHistory) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.showMeetingDetailView', codec, binaryMessenger: _binaryMessenger);
+     await ((channel.send(<Object?>[arg_meetingId, arg_currentSubMeetingId, arg_startTime, arg_isHistory]))..catchError((error){
+			throw PlatformException(
+				code: (error['code'] as String?)!,
+				message: error['message'] as String?,
+				details: error['details'],
+			);
+     })) as Map<Object?, Object?>?;
+  }
+
+  /// 带登录态去打开目标地址，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+  Future<void> jumpUrlWithLoginStatus(String arg_targetUrl) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.jumpUrlWithLoginStatus', codec, binaryMessenger: _binaryMessenger);
+     await ((channel.send(<Object?>[arg_targetUrl]))..catchError((error){
+			throw PlatformException(
+				code: (error['code'] as String?)!,
+				message: error['message'] as String?,
+				details: error['details'],
+			);
+     })) as Map<Object?, Object?>?;
+  }
+
+  /// 获取一个带登录态的URL链接，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+  Future<String> getUrlWithLoginStatus(String arg_targetUrl) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.getUrlWithLoginStatus', codec, binaryMessenger: _binaryMessenger);
+                final Map<Object?, Object?>? replyMap =
+        await channel.send(<Object?>[arg_targetUrl]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error = (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+                
+    } else if (replyMap['result'] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (replyMap['result'] as String?)!;
+    }
+  }
+
+  /// 获取当前SDK Token的值。
+  Future<String> getCurrentSDKToken() async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.getCurrentSDKToken', codec, binaryMessenger: _binaryMessenger);
+                final Map<Object?, Object?>? replyMap =
+        await channel.send(null) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error = (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+                
+    } else if (replyMap['result'] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (replyMap['result'] as String?)!;
+    }
+  }
+}
+
+abstract class WeMeetHostApi {
+  static const MessageCodec<Object?> codec = StandardMessageCodec();
+
+  /// 当前登录失效了
+  Future<void> sdkTokenInvalid();
+  /// 非阻塞通知sdk初始化成功
+  void sdkInitSuccess();
+  ///登录失败了
+  void loginFailed(int code, String? msg);
+  /// 非住宿通知登录成功
+  void loginSuccess();
+  /// 离开会议： 离会类型，1：用户自身操作离会；2：被踢出会议；3：会议结束
+  /// 结果码：0表示成功；其他值表示失败
+  void onLeaveMeeting(int type, int code, String msg, String meetingCode);
+  /// 非阻塞通知sdk初始化失败
+  void sdkInitFailed();
+  static void setup(WeMeetHostApi? api, {BinaryMessenger? binaryMessenger}) {
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.WeMeetHostApi.sdkTokenInvalid', codec, binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          // ignore message
+          await api.sdkTokenInvalid();
+          return;
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.WeMeetHostApi.sdkInitSuccess', codec, binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          // ignore message
+          api.sdkInitSuccess();
+          return;
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.WeMeetHostApi.loginFailed', codec, binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          assert(message != null, 'Argument for dev.flutter.pigeon.WeMeetHostApi.loginFailed was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final int? arg_code = (args[0] as int?);
+          assert(arg_code != null, 'Argument for dev.flutter.pigeon.WeMeetHostApi.loginFailed was null, expected non-null int.');
+          final String? arg_msg = (args[1] as String?);
+          api.loginFailed(arg_code!, arg_msg);
+          return;
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.WeMeetHostApi.loginSuccess', codec, binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          // ignore message
+          api.loginSuccess();
+          return;
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting', codec, binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          assert(message != null, 'Argument for dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final int? arg_type = (args[0] as int?);
+          assert(arg_type != null, 'Argument for dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting was null, expected non-null int.');
+          final int? arg_code = (args[1] as int?);
+          assert(arg_code != null, 'Argument for dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting was null, expected non-null int.');
+          final String? arg_msg = (args[2] as String?);
+          assert(arg_msg != null, 'Argument for dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting was null, expected non-null String.');
+          final String? arg_meetingCode = (args[3] as String?);
+          assert(arg_meetingCode != null, 'Argument for dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting was null, expected non-null String.');
+          api.onLeaveMeeting(arg_type!, arg_code!, arg_msg!, arg_meetingCode!);
+          return;
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.WeMeetHostApi.sdkInitFailed', codec, binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          // ignore message
+          api.sdkInitFailed();
+          return;
+        });
+      }
+    }
+  }
+}
+
+abstract class WeMeetAndroidGrantedHostApi {
+  static const MessageCodec<Object?> codec = StandardMessageCodec();
+
+  /// 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
+  Future<bool?> initPrivacyNeedGrant();
+  static void setup(WeMeetAndroidGrantedHostApi? api, {BinaryMessenger? binaryMessenger}) {
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.WeMeetAndroidGrantedHostApi.initPrivacyNeedGrant', codec, binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          // ignore message
+          final bool? output = await api.initPrivacyNeedGrant();
+          return output;
+        });
+      }
     }
   }
 }

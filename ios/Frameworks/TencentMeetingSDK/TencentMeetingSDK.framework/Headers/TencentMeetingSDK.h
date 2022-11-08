@@ -21,9 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// 组织机构域，如填写，SDK则会通过org_domain从公有云服务上获取私有化服务器地址，并覆盖server_host的值
 @property (nonatomic, copy) NSString *orgDomain;
 @property (nonatomic, copy) NSString *appName;
+@property (nonatomic, copy) NSString *proxyInfo;
 @property (nonatomic, weak) UIWindow *keyWindow;
 @property (nonatomic, strong) NSDictionary *ext;
 @property (nonatomic, copy) NSString *preferLanguage;
+@property (nonatomic, copy) NSString *extensionBundleId;
+@property (nonatomic, strong) UIImage *pipIconImage;
 @end
 
 @protocol TMSDKProtocol <NSObject>
@@ -33,6 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onShowLogsResult:(TMSDKResult)code msg:(NSString *)msg;
 - (void)onHandleWemeetAction:(TMSDKWemeetActionType)actionType param:(NSString *)param;
 - (void)onHandleSchemaResult:(TMSDKResult)code msg:(NSString *)msg;
+- (void)onSetProxyInfoResult:(TMSDKResult)code msg:(NSString *)msg;
+- (void)onAddUsersResult:(TMSDKInviteType)userType code:(TMSDKResult)code msg:(NSString *)msg;
+- (void)onParseMeetingInfoUrlCode:(NSInteger)code param:(NSString *)param;
+
+@optional
+- (void)onSDKUninitializeResult:(TMSDKResult)code msg:(NSString *)msg;
 @end
 
 @interface TencentMeetingSDK : NSObject
@@ -40,6 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)initialize:(TMInitParam *)params
           delegate:(id<TMSDKProtocol>)delegate;
+
+- (void)uninitialize:(NSString *)param;
 
 - (BOOL)isInitialized;
 
@@ -56,6 +67,21 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)handleSchema:(NSString *)schemaUrl;
 
+- (void)addUsersWithParam:(NSString *)params;
+
+
+/// 设置代理信息
+/// - Parameter proxyInfo: 代理信息
+- (void)setProxyInfo:(NSString *)proxyInfo;
+- (NSString *)getProxyInfo;
+- (void)parseMeetingInfoUrl:(NSString *)schemaUrl;
+
+- (void)appMultiWindowLayoutTypeChangedFromSize:(CGSize)fromSize toSize:(CGSize)toSize;
+- (void)discardSceneSession:(UISceneSession *)session API_AVAILABLE(ios(13.0));
+- (void)discardSceneSessionsExcept:(nonnull UISceneSession *)session API_AVAILABLE(ios(13.0));
+
+- (NSArray <NSString *>*)collectLogFiles:(uint64_t)beginTime
+                             endTime:(uint64_t)endTime;
 - (TMAccountService *)getAccountService;
 - (TMPreMeetingService *)getPreMeetingService;
 - (TMInMeetingService *)getInMeetingService;

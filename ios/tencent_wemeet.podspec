@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'tencent_wemeet'
-  s.version          = '0.0.1'
+  s.version          = '3.12.4'
   s.summary          = 'A new Flutter project.'
   s.description      = <<-DESC
 A new Flutter project.
@@ -13,13 +13,15 @@ A new Flutter project.
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'Classes/**/*.{h,m,swift}'
+  s.public_header_files = 'Classes/**/*.{h}'
   s.dependency 'Flutter'
   s.platform = :ios, '9.0'
-  s.vendored_frameworks = 'Frameworks/TencentMeetingBroadcastExtension.framework',\
-   'Frameworks/TencentMeetingSDK/{*}.framework'
+  s.vendored_frameworks = 'Frameworks/TencentMeetingSDK/{*}.framework'
+  #//'Frameworks/TencentMeetingBroadcastExtension.framework',
+  s.ios.vendored_frameworks = 'CoreAudioTypes.framework', "Foundation.framework"
 
   # Flutter.framework does not contain a i386 slice.
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 x86_64' }
   s.swift_version = '5.0'
 end

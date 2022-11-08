@@ -3,15 +3,15 @@
   <iq type="result">
     <pendant_res language="ru">
       <pendant_res_list>
-        <resource id="blackglasses" title="Черные рамки" icon="glass.png" resource_url="https://updatecdn.meeting.qq.com/resource-update/39c894458c3e6fd0c81108a74a9be908/accessory-1glass02.bundle.zip" resource_md5="39c894458c3e6fd0c81108a74a9be908"/>
-        <resource id="sunglasses" title="Солнечные очки" icon="glass02.png" resource_url="https://updatecdn.meeting.qq.com/resource-update/5b5fa00fb1c0b6a74a0ea7b793138ec9/accessory-1glass.bundle.zip" resource_md5="5b5fa00fb1c0b6a74a0ea7b793138ec9"/>
-        <resource id="mosaicglasses" title="Пиксельные очки" icon="glass-pixel.png" resource_url="https://updatecdn.meeting.qq.com/resource-update/28c86dbb8cb83ed9613255f2479fe11f/accessory-0glass-pixel.bundle.zip" resource_md5="28c86dbb8cb83ed9613255f2479fe11f"/>
-        <resource id="spaceglasses" title="Очки-авиаторы" icon="glass-blue.png" resource_url="https://updatecdn.meeting.qq.com/resource-update/23e51ae687c0db3ca07019ec6fb3f4fd/accessory-0glass-blue.bundle.zip" resource_md5="23e51ae687c0db3ca07019ec6fb3f4fd"/>
-        <resource id="rabbitear" title="Кроличьи уши" icon="rabbit.png" resource_url="https://updatecdn.meeting.qq.com/resource-update/21f4fd690c27418a3030a7085d769534/accessory-1rabbit.bundle.zip" resource_md5="21f4fd690c27418a3030a7085d769534"/>
-        <resource id="bearheadgear" title="Толстовка с капюшоном медведя" icon="bear.png" resource_url="https://updatecdn.meeting.qq.com/resource-update/a7bdd1efe05c8b84ba4b346e6ad4cf7d/accessory-1bear.bundle.zip" resource_md5="a7bdd1efe05c8b84ba4b346e6ad4cf7d"/>
-        <resource id="graduation_cap" title="Шапочка выпускника университета" icon="xueshimao.png" resource_url="https://updatecdn.meeting.qq.com/resource-update/80492824bc501d7ce219a6e778f2183f/accessory-0xueshimao.bundle.zip" resource_md5="80492824bc501d7ce219a6e778f2183f"/>
-        <resource id="mask" title="Маска для лица" icon="mask.png" resource_url="https://updatecdn.meeting.qq.com/resource-update/a2b3645fe2433b82ce567260cb3aacf6/accessory-1kouzhao-blue.bundle.zip" resource_md5="a2b3645fe2433b82ce567260cb3aacf6"/>
-        <resource id="chibi_hairpin" title="Головная повязка" icon="ball.png" resource_url="https://updatecdn.meeting.qq.com/resource-update/ed7c2881cd98184cc6e57f3b791213a6/accessory-0ball.bundle.zip" resource_md5="ed7c2881cd98184cc6e57f3b791213a6"/>
+        <resource id="blackglasses" title="Черные рамки" icon="glass.png" resource_url="https://updatecdnv6.meeting.qq.com/resource-update/39c894458c3e6fd0c81108a74a9be908/accessory-1glass02.bundle.zip" resource_md5="39c894458c3e6fd0c81108a74a9be908"/>
+        <resource id="sunglasses" title="Солнечные очки" icon="glass02.png" resource_url="https://updatecdnv6.meeting.qq.com/resource-update/5b5fa00fb1c0b6a74a0ea7b793138ec9/accessory-1glass.bundle.zip" resource_md5="5b5fa00fb1c0b6a74a0ea7b793138ec9"/>
+        <resource id="mosaicglasses" title="Пиксельные очки" icon="glass-pixel.png" resource_url="https://updatecdnv6.meeting.qq.com/resource-update/28c86dbb8cb83ed9613255f2479fe11f/accessory-0glass-pixel.bundle.zip" resource_md5="28c86dbb8cb83ed9613255f2479fe11f"/>
+        <resource id="spaceglasses" title="Очки-авиаторы" icon="glass-blue.png" resource_url="https://updatecdnv6.meeting.qq.com/resource-update/23e51ae687c0db3ca07019ec6fb3f4fd/accessory-0glass-blue.bundle.zip" resource_md5="23e51ae687c0db3ca07019ec6fb3f4fd"/>
+        <resource id="rabbitear" title="Кроличьи уши" icon="rabbit.png" resource_url="https://updatecdnv6.meeting.qq.com/resource-update/21f4fd690c27418a3030a7085d769534/accessory-1rabbit.bundle.zip" resource_md5="21f4fd690c27418a3030a7085d769534"/>
+        <resource id="bearheadgear" title="Толстовка с капюшоном медведя" icon="bear.png" resource_url="https://updatecdnv6.meeting.qq.com/resource-update/a7bdd1efe05c8b84ba4b346e6ad4cf7d/accessory-1bear.bundle.zip" resource_md5="a7bdd1efe05c8b84ba4b346e6ad4cf7d"/>
+        <resource id="graduation_cap" title="Шапочка выпускника университета" icon="xueshimao.png" resource_url="https://updatecdnv6.meeting.qq.com/resource-update/80492824bc501d7ce219a6e778f2183f/accessory-0xueshimao.bundle.zip" resource_md5="80492824bc501d7ce219a6e778f2183f"/>
+        <resource id="mask" title="Маска для лица" icon="mask.png" resource_url="https://updatecdnv6.meeting.qq.com/resource-update/a2b3645fe2433b82ce567260cb3aacf6/accessory-1kouzhao-blue.bundle.zip" resource_md5="a2b3645fe2433b82ce567260cb3aacf6"/>
+        <resource id="chibi_hairpin" title="Головная повязка" icon="ball.png" resource_url="https://updatecdnv6.meeting.qq.com/resource-update/ed7c2881cd98184cc6e57f3b791213a6/accessory-0ball.bundle.zip" resource_md5="ed7c2881cd98184cc6e57f3b791213a6"/>
       </pendant_res_list>
     </pendant_res>
   </iq>

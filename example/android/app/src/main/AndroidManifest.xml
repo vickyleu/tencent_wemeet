@@ -2,11 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.tencent_wemeet_example">
 
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:label="tencent_wemeet_example"
-        tools:replace="android:label">
+        android:networkSecurityConfig="@xml/http_config"
+        tools:replace="android:label,android:networkSecurityConfig">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

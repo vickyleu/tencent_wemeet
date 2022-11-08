@@ -1,7 +1,8 @@
 {
-  "app_version": "3.6.200",
-  "commit_id": "3e05d746f4959bfe0e086fa2ef78930bc8047ae6",
-  "build_id": "20",
-  "qci_build_id": "32355596",
-  "branch": "private/release/3.6.2/saas-sdk"
+  "app_version": "3.12.401",
+  "commit_id": "dc35e0b1798fbee49571c56c914a82622d802170",
+  "build_id": "5",
+  "qci_build_id": "80670178",
+  "branch": "private/release/3.12.401/saas-sdk",
+  "qci_build_number": "6"
 }

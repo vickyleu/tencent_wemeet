@@ -8,6 +8,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.tencent.wemeet.sdk:issue-checker:0.0.1'
     }
 }
 
@@ -16,6 +17,9 @@ allprojects {
         google()
         mavenCentral()
         jcenter()
+//        maven {
+//            url uri('/Volumes/Extra/Github/wemeet_maven')
+//        }
         maven { url 'https://raw.github.com/vickyleu/wemeet_maven/main/' }
         google()
         mavenCentral()
@@ -30,6 +34,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

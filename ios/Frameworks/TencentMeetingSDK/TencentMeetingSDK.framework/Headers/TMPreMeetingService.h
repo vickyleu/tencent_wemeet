@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onJoinMeeting:(TMSDKResult)code msg:(NSString *)msg meetingCode:(NSString *)meetingCode;
 - (void)onShowScreenCastViewResult:(TMSDKResult)code msg:(NSString *)msg;
 - (void)onActionResult:(TMSDKActionType)actionType code:(TMSDKResult)code msg:(NSString *)msg;
+- (void)onShowAddressBook:(TMSDKInviteType)userType users:(NSString *)users;
+@optional
+- (void)onRingInvitationEvent:(int32_t)ring_state ringInfo:(NSString *)ring_info;
 @end
 
 @interface TMJoinParam : NSObject
@@ -31,7 +34,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL cameraOn;
 /// 是否开启扬声器
 @property (nonatomic, assign) BOOL speakerOn;
+/// 是否开启美颜
 @property (nonatomic, assign) BOOL faceBeautyOn;
+/// 会中窗口的标题
+@property (nonatomic, copy) NSString *meetingWindowTitle;
 @end
 
 @interface TMPreMeetingService : NSObject
@@ -99,6 +105,28 @@ NS_ASSUME_NONNULL_BEGIN
  * 快速会议
  */
 - (void)quickMeeting;
+
+/**
+ * 快速会议，传入的Json字符串
+ */
+- (void)quickMeetingByJSON:(NSString *)quickMeetingJSON;
+
+- (void)enableAddressBookCallback:(BOOL)enable show:(BOOL)show;
+
+/**
+ * 开始投屏
+ */
+- (void)startScreenCast:(NSString *)screenCastJSON;
+
+/**
+ * 启用响铃邀请回调，配置是否同时展示默认响铃接听页面
+ */
+- (void)enableRingInvitationView:(BOOL)enable;
+
+/**
+ * 处理指定invite id的响铃邀请
+ */
+- (void)handleRingInvitation:(BOOL)accept inviteId:(NSString *)invite_id complete:(void(^ __nullable)(int32_t, NSString * __nullable))handler;
 
 @end
 

@@ -6,6 +6,7 @@
         "text-color-normal":"color-text-1-1",
         "text-color-disable":"color-text-3",
         "message-text-color":"color-text-2",
+        "desc-text-color":"color-desc-text",
         "link-text-color":"color-link-1-1",
         "border-color":"color-border-1-1",
         "group-title-font-weight":"font-weight-2",

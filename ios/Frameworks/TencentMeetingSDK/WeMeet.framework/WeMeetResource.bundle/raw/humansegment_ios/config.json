@@ -1,9 +1,11 @@
 {
-    "version": "20220118_mbms_unet4_edge_hor_epoch_40_ios",
+    "version": "2022092306_mu4",
     "name": "model",
     "width": 288,
     "height": 160,
     "hv_model": "model_hv",
+    "basic_mode_level": 0,
+    "use_face": 0,
     "gpu_model": "model_metal",
     "gpu_hv_model": "model_hv_metal",
     "gpu_model_runningmode": [
@@ -12,6 +14,6 @@
     ],
     "output_name": [
         "Softmax_0",
-        "Softmax_1",
+        "Softmax_1"
     ]
 }

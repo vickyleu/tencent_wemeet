@@ -1,0 +1,3308 @@
+{
+    "layer_cnt": 151,
+    "blob_cnt": 151,
+    "layer_info": [
+        {
+            "layer_type": "Input",
+            "layer_name": "Input_0",
+            "input_blob_cnt": 0,
+            "output_blob_cnt": 1,
+            "input_blobs": [],
+            "output_blobs": [
+                "Input_0_0"
+            ],
+            "layer_param": {},
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Input_0_0"
+            ],
+            "output_blobs": [
+                "Pad_0_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_0_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_0_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 24
+            },
+            "weight_info": [
+                0,
+                24,
+                32
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_0_0"
+            ],
+            "output_blobs": [
+                "Tanh_0_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_0_0"
+            ],
+            "output_blobs": [
+                "Convolution_0_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 64
+            },
+            "weight_info": [
+                33,
+                64,
+                105
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_1",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_0_0"
+            ],
+            "output_blobs": [
+                "Tanh_1_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_1",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_1_0"
+            ],
+            "output_blobs": [
+                "Pad_1_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_1",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_1_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_1_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 192
+            },
+            "weight_info": [
+                105,
+                192,
+                305
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_0",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_1_0",
+                "ConvolutionIrregularKernel_0_0"
+            ],
+            "output_blobs": [
+                "Eltwise_0_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_0_0"
+            ],
+            "output_blobs": [
+                "Tanh_2_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_1",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_2_0"
+            ],
+            "output_blobs": [
+                "Convolution_1_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 64
+            },
+            "weight_info": [
+                306,
+                64,
+                378
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_3",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_1_0"
+            ],
+            "output_blobs": [
+                "Tanh_3_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_3_0"
+            ],
+            "output_blobs": [
+                "Pad_2_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 6,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_2_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_2_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate_y": 1,
+                "dilate_x": 3,
+                "weight_data_size": 192
+            },
+            "weight_info": [
+                378,
+                192,
+                578
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_1",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_2_0",
+                "Eltwise_0_0"
+            ],
+            "output_blobs": [
+                "Eltwise_1_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_4",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_1_0"
+            ],
+            "output_blobs": [
+                "Tanh_4_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_4_0"
+            ],
+            "output_blobs": [
+                "Convolution_2_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 64
+            },
+            "weight_info": [
+                579,
+                64,
+                651
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_5",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_2_0"
+            ],
+            "output_blobs": [
+                "Tanh_5_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_3",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_5_0"
+            ],
+            "output_blobs": [
+                "Pad_3_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 18,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_3",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_3_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_3_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate_y": 1,
+                "dilate_x": 9,
+                "weight_data_size": 192
+            },
+            "weight_info": [
+                651,
+                192,
+                851
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_2",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_3_0",
+                "Eltwise_1_0"
+            ],
+            "output_blobs": [
+                "Eltwise_2_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_4",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_2_0"
+            ],
+            "output_blobs": [
+                "Pad_4_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_4",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_4_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_4_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 4,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 384
+            },
+            "weight_info": [
+                851,
+                384,
+                1251
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_6",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_4_0"
+            ],
+            "output_blobs": [
+                "Tanh_6_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_3",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_6_0"
+            ],
+            "output_blobs": [
+                "Convolution_3_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 256
+            },
+            "weight_info": [
+                1252,
+                256,
+                1524
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_7",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_3_0"
+            ],
+            "output_blobs": [
+                "Tanh_7_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_5",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_7_0"
+            ],
+            "output_blobs": [
+                "Pad_5_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_5",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_5_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_5_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 768
+            },
+            "weight_info": [
+                1524,
+                768,
+                2308
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_3",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_5_0",
+                "ConvolutionIrregularKernel_4_0"
+            ],
+            "output_blobs": [
+                "Eltwise_3_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_8",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_3_0"
+            ],
+            "output_blobs": [
+                "Tanh_8_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_4",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_8_0"
+            ],
+            "output_blobs": [
+                "Convolution_4_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 256
+            },
+            "weight_info": [
+                2309,
+                256,
+                2581
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_9",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_4_0"
+            ],
+            "output_blobs": [
+                "Tanh_9_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_6",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_9_0"
+            ],
+            "output_blobs": [
+                "Pad_6_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 6,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_6",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_6_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_6_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate_y": 1,
+                "dilate_x": 3,
+                "weight_data_size": 768
+            },
+            "weight_info": [
+                2581,
+                768,
+                3365
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_4",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_6_0",
+                "Eltwise_3_0"
+            ],
+            "output_blobs": [
+                "Eltwise_4_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_10",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_4_0"
+            ],
+            "output_blobs": [
+                "Tanh_10_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_5",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_10_0"
+            ],
+            "output_blobs": [
+                "Convolution_5_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 256
+            },
+            "weight_info": [
+                3366,
+                256,
+                3638
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_11",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_5_0"
+            ],
+            "output_blobs": [
+                "Tanh_11_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_7",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_11_0"
+            ],
+            "output_blobs": [
+                "Pad_7_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 18,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_7",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_7_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_7_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate_y": 1,
+                "dilate_x": 9,
+                "weight_data_size": 768
+            },
+            "weight_info": [
+                3638,
+                768,
+                4422
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_5",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_7_0",
+                "Eltwise_4_0"
+            ],
+            "output_blobs": [
+                "Eltwise_5_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_8",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_5_0"
+            ],
+            "output_blobs": [
+                "Pad_8_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_8",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_8_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_8_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 8,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 1536
+            },
+            "weight_info": [
+                4422,
+                1536,
+                5990
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_12",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_8_0"
+            ],
+            "output_blobs": [
+                "Tanh_12_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_6",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_12_0"
+            ],
+            "output_blobs": [
+                "Convolution_6_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 1024
+            },
+            "weight_info": [
+                5991,
+                1024,
+                7047
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_13",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_6_0"
+            ],
+            "output_blobs": [
+                "Tanh_13_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_9",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_13_0"
+            ],
+            "output_blobs": [
+                "Pad_9_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_9",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_9_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_9_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 3072
+            },
+            "weight_info": [
+                7047,
+                3072,
+                10151
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_6",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_9_0",
+                "ConvolutionIrregularKernel_8_0"
+            ],
+            "output_blobs": [
+                "Eltwise_6_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_14",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_6_0"
+            ],
+            "output_blobs": [
+                "Tanh_14_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_7",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_14_0"
+            ],
+            "output_blobs": [
+                "Convolution_7_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 1024
+            },
+            "weight_info": [
+                10152,
+                1024,
+                11208
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_15",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_7_0"
+            ],
+            "output_blobs": [
+                "Tanh_15_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_10",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_15_0"
+            ],
+            "output_blobs": [
+                "Pad_10_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 6,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_10",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_10_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_10_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate_y": 1,
+                "dilate_x": 3,
+                "weight_data_size": 3072
+            },
+            "weight_info": [
+                11208,
+                3072,
+                14312
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_7",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_10_0",
+                "Eltwise_6_0"
+            ],
+            "output_blobs": [
+                "Eltwise_7_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_16",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_7_0"
+            ],
+            "output_blobs": [
+                "Tanh_16_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_8",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_16_0"
+            ],
+            "output_blobs": [
+                "Convolution_8_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 1024
+            },
+            "weight_info": [
+                14313,
+                1024,
+                15369
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_17",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_8_0"
+            ],
+            "output_blobs": [
+                "Tanh_17_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_11",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_17_0"
+            ],
+            "output_blobs": [
+                "Pad_11_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 18,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_11",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_11_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_11_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate_y": 1,
+                "dilate_x": 9,
+                "weight_data_size": 3072
+            },
+            "weight_info": [
+                15369,
+                3072,
+                18473
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_8",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_11_0",
+                "Eltwise_7_0"
+            ],
+            "output_blobs": [
+                "Eltwise_8_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_12",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_8_0"
+            ],
+            "output_blobs": [
+                "Pad_12_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_12",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_12_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_12_0"
+            ],
+            "layer_param": {
+                "output_channel": 64,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 10,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 6144
+            },
+            "weight_info": [
+                18473,
+                6144,
+                24681
+            ]
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_13",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_12_0"
+            ],
+            "output_blobs": [
+                "Pad_13_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_13",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_13_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_13_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 6144
+            },
+            "weight_info": [
+                24681,
+                6144,
+                30857
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_18",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_13_0"
+            ],
+            "output_blobs": [
+                "Tanh_18_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_14",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_18_0"
+            ],
+            "output_blobs": [
+                "Pad_14_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_14",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_14_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_14_0"
+            ],
+            "layer_param": {
+                "output_channel": 64,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 6144
+            },
+            "weight_info": [
+                30857,
+                6144,
+                37065
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_9",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_14_0",
+                "ConvolutionIrregularKernel_12_0"
+            ],
+            "output_blobs": [
+                "Eltwise_9_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_19",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_9_0"
+            ],
+            "output_blobs": [
+                "Tanh_19_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_15",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_19_0"
+            ],
+            "output_blobs": [
+                "Pad_15_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_15",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_15_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_15_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 6144
+            },
+            "weight_info": [
+                37065,
+                6144,
+                43241
+            ]
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_15_0"
+            ],
+            "output_blobs": [
+                "Permute_0_0"
+            ],
+            "layer_param": {
+                "c_dim": 1,
+                "h_dim": 2,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Repeat",
+            "layer_name": "Repeat_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_0_0"
+            ],
+            "output_blobs": [
+                "Repeat_0_0"
+            ],
+            "layer_param": {
+                "repeat_param": [
+                    1,
+                    1,
+                    1,
+                    10
+                ]
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Reshape",
+            "layer_name": "Reshape_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Repeat_0_0"
+            ],
+            "output_blobs": [
+                "Reshape_0_0"
+            ],
+            "layer_param": {
+                "n": 1,
+                "c": -1,
+                "h": 32,
+                "w": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_1",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Reshape_0_0"
+            ],
+            "output_blobs": [
+                "Permute_1_0"
+            ],
+            "layer_param": {
+                "c_dim": 1,
+                "h_dim": 2,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_20",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_1_0"
+            ],
+            "output_blobs": [
+                "Tanh_20_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_9",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_20_0"
+            ],
+            "output_blobs": [
+                "Convolution_9_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 1024
+            },
+            "weight_info": [
+                43242,
+                1024,
+                44298
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_21",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_9_0"
+            ],
+            "output_blobs": [
+                "Tanh_21_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_16",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_21_0"
+            ],
+            "output_blobs": [
+                "Pad_16_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_16",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_16_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_16_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 3072
+            },
+            "weight_info": [
+                44298,
+                3072,
+                47402
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_10",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_16_0",
+                "Permute_1_0"
+            ],
+            "output_blobs": [
+                "Eltwise_10_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_22",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_10_0"
+            ],
+            "output_blobs": [
+                "Tanh_22_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_10",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_22_0"
+            ],
+            "output_blobs": [
+                "Convolution_10_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 1024
+            },
+            "weight_info": [
+                47403,
+                1024,
+                48459
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_23",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_10_0"
+            ],
+            "output_blobs": [
+                "Tanh_23_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_17",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_23_0"
+            ],
+            "output_blobs": [
+                "Pad_17_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 6,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_17",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_17_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_17_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate_y": 1,
+                "dilate_x": 3,
+                "weight_data_size": 3072
+            },
+            "weight_info": [
+                48459,
+                3072,
+                51563
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_11",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_17_0",
+                "Eltwise_10_0"
+            ],
+            "output_blobs": [
+                "Eltwise_11_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_24",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_11_0"
+            ],
+            "output_blobs": [
+                "Tanh_24_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_11",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_24_0"
+            ],
+            "output_blobs": [
+                "Convolution_11_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 1024
+            },
+            "weight_info": [
+                51564,
+                1024,
+                52620
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_25",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_11_0"
+            ],
+            "output_blobs": [
+                "Tanh_25_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_18",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_25_0"
+            ],
+            "output_blobs": [
+                "Pad_18_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 18,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_18",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_18_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_18_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate_y": 1,
+                "dilate_x": 9,
+                "weight_data_size": 3072
+            },
+            "weight_info": [
+                52620,
+                3072,
+                55724
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_12",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_18_0",
+                "Eltwise_11_0"
+            ],
+            "output_blobs": [
+                "Eltwise_12_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_13",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_12_0",
+                "ConvolutionIrregularKernel_8_0"
+            ],
+            "output_blobs": [
+                "Eltwise_13_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_26",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_13_0"
+            ],
+            "output_blobs": [
+                "Tanh_26_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_19",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_26_0"
+            ],
+            "output_blobs": [
+                "Pad_19_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_19",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_19_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_19_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 1536
+            },
+            "weight_info": [
+                55724,
+                1536,
+                57276
+            ]
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_19_0"
+            ],
+            "output_blobs": [
+                "Permute_2_0"
+            ],
+            "layer_param": {
+                "c_dim": 1,
+                "h_dim": 2,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Repeat",
+            "layer_name": "Repeat_1",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_2_0"
+            ],
+            "output_blobs": [
+                "Repeat_1_0"
+            ],
+            "layer_param": {
+                "repeat_param": [
+                    1,
+                    1,
+                    1,
+                    8
+                ]
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Reshape",
+            "layer_name": "Reshape_1",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Repeat_1_0"
+            ],
+            "output_blobs": [
+                "Reshape_1_0"
+            ],
+            "layer_param": {
+                "n": 1,
+                "c": -1,
+                "h": 16,
+                "w": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_3",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Reshape_1_0"
+            ],
+            "output_blobs": [
+                "Permute_3_0"
+            ],
+            "layer_param": {
+                "c_dim": 1,
+                "h_dim": 2,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_27",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_3_0"
+            ],
+            "output_blobs": [
+                "Tanh_27_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_12",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_27_0"
+            ],
+            "output_blobs": [
+                "Convolution_12_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 256
+            },
+            "weight_info": [
+                57277,
+                256,
+                57549
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_28",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_12_0"
+            ],
+            "output_blobs": [
+                "Tanh_28_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_20",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_28_0"
+            ],
+            "output_blobs": [
+                "Pad_20_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_20",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_20_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_20_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 768
+            },
+            "weight_info": [
+                57549,
+                768,
+                58333
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_14",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_20_0",
+                "Permute_3_0"
+            ],
+            "output_blobs": [
+                "Eltwise_14_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_29",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_14_0"
+            ],
+            "output_blobs": [
+                "Tanh_29_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_13",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_29_0"
+            ],
+            "output_blobs": [
+                "Convolution_13_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 256
+            },
+            "weight_info": [
+                58334,
+                256,
+                58606
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_30",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_13_0"
+            ],
+            "output_blobs": [
+                "Tanh_30_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_21",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_30_0"
+            ],
+            "output_blobs": [
+                "Pad_21_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 6,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_21",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_21_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_21_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate_y": 1,
+                "dilate_x": 3,
+                "weight_data_size": 768
+            },
+            "weight_info": [
+                58606,
+                768,
+                59390
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_15",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_21_0",
+                "Eltwise_14_0"
+            ],
+            "output_blobs": [
+                "Eltwise_15_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_31",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_15_0"
+            ],
+            "output_blobs": [
+                "Tanh_31_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_14",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_31_0"
+            ],
+            "output_blobs": [
+                "Convolution_14_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 256
+            },
+            "weight_info": [
+                59391,
+                256,
+                59663
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_32",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_14_0"
+            ],
+            "output_blobs": [
+                "Tanh_32_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_22",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_32_0"
+            ],
+            "output_blobs": [
+                "Pad_22_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 18,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_22",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_22_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_22_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate_y": 1,
+                "dilate_x": 9,
+                "weight_data_size": 768
+            },
+            "weight_info": [
+                59663,
+                768,
+                60447
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_16",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_22_0",
+                "Eltwise_15_0"
+            ],
+            "output_blobs": [
+                "Eltwise_16_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_17",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_16_0",
+                "ConvolutionIrregularKernel_4_0"
+            ],
+            "output_blobs": [
+                "Eltwise_17_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_33",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_17_0"
+            ],
+            "output_blobs": [
+                "Tanh_33_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_23",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_33_0"
+            ],
+            "output_blobs": [
+                "Pad_23_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_23",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_23_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_23_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 384
+            },
+            "weight_info": [
+                60447,
+                384,
+                60839
+            ]
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_4",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_23_0"
+            ],
+            "output_blobs": [
+                "Permute_4_0"
+            ],
+            "layer_param": {
+                "c_dim": 1,
+                "h_dim": 2,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Repeat",
+            "layer_name": "Repeat_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_4_0"
+            ],
+            "output_blobs": [
+                "Repeat_2_0"
+            ],
+            "layer_param": {
+                "repeat_param": [
+                    1,
+                    1,
+                    1,
+                    4
+                ]
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Reshape",
+            "layer_name": "Reshape_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Repeat_2_0"
+            ],
+            "output_blobs": [
+                "Reshape_2_0"
+            ],
+            "layer_param": {
+                "n": 1,
+                "c": -1,
+                "h": 8,
+                "w": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_5",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Reshape_2_0"
+            ],
+            "output_blobs": [
+                "Permute_5_0"
+            ],
+            "layer_param": {
+                "c_dim": 1,
+                "h_dim": 2,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_34",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_5_0"
+            ],
+            "output_blobs": [
+                "Tanh_34_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_15",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_34_0"
+            ],
+            "output_blobs": [
+                "Convolution_15_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 64
+            },
+            "weight_info": [
+                60840,
+                64,
+                60912
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_35",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_15_0"
+            ],
+            "output_blobs": [
+                "Tanh_35_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_24",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_35_0"
+            ],
+            "output_blobs": [
+                "Pad_24_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_24",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_24_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_24_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 192
+            },
+            "weight_info": [
+                60912,
+                192,
+                61112
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_18",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_24_0",
+                "Permute_5_0"
+            ],
+            "output_blobs": [
+                "Eltwise_18_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_36",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_18_0"
+            ],
+            "output_blobs": [
+                "Tanh_36_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_16",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_36_0"
+            ],
+            "output_blobs": [
+                "Convolution_16_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 64
+            },
+            "weight_info": [
+                61113,
+                64,
+                61185
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_37",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_16_0"
+            ],
+            "output_blobs": [
+                "Tanh_37_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_25",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_37_0"
+            ],
+            "output_blobs": [
+                "Pad_25_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 6,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_25",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_25_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_25_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate_y": 1,
+                "dilate_x": 3,
+                "weight_data_size": 192
+            },
+            "weight_info": [
+                61185,
+                192,
+                61385
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_19",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_25_0",
+                "Eltwise_18_0"
+            ],
+            "output_blobs": [
+                "Eltwise_19_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_38",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_19_0"
+            ],
+            "output_blobs": [
+                "Tanh_38_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_17",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_38_0"
+            ],
+            "output_blobs": [
+                "Convolution_17_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 64
+            },
+            "weight_info": [
+                61386,
+                64,
+                61458
+            ]
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_39",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_17_0"
+            ],
+            "output_blobs": [
+                "Tanh_39_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_26",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_39_0"
+            ],
+            "output_blobs": [
+                "Pad_26_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 18,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_26",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_26_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_26_0"
+            ],
+            "layer_param": {
+                "output_channel": 8,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate_y": 1,
+                "dilate_x": 9,
+                "weight_data_size": 192
+            },
+            "weight_info": [
+                61458,
+                192,
+                61658
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_20",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_26_0",
+                "Eltwise_19_0"
+            ],
+            "output_blobs": [
+                "Eltwise_20_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_21",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_20_0",
+                "ConvolutionIrregularKernel_0_0"
+            ],
+            "output_blobs": [
+                "Eltwise_21_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Tanh",
+            "layer_name": "Tanh_40",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_21_0"
+            ],
+            "output_blobs": [
+                "Tanh_40_0"
+            ],
+            "layer_param": {
+                "approximate": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pad",
+            "layer_name": "Pad_27",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Tanh_40_0"
+            ],
+            "output_blobs": [
+                "Pad_27_0"
+            ],
+            "layer_param": {
+                "PadOnNBegin": 0,
+                "PadOnCBegin": 0,
+                "PadOnHBegin": 0,
+                "PadOnWBegin": 2,
+                "PadOnNEnd": 0,
+                "PadOnCEnd": 0,
+                "PadOnHEnd": 0,
+                "PadOnWEnd": 0,
+                "ConstantValue": 0.0,
+                "CacheMode": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ConvolutionIrregularKernel",
+            "layer_name": "ConvolutionIrregularKernel_27",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pad_27_0"
+            ],
+            "output_blobs": [
+                "ConvolutionIrregularKernel_27_0"
+            ],
+            "layer_param": {
+                "output_channel": 1,
+                "kernel_h": 1,
+                "kernel_w": 3,
+                "stride": 1,
+                "pad_y": 0,
+                "pad_x": 0,
+                "has_bias": 1,
+                "group": 1,
+                "dilate": 1,
+                "weight_data_size": 24
+            },
+            "weight_info": [
+                61658,
+                24,
+                61683
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_22",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ConvolutionIrregularKernel_27_0",
+                "Input_0_0"
+            ],
+            "output_blobs": [
+                "Eltwise_22_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        }
+    ]
+}

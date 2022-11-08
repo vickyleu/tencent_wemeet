@@ -30,25 +30,45 @@ typedef NS_ENUM(NSInteger, TMSDKResult) {
     kTMSDKErrorIsLogining = -1017,
     kTMSDKErrorLoginNetError = -1018,
     kTMSDKErrorTokenVerifyFailed = -1019,
+    kTMSDKErrorChildProcessCrash = -1020,
     kTMSDKErrorMultiAccountLoginConflict = -1021,
     kTMSDKErrorJoinMeetingServiceFailed = -1022,
     kTMSDKErrorActionConflict = -1023,
     kTMSDKErrorInvalidJsonString = -1024,
-    kTMSDKErrorProxySetFailed  = -1025,
-    kTMSDKErrorInvalidSchemaString = -1026
+    kTMSDKErrorProxySetFailed = -1025,
+    kTMSDKErrorInvalidSchemaString = -1026,
+    kTMSDKErrorNotSupportSwitchPip = -1027,
+    kTMSDKErrorInMeetingBackgroundNotSupportSwitchPip = -1028,
+    kTMSDKErrorEnterPipFail = -1029,
+    kTMSDKErrorEnterPipPermissionReject = -1030,
+    kTMSDKErrorInUninitializing = -1032,
+    kTMSDKErrorUnableUnInit = -1033,
+
+    kTMSDKErrorServerResourceConstraint = -2001,
+    kTMSDKErrorAddUsersSuccess = -2002,
+    kTMSDKErrorAddHostMoreThen10 = -2003,
+    kTMSDKErrorAddNormalMoreThen300 = -2004,
+    kTMSDKErrorAddUsersUidIsEmpty = -2005,
+    kTMSDKErrorAddUsersMembersModelError = -2006,
+
+    kTMSDKErrorInnerCallError = -3001,
+    kTMSDKErrorDuplicatedCall = -3002,
 };
 
 typedef NS_ENUM(NSInteger, TMSDKActionType) {
-    kTMSDKActionTypeShowPreMeetingView,
-    kTMSDKActionTypeShowScreenCastView,
-    kTMSDKActionTypeShowHistoricalMeetingView,
-    kTMSDKActionTypeShowMeetingDetailView,
-    kTMSDKActionTypeShowJoinMeetingView,
-    kTMSDKActionTypeShowScheduleMeetingView,
-    kTMSDKActionTypeShowMeetingSettingView,
-    kTMSDKActionTypeClosePreMeetingView = 100,
-    kTMSDKActionTypeQueryMeetingInfo,
-    kTMSDKActionTypeInviteUsers,
+    kTMSDKActionTypeShowPreMeetingView = 0,
+    kTMSDKActionTypeShowScreenCastView = 1,
+    kTMSDKActionTypeShowHistoricalMeetingView = 2,
+    kTMSDKActionTypeShowMeetingDetailView = 3,
+    kTMSDKActionTypeShowJoinMeetingView = 4,
+    kTMSDKActionTypeShowScheduleMeetingView = 5,
+    kTMSDKActionTypeShowMeetingSettingView = 6,
+    kTMSDKActionTypeClosePreMeetingView = 7,
+    kTMSDKActionTypeQueryMeetingInfo = 8,
+    kTMSDKActionTypeInviteUsers = 9,
+    kTMSDKActionTypeSetCustomOrgInfo = 1000,
+    kTMSDKActionTypeScreenShareComplete = 1002,
+    kTMSDKActionTypeBreakoutRoomStatusChange = 1003,
 };
 
 typedef NS_ENUM(NSInteger, TMSDKMeetingState) {
@@ -70,5 +90,16 @@ typedef NS_ENUM (NSInteger, TMSDKMainUIStyle) {
   kTMSDKMainUIStyleTabs
 };
 
+typedef NS_ENUM (NSInteger, TMSDKInviteType) {
+    TMSDKInviteTypeUnkown = 0,
+    TMSDKInviteTypeScheduleHost,
+    TMSDKInviteTypeScheduleNormal,
+    TMSDKInviteTypeInmeetingJoin
+};
+
+typedef NS_ENUM (NSInteger, TMSDKOrgQueryType) {
+    TMSDKOrgQueryTypeUser = 0,
+    TMSDKOrgQueryTypeWaitingRoom
+};
 
 #endif /* TencentMeetingSDKDefine_h */

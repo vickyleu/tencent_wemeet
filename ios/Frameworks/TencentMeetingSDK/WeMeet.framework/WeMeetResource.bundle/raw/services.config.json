@@ -1,0 +1,1 @@
+[{"module_name":"file_delta","host_name":"app","services":["file_delta"]},{"module_name":"zipper","host_name":"app","services":["zipper"]}]

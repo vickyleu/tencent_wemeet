@@ -16,6 +16,7 @@ typedef void (^WeMeetCompletionHandler)(NSError *error);
 
 + (instancetype)sharedInstance;
 
+- (void) startWithMainBundleID:(NSString *)mainBundleId errorCompletion:(WeMeetCompletionHandler)completion;
 /**
  * abstract      Process the video data of Replaykit2 and send it to the peer.
  * discussion    The calling timing is in the case of RPSampleBufferTypeVideo of processSampleBuffer:withType: in SampleHandler

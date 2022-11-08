@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<stream>
+    <iq type="result">
+        <avatar_res language="en">
+            <avatar_res_list>
+                <resource id="choumeng_boy" title="choumeng_boy" icon="choumeng_boy.png"  resource_url="https://updatecdnv6.meeting.qq.com/resource-update/c3649b54d1241908723f1bf0032cdaac/c3649b54d1241908723f1bf0032cdaac.zip" resource_md5="c3649b54d1241908723f1bf0032cdaac"/>
+                <resource id="choumeng_girl" title="choumeng_girl" icon="choumeng_girl.png"  resource_url="https://updatecdnv6.meeting.qq.com/resource-update/0cd9d4f534b41487f893b44b7368ca6b/0cd9d4f534b41487f893b44b7368ca6b.zip" resource_md5="0cd9d4f534b41487f893b44b7368ca6b"/>
+            </avatar_res_list>
+        </avatar_res>
+    </iq>
+</stream>

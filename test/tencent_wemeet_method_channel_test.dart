@@ -1,24 +1,16 @@
-import 'package:flutter/services.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:tencent_wemeet/api_generated.dart';
 import 'package:tencent_wemeet/tencent_wemeet_method_channel.dart';
 
 void main() {
-  MethodChannelTencentWemeet platform = MethodChannelTencentWemeet();
-  const MethodChannel channel = MethodChannel('tencent_wemeet');
-
+  MethodChannelTencentWemeet platform = MethodChannelTencentWemeet(
+      binaryMessenger: WidgetsBinding.instance.defaultBinaryMessenger);
   TestWidgetsFlutterBinding.ensureInitialized();
-
-  setUp(() {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return '42';
-    });
-  });
-
-  tearDown(() {
-    channel.setMockMethodCallHandler(null);
-  });
-
-  test('getPlatformVersion', () async {
-    expect(await platform.getPlatformVersion(), '42');
+  final params = DartInitParams(sdkId: '', sdkToken: '', serverAddress: ''//
+      , appName: '', serverDomain: '', preferLanguage: '');
+  test('initWeMeet', () async {
+    final dynamic a = (await platform.initWeMeet(params)) as dynamic;
+    expect(a.runtimeType, 'void');
   });
 }

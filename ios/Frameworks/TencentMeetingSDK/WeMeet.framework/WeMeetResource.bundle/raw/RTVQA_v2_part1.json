@@ -1,6 +1,6 @@
 {
-    "layer_cnt": 62,
-    "blob_cnt": 66,
+    "layer_cnt": 104,
+    "blob_cnt": 104,
     "layer_info": [
         {
             "layer_type": "Input",
@@ -12,8 +12,7 @@
                 "Input_0_0"
             ],
             "layer_param": {},
-            "offset_in_bin": 0,
-            "size_in_bin": 0
+            "weight_info": []
         },
         {
             "layer_type": "Convolution",
@@ -24,19 +23,40 @@
                 "Input_0_0"
             ],
             "output_blobs": [
-                "Scale_0_0"
+                "Convolution_0_0"
             ],
             "layer_param": {
-                "output_channel": 8,
+                "output_channel": 16,
                 "kernel": 3,
                 "stride": 2,
                 "pad": 1,
                 "has_bias": 1,
                 "group": 1,
-                "weight_data_size": 216
+                "weight_data_size": 144
             },
-            "offset_in_bin": 1,
-            "size_in_bin": 224
+            "weight_info": [
+                1,
+                144,
+                161
+            ]
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_0_0"
+            ],
+            "output_blobs": [
+                "Power_0_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 1.0,
+                "shift": 3.0
+            },
+            "weight_info": []
         },
         {
             "layer_type": "ReLUX",
@@ -44,7 +64,7 @@
             "input_blob_cnt": 1,
             "output_blob_cnt": 1,
             "input_blobs": [
-                "Scale_0_0"
+                "Power_0_0"
             ],
             "output_blobs": [
                 "ReLUX_0_0"
@@ -52,87 +72,25 @@
             "layer_param": {
                 "slope": 6.0
             },
-            "offset_in_bin": 225,
-            "size_in_bin": 0
+            "weight_info": []
         },
         {
-            "layer_type": "Split",
-            "layer_name": "Split_0",
+            "layer_type": "Power",
+            "layer_name": "Power_1",
             "input_blob_cnt": 1,
-            "output_blob_cnt": 2,
+            "output_blob_cnt": 1,
             "input_blobs": [
                 "ReLUX_0_0"
             ],
             "output_blobs": [
-                "Split_0_0",
-                "Split_0_1"
-            ],
-            "layer_param": {},
-            "offset_in_bin": 225,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_1",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Split_0_0"
-            ],
-            "output_blobs": [
-                "Scale_1_0"
+                "Power_1_0"
             ],
             "layer_param": {
-                "output_channel": 8,
-                "kernel": 3,
-                "stride": 1,
-                "pad": 1,
-                "has_bias": 1,
-                "group": 8,
-                "weight_data_size": 72
+                "power": 1.0,
+                "scale": 0.16666666666666666,
+                "shift": 0.0
             },
-            "offset_in_bin": 226,
-            "size_in_bin": 80
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_1",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_1_0"
-            ],
-            "output_blobs": [
-                "ReLUX_1_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 306,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_2",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_1_0"
-            ],
-            "output_blobs": [
-                "Scale_2_0"
-            ],
-            "layer_param": {
-                "output_channel": 8,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 64
-            },
-            "offset_in_bin": 307,
-            "size_in_bin": 72
+            "weight_info": []
         },
         {
             "layer_type": "Eltwise",
@@ -140,1090 +98,59 @@
             "input_blob_cnt": 2,
             "output_blob_cnt": 1,
             "input_blobs": [
-                "Split_0_1",
-                "Scale_2_0"
+                "Convolution_0_0",
+                "Power_1_0"
             ],
             "output_blobs": [
                 "Eltwise_0_0"
             ],
             "layer_param": {
-                "op_type": 1,
+                "op_type": 0,
                 "num_coeffs": 0
             },
-            "offset_in_bin": 379,
-            "size_in_bin": 0
+            "weight_info": []
         },
         {
             "layer_type": "Convolution",
-            "layer_name": "Convolution_3",
+            "layer_name": "Convolution_1",
             "input_blob_cnt": 1,
             "output_blob_cnt": 1,
             "input_blobs": [
                 "Eltwise_0_0"
             ],
             "output_blobs": [
-                "Scale_3_0"
-            ],
-            "layer_param": {
-                "output_channel": 48,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 384
-            },
-            "offset_in_bin": 380,
-            "size_in_bin": 432
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_2",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_3_0"
-            ],
-            "output_blobs": [
-                "ReLUX_2_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 812,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_4",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_2_0"
-            ],
-            "output_blobs": [
-                "Scale_4_0"
-            ],
-            "layer_param": {
-                "output_channel": 48,
-                "kernel": 3,
-                "stride": 2,
-                "pad": 1,
-                "has_bias": 1,
-                "group": 48,
-                "weight_data_size": 432
-            },
-            "offset_in_bin": 813,
-            "size_in_bin": 480
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_3",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_4_0"
-            ],
-            "output_blobs": [
-                "ReLUX_3_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 1293,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_5",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_3_0"
-            ],
-            "output_blobs": [
-                "Scale_5_0"
-            ],
-            "layer_param": {
-                "output_channel": 8,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 384
-            },
-            "offset_in_bin": 1294,
-            "size_in_bin": 392
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_6",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_5_0"
-            ],
-            "output_blobs": [
-                "Scale_6_0"
-            ],
-            "layer_param": {
-                "output_channel": 48,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 384
-            },
-            "offset_in_bin": 1687,
-            "size_in_bin": 432
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_4",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_6_0"
-            ],
-            "output_blobs": [
-                "ReLUX_4_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 2119,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_7",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_4_0"
-            ],
-            "output_blobs": [
-                "Scale_7_0"
-            ],
-            "layer_param": {
-                "output_channel": 48,
-                "kernel": 3,
-                "stride": 2,
-                "pad": 1,
-                "has_bias": 1,
-                "group": 48,
-                "weight_data_size": 432
-            },
-            "offset_in_bin": 2120,
-            "size_in_bin": 480
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_5",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_7_0"
-            ],
-            "output_blobs": [
-                "ReLUX_5_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 2600,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_8",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_5_0"
-            ],
-            "output_blobs": [
-                "Scale_8_0"
-            ],
-            "layer_param": {
-                "output_channel": 8,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 384
-            },
-            "offset_in_bin": 2601,
-            "size_in_bin": 392
-        },
-        {
-            "layer_type": "Split",
-            "layer_name": "Split_1",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 2,
-            "input_blobs": [
-                "Scale_8_0"
-            ],
-            "output_blobs": [
-                "Split_1_0",
-                "Split_1_1"
-            ],
-            "layer_param": {},
-            "offset_in_bin": 2993,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_9",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Split_1_0"
-            ],
-            "output_blobs": [
-                "Scale_9_0"
-            ],
-            "layer_param": {
-                "output_channel": 48,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 384
-            },
-            "offset_in_bin": 2994,
-            "size_in_bin": 432
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_6",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_9_0"
-            ],
-            "output_blobs": [
-                "ReLUX_6_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 3426,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_10",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_6_0"
-            ],
-            "output_blobs": [
-                "Scale_10_0"
-            ],
-            "layer_param": {
-                "output_channel": 48,
-                "kernel": 3,
-                "stride": 1,
-                "pad": 1,
-                "has_bias": 1,
-                "group": 48,
-                "weight_data_size": 432
-            },
-            "offset_in_bin": 3427,
-            "size_in_bin": 480
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_7",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_10_0"
-            ],
-            "output_blobs": [
-                "ReLUX_7_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 3907,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_11",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_7_0"
-            ],
-            "output_blobs": [
-                "Scale_11_0"
-            ],
-            "layer_param": {
-                "output_channel": 8,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 384
-            },
-            "offset_in_bin": 3908,
-            "size_in_bin": 392
-        },
-        {
-            "layer_type": "Eltwise",
-            "layer_name": "Eltwise_1",
-            "input_blob_cnt": 2,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Split_1_1",
-                "Scale_11_0"
-            ],
-            "output_blobs": [
-                "Eltwise_1_0"
-            ],
-            "layer_param": {
-                "op_type": 1,
-                "num_coeffs": 0
-            },
-            "offset_in_bin": 4300,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_12",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Eltwise_1_0"
-            ],
-            "output_blobs": [
-                "Scale_12_0"
-            ],
-            "layer_param": {
-                "output_channel": 48,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 384
-            },
-            "offset_in_bin": 4301,
-            "size_in_bin": 432
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_8",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_12_0"
-            ],
-            "output_blobs": [
-                "ReLUX_8_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 4733,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_13",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_8_0"
-            ],
-            "output_blobs": [
-                "Scale_13_0"
-            ],
-            "layer_param": {
-                "output_channel": 48,
-                "kernel": 3,
-                "stride": 2,
-                "pad": 1,
-                "has_bias": 1,
-                "group": 48,
-                "weight_data_size": 432
-            },
-            "offset_in_bin": 4734,
-            "size_in_bin": 480
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_9",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_13_0"
-            ],
-            "output_blobs": [
-                "ReLUX_9_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 5214,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_14",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_9_0"
-            ],
-            "output_blobs": [
-                "Scale_14_0"
+                "Convolution_1_0"
             ],
             "layer_param": {
                 "output_channel": 16,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 768
-            },
-            "offset_in_bin": 5215,
-            "size_in_bin": 784
-        },
-        {
-            "layer_type": "Split",
-            "layer_name": "Split_2",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 2,
-            "input_blobs": [
-                "Scale_14_0"
-            ],
-            "output_blobs": [
-                "Split_2_0",
-                "Split_2_1"
-            ],
-            "layer_param": {},
-            "offset_in_bin": 5999,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_15",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Split_2_0"
-            ],
-            "output_blobs": [
-                "Scale_15_0"
-            ],
-            "layer_param": {
-                "output_channel": 96,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 1536
-            },
-            "offset_in_bin": 6000,
-            "size_in_bin": 1632
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_10",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_15_0"
-            ],
-            "output_blobs": [
-                "ReLUX_10_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 7632,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_16",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_10_0"
-            ],
-            "output_blobs": [
-                "Scale_16_0"
-            ],
-            "layer_param": {
-                "output_channel": 96,
-                "kernel": 3,
-                "stride": 1,
-                "pad": 1,
-                "has_bias": 1,
-                "group": 96,
-                "weight_data_size": 864
-            },
-            "offset_in_bin": 7633,
-            "size_in_bin": 960
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_11",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_16_0"
-            ],
-            "output_blobs": [
-                "ReLUX_11_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 8593,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_17",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_11_0"
-            ],
-            "output_blobs": [
-                "Scale_17_0"
-            ],
-            "layer_param": {
-                "output_channel": 16,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 1536
-            },
-            "offset_in_bin": 8594,
-            "size_in_bin": 1552
-        },
-        {
-            "layer_type": "Eltwise",
-            "layer_name": "Eltwise_2",
-            "input_blob_cnt": 2,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Split_2_1",
-                "Scale_17_0"
-            ],
-            "output_blobs": [
-                "Eltwise_2_0"
-            ],
-            "layer_param": {
-                "op_type": 1,
-                "num_coeffs": 0
-            },
-            "offset_in_bin": 10146,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_18",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Eltwise_2_0"
-            ],
-            "output_blobs": [
-                "Scale_18_0"
-            ],
-            "layer_param": {
-                "output_channel": 96,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 1536
-            },
-            "offset_in_bin": 10147,
-            "size_in_bin": 1632
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_12",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_18_0"
-            ],
-            "output_blobs": [
-                "ReLUX_12_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 11779,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_19",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_12_0"
-            ],
-            "output_blobs": [
-                "Scale_19_0"
-            ],
-            "layer_param": {
-                "output_channel": 96,
-                "kernel": 3,
-                "stride": 1,
-                "pad": 1,
-                "has_bias": 1,
-                "group": 96,
-                "weight_data_size": 864
-            },
-            "offset_in_bin": 11780,
-            "size_in_bin": 960
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_13",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_19_0"
-            ],
-            "output_blobs": [
-                "ReLUX_13_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 12740,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_20",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_13_0"
-            ],
-            "output_blobs": [
-                "Scale_20_0"
-            ],
-            "layer_param": {
-                "output_channel": 24,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 2304
-            },
-            "offset_in_bin": 12741,
-            "size_in_bin": 2328
-        },
-        {
-            "layer_type": "Split",
-            "layer_name": "Split_3",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 2,
-            "input_blobs": [
-                "Scale_20_0"
-            ],
-            "output_blobs": [
-                "Split_3_0",
-                "Split_3_1"
-            ],
-            "layer_param": {},
-            "offset_in_bin": 15069,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_21",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Split_3_0"
-            ],
-            "output_blobs": [
-                "Scale_21_0"
-            ],
-            "layer_param": {
-                "output_channel": 144,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 3456
-            },
-            "offset_in_bin": 15070,
-            "size_in_bin": 3600
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_14",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_21_0"
-            ],
-            "output_blobs": [
-                "ReLUX_14_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 18670,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_22",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_14_0"
-            ],
-            "output_blobs": [
-                "Scale_22_0"
-            ],
-            "layer_param": {
-                "output_channel": 144,
-                "kernel": 3,
-                "stride": 1,
-                "pad": 1,
-                "has_bias": 1,
-                "group": 144,
-                "weight_data_size": 1296
-            },
-            "offset_in_bin": 18671,
-            "size_in_bin": 1440
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_15",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_22_0"
-            ],
-            "output_blobs": [
-                "ReLUX_15_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 20111,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_23",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_15_0"
-            ],
-            "output_blobs": [
-                "Scale_23_0"
-            ],
-            "layer_param": {
-                "output_channel": 24,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 3456
-            },
-            "offset_in_bin": 20112,
-            "size_in_bin": 3480
-        },
-        {
-            "layer_type": "Eltwise",
-            "layer_name": "Eltwise_3",
-            "input_blob_cnt": 2,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Split_3_1",
-                "Scale_23_0"
-            ],
-            "output_blobs": [
-                "Eltwise_3_0"
-            ],
-            "layer_param": {
-                "op_type": 1,
-                "num_coeffs": 0
-            },
-            "offset_in_bin": 23592,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_24",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Eltwise_3_0"
-            ],
-            "output_blobs": [
-                "Scale_24_0"
-            ],
-            "layer_param": {
-                "output_channel": 144,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 3456
-            },
-            "offset_in_bin": 23593,
-            "size_in_bin": 3600
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_16",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_24_0"
-            ],
-            "output_blobs": [
-                "ReLUX_16_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 27193,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_25",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_16_0"
-            ],
-            "output_blobs": [
-                "Scale_25_0"
-            ],
-            "layer_param": {
-                "output_channel": 144,
                 "kernel": 3,
                 "stride": 2,
                 "pad": 1,
                 "has_bias": 1,
-                "group": 144,
-                "weight_data_size": 1296
+                "group": 16,
+                "weight_data_size": 144
             },
-            "offset_in_bin": 27194,
-            "size_in_bin": 1440
+            "weight_info": [
+                162,
+                144,
+                322
+            ]
         },
         {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_17",
+            "layer_type": "ReLU",
+            "layer_name": "ReLU_0",
             "input_blob_cnt": 1,
             "output_blob_cnt": 1,
             "input_blobs": [
-                "Scale_25_0"
+                "Convolution_1_0"
             ],
             "output_blobs": [
-                "ReLUX_17_0"
+                "ReLU_0_0"
             ],
             "layer_param": {
-                "slope": 6.0
+                "slope": 0.0
             },
-            "offset_in_bin": 28634,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_26",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_17_0"
-            ],
-            "output_blobs": [
-                "Scale_26_0"
-            ],
-            "layer_param": {
-                "output_channel": 40,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 5760
-            },
-            "offset_in_bin": 28635,
-            "size_in_bin": 5800
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_27",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_26_0"
-            ],
-            "output_blobs": [
-                "Scale_27_0"
-            ],
-            "layer_param": {
-                "output_channel": 240,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 9600
-            },
-            "offset_in_bin": 34436,
-            "size_in_bin": 9840
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_18",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_27_0"
-            ],
-            "output_blobs": [
-                "ReLUX_18_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 44276,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_28",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_18_0"
-            ],
-            "output_blobs": [
-                "Scale_28_0"
-            ],
-            "layer_param": {
-                "output_channel": 240,
-                "kernel": 3,
-                "stride": 1,
-                "pad": 1,
-                "has_bias": 1,
-                "group": 240,
-                "weight_data_size": 2160
-            },
-            "offset_in_bin": 44277,
-            "size_in_bin": 2400
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_19",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_28_0"
-            ],
-            "output_blobs": [
-                "ReLUX_19_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 46677,
-            "size_in_bin": 0
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_29",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "ReLUX_19_0"
-            ],
-            "output_blobs": [
-                "Scale_29_0"
-            ],
-            "layer_param": {
-                "output_channel": 80,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 19200
-            },
-            "offset_in_bin": 46678,
-            "size_in_bin": 19280
-        },
-        {
-            "layer_type": "Convolution",
-            "layer_name": "Convolution_30",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_29_0"
-            ],
-            "output_blobs": [
-                "Scale_30_0"
-            ],
-            "layer_param": {
-                "output_channel": 256,
-                "kernel": 1,
-                "stride": 1,
-                "pad": 0,
-                "has_bias": 1,
-                "group": 1,
-                "weight_data_size": 20480
-            },
-            "offset_in_bin": 65959,
-            "size_in_bin": 20736
-        },
-        {
-            "layer_type": "ReLUX",
-            "layer_name": "ReLUX_20",
-            "input_blob_cnt": 1,
-            "output_blob_cnt": 1,
-            "input_blobs": [
-                "Scale_30_0"
-            ],
-            "output_blobs": [
-                "ReLUX_20_0"
-            ],
-            "layer_param": {
-                "slope": 6.0
-            },
-            "offset_in_bin": 86695,
-            "size_in_bin": 0
+            "weight_info": []
         },
         {
             "layer_type": "Pooling",
@@ -1231,7 +158,7 @@
             "input_blob_cnt": 1,
             "output_blob_cnt": 1,
             "input_blobs": [
-                "ReLUX_20_0"
+                "ReLU_0_0"
             ],
             "output_blobs": [
                 "Pooling_0_0"
@@ -1243,8 +170,1841 @@
                 "pad": 0,
                 "global_pooling": 1
             },
-            "offset_in_bin": 86695,
-            "size_in_bin": 0
+            "weight_info": []
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pooling_0_0"
+            ],
+            "output_blobs": [
+                "Permute_0_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Linear",
+            "layer_name": "Linear_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_0_0"
+            ],
+            "output_blobs": [
+                "Linear_0_0"
+            ],
+            "layer_param": {
+                "num_input": 16,
+                "num_output": 8
+            },
+            "weight_info": [
+                322,
+                128,
+                458
+            ]
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_1",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Linear_0_0"
+            ],
+            "output_blobs": [
+                "Permute_1_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLU",
+            "layer_name": "ReLU_1",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_1_0"
+            ],
+            "output_blobs": [
+                "ReLU_1_0"
+            ],
+            "layer_param": {
+                "slope": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLU_1_0"
+            ],
+            "output_blobs": [
+                "Permute_2_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Linear",
+            "layer_name": "Linear_1",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_2_0"
+            ],
+            "output_blobs": [
+                "Linear_1_0"
+            ],
+            "layer_param": {
+                "num_input": 8,
+                "num_output": 16
+            },
+            "weight_info": [
+                458,
+                128,
+                602
+            ]
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_3",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Linear_1_0"
+            ],
+            "output_blobs": [
+                "Permute_3_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_3_0"
+            ],
+            "output_blobs": [
+                "Power_2_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 1.0,
+                "shift": 3.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLUX",
+            "layer_name": "ReLUX_1",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Power_2_0"
+            ],
+            "output_blobs": [
+                "ReLUX_1_0"
+            ],
+            "layer_param": {
+                "slope": 6.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_3",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLUX_1_0"
+            ],
+            "output_blobs": [
+                "Power_3_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 0.16666666666666666,
+                "shift": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_1",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLU_0_0",
+                "Power_3_0"
+            ],
+            "output_blobs": [
+                "Eltwise_1_0"
+            ],
+            "layer_param": {
+                "op_type": 0,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_1_0"
+            ],
+            "output_blobs": [
+                "Convolution_2_0"
+            ],
+            "layer_param": {
+                "output_channel": 16,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 256
+            },
+            "weight_info": [
+                603,
+                256,
+                875
+            ]
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_3",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_2_0"
+            ],
+            "output_blobs": [
+                "Convolution_3_0"
+            ],
+            "layer_param": {
+                "output_channel": 72,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 1152
+            },
+            "weight_info": [
+                876,
+                1152,
+                2100
+            ]
+        },
+        {
+            "layer_type": "ReLU",
+            "layer_name": "ReLU_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_3_0"
+            ],
+            "output_blobs": [
+                "ReLU_2_0"
+            ],
+            "layer_param": {
+                "slope": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_4",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLU_2_0"
+            ],
+            "output_blobs": [
+                "Convolution_4_0"
+            ],
+            "layer_param": {
+                "output_channel": 72,
+                "kernel": 3,
+                "stride": 2,
+                "pad": 1,
+                "has_bias": 1,
+                "group": 72,
+                "weight_data_size": 648
+            },
+            "weight_info": [
+                2101,
+                648,
+                2821
+            ]
+        },
+        {
+            "layer_type": "ReLU",
+            "layer_name": "ReLU_3",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_4_0"
+            ],
+            "output_blobs": [
+                "ReLU_3_0"
+            ],
+            "layer_param": {
+                "slope": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_5",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLU_3_0"
+            ],
+            "output_blobs": [
+                "Convolution_5_0"
+            ],
+            "layer_param": {
+                "output_channel": 24,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 1728
+            },
+            "weight_info": [
+                2822,
+                1728,
+                4574
+            ]
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_6",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_5_0"
+            ],
+            "output_blobs": [
+                "Convolution_6_0"
+            ],
+            "layer_param": {
+                "output_channel": 88,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 2112
+            },
+            "weight_info": [
+                4575,
+                2112,
+                6775
+            ]
+        },
+        {
+            "layer_type": "ReLU",
+            "layer_name": "ReLU_4",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_6_0"
+            ],
+            "output_blobs": [
+                "ReLU_4_0"
+            ],
+            "layer_param": {
+                "slope": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_7",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLU_4_0"
+            ],
+            "output_blobs": [
+                "Convolution_7_0"
+            ],
+            "layer_param": {
+                "output_channel": 88,
+                "kernel": 3,
+                "stride": 1,
+                "pad": 1,
+                "has_bias": 1,
+                "group": 88,
+                "weight_data_size": 792
+            },
+            "weight_info": [
+                6776,
+                792,
+                7656
+            ]
+        },
+        {
+            "layer_type": "ReLU",
+            "layer_name": "ReLU_5",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_7_0"
+            ],
+            "output_blobs": [
+                "ReLU_5_0"
+            ],
+            "layer_param": {
+                "slope": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_8",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLU_5_0"
+            ],
+            "output_blobs": [
+                "Convolution_8_0"
+            ],
+            "layer_param": {
+                "output_channel": 24,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 2112
+            },
+            "weight_info": [
+                7657,
+                2112,
+                9793
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_2",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_5_0",
+                "Convolution_8_0"
+            ],
+            "output_blobs": [
+                "Eltwise_2_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_9",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_2_0"
+            ],
+            "output_blobs": [
+                "Convolution_9_0"
+            ],
+            "layer_param": {
+                "output_channel": 96,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 2304
+            },
+            "weight_info": [
+                9794,
+                2304,
+                12194
+            ]
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_4",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_9_0"
+            ],
+            "output_blobs": [
+                "Power_4_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 1.0,
+                "shift": 3.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLUX",
+            "layer_name": "ReLUX_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Power_4_0"
+            ],
+            "output_blobs": [
+                "ReLUX_2_0"
+            ],
+            "layer_param": {
+                "slope": 6.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_5",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLUX_2_0"
+            ],
+            "output_blobs": [
+                "Power_5_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 0.16666666666666666,
+                "shift": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_3",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_9_0",
+                "Power_5_0"
+            ],
+            "output_blobs": [
+                "Eltwise_3_0"
+            ],
+            "layer_param": {
+                "op_type": 0,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_10",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_3_0"
+            ],
+            "output_blobs": [
+                "Convolution_10_0"
+            ],
+            "layer_param": {
+                "output_channel": 96,
+                "kernel": 5,
+                "stride": 2,
+                "pad": 2,
+                "has_bias": 1,
+                "group": 96,
+                "weight_data_size": 2400
+            },
+            "weight_info": [
+                12195,
+                2400,
+                14691
+            ]
+        },
+        {
+            "layer_type": "Pooling",
+            "layer_name": "Pooling_1",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_10_0"
+            ],
+            "output_blobs": [
+                "Pooling_1_0"
+            ],
+            "layer_param": {
+                "pooling_type": 1,
+                "kernel_size": 0,
+                "stride": 0,
+                "pad": 0,
+                "global_pooling": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_4",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pooling_1_0"
+            ],
+            "output_blobs": [
+                "Permute_4_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Linear",
+            "layer_name": "Linear_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_4_0"
+            ],
+            "output_blobs": [
+                "Linear_2_0"
+            ],
+            "layer_param": {
+                "num_input": 96,
+                "num_output": 24
+            },
+            "weight_info": [
+                14691,
+                2304,
+                17019
+            ]
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_5",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Linear_2_0"
+            ],
+            "output_blobs": [
+                "Permute_5_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLU",
+            "layer_name": "ReLU_6",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_5_0"
+            ],
+            "output_blobs": [
+                "ReLU_6_0"
+            ],
+            "layer_param": {
+                "slope": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_6",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLU_6_0"
+            ],
+            "output_blobs": [
+                "Permute_6_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Linear",
+            "layer_name": "Linear_3",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_6_0"
+            ],
+            "output_blobs": [
+                "Linear_3_0"
+            ],
+            "layer_param": {
+                "num_input": 24,
+                "num_output": 96
+            },
+            "weight_info": [
+                17019,
+                2304,
+                19419
+            ]
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_7",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Linear_3_0"
+            ],
+            "output_blobs": [
+                "Permute_7_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_6",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_7_0"
+            ],
+            "output_blobs": [
+                "Power_6_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 1.0,
+                "shift": 3.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLUX",
+            "layer_name": "ReLUX_3",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Power_6_0"
+            ],
+            "output_blobs": [
+                "ReLUX_3_0"
+            ],
+            "layer_param": {
+                "slope": 6.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_7",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLUX_3_0"
+            ],
+            "output_blobs": [
+                "Power_7_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 0.16666666666666666,
+                "shift": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_4",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_10_0",
+                "Power_7_0"
+            ],
+            "output_blobs": [
+                "Eltwise_4_0"
+            ],
+            "layer_param": {
+                "op_type": 0,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_8",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_4_0"
+            ],
+            "output_blobs": [
+                "Power_8_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 1.0,
+                "shift": 3.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLUX",
+            "layer_name": "ReLUX_4",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Power_8_0"
+            ],
+            "output_blobs": [
+                "ReLUX_4_0"
+            ],
+            "layer_param": {
+                "slope": 6.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_9",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLUX_4_0"
+            ],
+            "output_blobs": [
+                "Power_9_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 0.16666666666666666,
+                "shift": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_5",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_4_0",
+                "Power_9_0"
+            ],
+            "output_blobs": [
+                "Eltwise_5_0"
+            ],
+            "layer_param": {
+                "op_type": 0,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_11",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_5_0"
+            ],
+            "output_blobs": [
+                "Convolution_11_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 3072
+            },
+            "weight_info": [
+                19420,
+                3072,
+                22524
+            ]
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_12",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_11_0"
+            ],
+            "output_blobs": [
+                "Convolution_12_0"
+            ],
+            "layer_param": {
+                "output_channel": 192,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 6144
+            },
+            "weight_info": [
+                22525,
+                6144,
+                28861
+            ]
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_10",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_12_0"
+            ],
+            "output_blobs": [
+                "Power_10_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 1.0,
+                "shift": 3.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLUX",
+            "layer_name": "ReLUX_5",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Power_10_0"
+            ],
+            "output_blobs": [
+                "ReLUX_5_0"
+            ],
+            "layer_param": {
+                "slope": 6.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_11",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLUX_5_0"
+            ],
+            "output_blobs": [
+                "Power_11_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 0.16666666666666666,
+                "shift": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_6",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_12_0",
+                "Power_11_0"
+            ],
+            "output_blobs": [
+                "Eltwise_6_0"
+            ],
+            "layer_param": {
+                "op_type": 0,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_13",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_6_0"
+            ],
+            "output_blobs": [
+                "Convolution_13_0"
+            ],
+            "layer_param": {
+                "output_channel": 192,
+                "kernel": 5,
+                "stride": 1,
+                "pad": 2,
+                "has_bias": 1,
+                "group": 192,
+                "weight_data_size": 4800
+            },
+            "weight_info": [
+                28862,
+                4800,
+                33854
+            ]
+        },
+        {
+            "layer_type": "Pooling",
+            "layer_name": "Pooling_2",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_13_0"
+            ],
+            "output_blobs": [
+                "Pooling_2_0"
+            ],
+            "layer_param": {
+                "pooling_type": 1,
+                "kernel_size": 0,
+                "stride": 0,
+                "pad": 0,
+                "global_pooling": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_8",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pooling_2_0"
+            ],
+            "output_blobs": [
+                "Permute_8_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Linear",
+            "layer_name": "Linear_4",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_8_0"
+            ],
+            "output_blobs": [
+                "Linear_4_0"
+            ],
+            "layer_param": {
+                "num_input": 192,
+                "num_output": 48
+            },
+            "weight_info": [
+                33854,
+                9216,
+                43118
+            ]
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_9",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Linear_4_0"
+            ],
+            "output_blobs": [
+                "Permute_9_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLU",
+            "layer_name": "ReLU_7",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_9_0"
+            ],
+            "output_blobs": [
+                "ReLU_7_0"
+            ],
+            "layer_param": {
+                "slope": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_10",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLU_7_0"
+            ],
+            "output_blobs": [
+                "Permute_10_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Linear",
+            "layer_name": "Linear_5",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_10_0"
+            ],
+            "output_blobs": [
+                "Linear_5_0"
+            ],
+            "layer_param": {
+                "num_input": 48,
+                "num_output": 192
+            },
+            "weight_info": [
+                43118,
+                9216,
+                52526
+            ]
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_11",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Linear_5_0"
+            ],
+            "output_blobs": [
+                "Permute_11_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_12",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_11_0"
+            ],
+            "output_blobs": [
+                "Power_12_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 1.0,
+                "shift": 3.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLUX",
+            "layer_name": "ReLUX_6",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Power_12_0"
+            ],
+            "output_blobs": [
+                "ReLUX_6_0"
+            ],
+            "layer_param": {
+                "slope": 6.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_13",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLUX_6_0"
+            ],
+            "output_blobs": [
+                "Power_13_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 0.16666666666666666,
+                "shift": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_7",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_13_0",
+                "Power_13_0"
+            ],
+            "output_blobs": [
+                "Eltwise_7_0"
+            ],
+            "layer_param": {
+                "op_type": 0,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_14",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_7_0"
+            ],
+            "output_blobs": [
+                "Power_14_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 1.0,
+                "shift": 3.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLUX",
+            "layer_name": "ReLUX_7",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Power_14_0"
+            ],
+            "output_blobs": [
+                "ReLUX_7_0"
+            ],
+            "layer_param": {
+                "slope": 6.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_15",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLUX_7_0"
+            ],
+            "output_blobs": [
+                "Power_15_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 0.16666666666666666,
+                "shift": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_8",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_7_0",
+                "Power_15_0"
+            ],
+            "output_blobs": [
+                "Eltwise_8_0"
+            ],
+            "layer_param": {
+                "op_type": 0,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_14",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_8_0"
+            ],
+            "output_blobs": [
+                "Convolution_14_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 6144
+            },
+            "weight_info": [
+                52527,
+                6144,
+                58703
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_9",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_11_0",
+                "Convolution_14_0"
+            ],
+            "output_blobs": [
+                "Eltwise_9_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_15",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_9_0"
+            ],
+            "output_blobs": [
+                "Convolution_15_0"
+            ],
+            "layer_param": {
+                "output_channel": 192,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 6144
+            },
+            "weight_info": [
+                58704,
+                6144,
+                65040
+            ]
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_16",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_15_0"
+            ],
+            "output_blobs": [
+                "Power_16_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 1.0,
+                "shift": 3.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLUX",
+            "layer_name": "ReLUX_8",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Power_16_0"
+            ],
+            "output_blobs": [
+                "ReLUX_8_0"
+            ],
+            "layer_param": {
+                "slope": 6.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_17",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLUX_8_0"
+            ],
+            "output_blobs": [
+                "Power_17_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 0.16666666666666666,
+                "shift": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_10",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_15_0",
+                "Power_17_0"
+            ],
+            "output_blobs": [
+                "Eltwise_10_0"
+            ],
+            "layer_param": {
+                "op_type": 0,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_16",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_10_0"
+            ],
+            "output_blobs": [
+                "Convolution_16_0"
+            ],
+            "layer_param": {
+                "output_channel": 192,
+                "kernel": 5,
+                "stride": 1,
+                "pad": 2,
+                "has_bias": 1,
+                "group": 192,
+                "weight_data_size": 4800
+            },
+            "weight_info": [
+                65041,
+                4800,
+                70033
+            ]
+        },
+        {
+            "layer_type": "Pooling",
+            "layer_name": "Pooling_3",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_16_0"
+            ],
+            "output_blobs": [
+                "Pooling_3_0"
+            ],
+            "layer_param": {
+                "pooling_type": 1,
+                "kernel_size": 0,
+                "stride": 0,
+                "pad": 0,
+                "global_pooling": 1
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_12",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Pooling_3_0"
+            ],
+            "output_blobs": [
+                "Permute_12_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Linear",
+            "layer_name": "Linear_6",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_12_0"
+            ],
+            "output_blobs": [
+                "Linear_6_0"
+            ],
+            "layer_param": {
+                "num_input": 192,
+                "num_output": 48
+            },
+            "weight_info": [
+                70033,
+                9216,
+                79297
+            ]
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_13",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Linear_6_0"
+            ],
+            "output_blobs": [
+                "Permute_13_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLU",
+            "layer_name": "ReLU_8",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_13_0"
+            ],
+            "output_blobs": [
+                "ReLU_8_0"
+            ],
+            "layer_param": {
+                "slope": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_14",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLU_8_0"
+            ],
+            "output_blobs": [
+                "Permute_14_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Linear",
+            "layer_name": "Linear_7",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_14_0"
+            ],
+            "output_blobs": [
+                "Linear_7_0"
+            ],
+            "layer_param": {
+                "num_input": 48,
+                "num_output": 192
+            },
+            "weight_info": [
+                79297,
+                9216,
+                88705
+            ]
+        },
+        {
+            "layer_type": "Permute",
+            "layer_name": "Permute_15",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Linear_7_0"
+            ],
+            "output_blobs": [
+                "Permute_15_0"
+            ],
+            "layer_param": {
+                "c_dim": 2,
+                "h_dim": 1,
+                "w_dim": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_18",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Permute_15_0"
+            ],
+            "output_blobs": [
+                "Power_18_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 1.0,
+                "shift": 3.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLUX",
+            "layer_name": "ReLUX_9",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Power_18_0"
+            ],
+            "output_blobs": [
+                "ReLUX_9_0"
+            ],
+            "layer_param": {
+                "slope": 6.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_19",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLUX_9_0"
+            ],
+            "output_blobs": [
+                "Power_19_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 0.16666666666666666,
+                "shift": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_11",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Convolution_16_0",
+                "Power_19_0"
+            ],
+            "output_blobs": [
+                "Eltwise_11_0"
+            ],
+            "layer_param": {
+                "op_type": 0,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_20",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_11_0"
+            ],
+            "output_blobs": [
+                "Power_20_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 1.0,
+                "shift": 3.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "ReLUX",
+            "layer_name": "ReLUX_10",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Power_20_0"
+            ],
+            "output_blobs": [
+                "ReLUX_10_0"
+            ],
+            "layer_param": {
+                "slope": 6.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Power",
+            "layer_name": "Power_21",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "ReLUX_10_0"
+            ],
+            "output_blobs": [
+                "Power_21_0"
+            ],
+            "layer_param": {
+                "power": 1.0,
+                "scale": 0.16666666666666666,
+                "shift": 0.0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_12",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_11_0",
+                "Power_21_0"
+            ],
+            "output_blobs": [
+                "Eltwise_12_0"
+            ],
+            "layer_param": {
+                "op_type": 0,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Convolution",
+            "layer_name": "Convolution_17",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_12_0"
+            ],
+            "output_blobs": [
+                "Convolution_17_0"
+            ],
+            "layer_param": {
+                "output_channel": 32,
+                "kernel": 1,
+                "stride": 1,
+                "pad": 0,
+                "has_bias": 1,
+                "group": 1,
+                "weight_data_size": 6144
+            },
+            "weight_info": [
+                88706,
+                6144,
+                94882
+            ]
+        },
+        {
+            "layer_type": "Eltwise",
+            "layer_name": "Eltwise_13",
+            "input_blob_cnt": 2,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_9_0",
+                "Convolution_17_0"
+            ],
+            "output_blobs": [
+                "Eltwise_13_0"
+            ],
+            "layer_param": {
+                "op_type": 1,
+                "num_coeffs": 0
+            },
+            "weight_info": []
+        },
+        {
+            "layer_type": "Pooling",
+            "layer_name": "Pooling_4",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Eltwise_13_0"
+            ],
+            "output_blobs": [
+                "Pooling_4_0"
+            ],
+            "layer_param": {
+                "pooling_type": 1,
+                "kernel_size": 0,
+                "stride": 0,
+                "pad": 0,
+                "global_pooling": 1
+            },
+            "weight_info": []
         }
     ]
 }

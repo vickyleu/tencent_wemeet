@@ -1,0 +1,205 @@
+{
+  "tip": {
+    "icon": "https://meeting-75420.picgzc.qpic.cn/launch_material/1660533119.png",
+    "content": {
+      "text": "升级付费版即可解锁该趣味头饰",
+      "color": "FFFFFF",
+      "size": 16
+    },
+    "background": {
+      "image": "https://meeting-75420.picgzc.qpic.cn/launch_material/1660533305.png",
+      "border": {
+        "radius": 12
+      },
+      "gradient": {
+        "angle": 0,
+        "list": [
+          "4D94FF",
+          "6D86FF",
+          "5F65FF"
+        ]
+      }
+    },
+    "button": {
+      "text": "立即升级",
+      "color": "3354FF",
+      "size": 14,
+      "background": {
+        "image": "https://meeting-75420.picgzc.qpic.cn/launch_material/1660533197.png",
+        "border": {
+          "size": 0.5,
+          "radius": 4,
+          "color": "FFFFFF",
+          "type": 0
+        },
+        "gradient": {
+          "angle": 0,
+          "list": [
+            "FFFFFF",
+            "CCFFFFFF"
+          ]
+        }
+      },
+      "link": {
+        "Android": "https://meeting.tencent.com/v2/buy/vipcenter?mid=mandroid.g.ts.tips",
+        "iOS": "https://meeting.tencent.com/v2/buy/vipcenter?mid=mios.g.ts.tips",
+        "iPad": "https://meeting.tencent.com/v2/buy/vipcenter?mid=mpad.g.ts.tips",
+        "Mac": "https://meeting.tencent.com/buy.html?open-vip=1&mid=mac.g.ts.tips",
+        "Windows": "https://meeting.tencent.com/buy.html?open-vip=1&mid=win.g.ts.tips"
+      },
+      "event": {
+        "name": "e#headwear_pay_guide_tips#upgrade#click",
+        "params": {}
+      }
+    },
+    "event": {
+      "name": "e#headwear_pay_guide_tips#all#exposure",
+      "params": {}
+    }
+  },
+  "dialog_mobile": {
+    "title": {
+      "text": "想尝试更丰富的趣味头饰吗？",
+      "color": "000000",
+      "size": 20
+    },
+    "content": {
+      "text": "升级付费版，即可畅快使用所有有趣的头饰素材。快快尝试起来！",
+      "color": "4E5461",
+      "size": 16
+    },
+    "top_image": "https://meeting-75420.picgzc.qpic.cn/launch_material/1660716408.png",
+    "background": {
+      "color": "FFFFFF",
+      "border": {
+        "radius": 12,
+        "type": 1
+      }
+    },
+    "close_button": {
+      "visible": 1,
+      "event": {
+        "name": "e#headwear_pay_guide_popup#cancel#click",
+        "params": {}
+      }
+    },
+    "button": {
+      "text": "立即升级",
+      "color": "FFFFFF",
+      "size": 16,
+      "background": {
+        "border": {
+          "radius": 4
+        },
+        "gradient": {
+          "angle": 0,
+          "list": [
+            "4D94FF",
+            "6D86FF",
+            "5F65FF"
+          ]
+        }
+      },
+      "link": {
+        "Android": "https://meeting.tencent.com/v2/buy/vipcenter?mid=mandroid.g.ts.tstc",
+        "iOS": "https://meeting.tencent.com/v2/buy/vipcenter?mid=mios.g.ts.tstc",
+        "iPad": "https://meeting.tencent.com/v2/buy/vipcenter?mid=mpad.g.ts.tstc",
+        "Mac": "https://meeting.tencent.com/buy.html?open-vip=1&mid=mac.g.ts.tstc",
+        "Windows": "https://meeting.tencent.com/buy.html?open-vip=1&mid=win.g.ts.tstc"
+      },
+      "event": {
+        "name": "e#headwear_pay_guide_popup#upgrade#click",
+        "params": {}
+      }
+    },
+    "blings": [
+      {
+        "icon": "https://meeting-75420.picgzc.qpic.cn/launch_material/1660533163.png",
+        "text": "更有趣设计",
+        "color": "4E5461",
+        "size": 14,
+        "background": {
+          "color": "0D006FFF",
+          "border": {
+            "radius": 20
+          }
+        }
+      },
+      {
+        "icon": "https://meeting-75420.picgzc.qpic.cn/launch_material/1660533147.png",
+        "text": "更丰富素材",
+        "color": "4E5461",
+        "size": 14,
+        "background": {
+          "color": "0D006FFF",
+          "border": {
+            "radius": 20
+          }
+        }
+      }
+    ],
+    "event": {
+      "name": "e#headwear_pay_guide_popup#all#exposure",
+      "params": {}
+    }
+  },
+  "dialog_desktop": {
+    "title": {
+      "text": "想尝试更丰富的趣味头饰吗？",
+      "color": "000000",
+      "size": 16
+    },
+    "content": {
+      "text": "升级付费版，即可畅快使用所有有趣的头饰素材。快快尝试起来！",
+      "color": "7B818F",
+      "size": 12
+    },
+    "button_list": [
+      {
+        "type": 0,
+        "text": "取消",
+        "color": "000000",
+        "size": 14,
+        "background": {
+          "color": "FFFFFF",
+          "border": {
+            "size": 1,
+            "radius": 4,
+            "color": "D3D6DB"
+          }
+        },
+        "event": {
+          "name": "e#headwear_pay_guide_popup#cancel#click",
+          "params": {}
+        }
+      },
+      {
+        "type": 1,
+        "text": "立即升级",
+        "color": "FFFFFF",
+        "size": 14,
+        "background": {
+          "color": "006FFF",
+          "border": {
+            "radius": 4
+          }
+        },
+        "link": {
+          "Android": "https://meeting.tencent.com/v2/buy/vipcenter?mid=mandroid.g.ts.tstc",
+          "iOS": "https://meeting.tencent.com/v2/buy/vipcenter?mid=mios.g.ts.tstc",
+          "iPad": "https://meeting.tencent.com/v2/buy/vipcenter?mid=mpad.g.ts.tstc",
+          "Mac": "https://meeting.tencent.com/buy.html?open-vip=1&mid=mac.g.ts.tstc",
+          "Windows": "https://meeting.tencent.com/buy.html?open-vip=1&mid=win.g.ts.tstc"
+        },
+        "event": {
+          "name": "e#headwear_pay_guide_popup#upgrade#click",
+          "params": {}
+        }
+      }
+    ],
+    "event": {
+      "name": "e#headwear_pay_guide_popup#all#exposure",
+      "params": {}
+    }
+  }
+}

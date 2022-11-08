@@ -80,6 +80,11 @@
         "icon-selected":"image-setting-share-selected",
         "desc":"共享屏幕"
     },
+	"side_bar_option#shortcut_key":{
+        "icon-normal":"image-setting-keyboard-normal",
+        "icon-selected":"image-setting-keyboard-selected",
+        "desc":"快捷键"
+    },
     "side_bar_option_pc":{
         "bg-image-normal":"sidebar-bg-normal",
         "bg-image-selected":"sidebar-bg-select",
@@ -150,5 +155,10 @@
         "icon-normal":"image-setting-quality-monitor-normal-s",
         "icon-selected":"image-setting-quality-monitor-selected-s",
         "desc":"质量检测"
+    },
+	"side_bar_option_pc#shortcut_key":{
+        "icon-normal":"image-setting-keyboard-normal-s",
+        "icon-selected":"image-setting-keyboard-selected-s",
+        "desc":"快捷键"
     }
 }

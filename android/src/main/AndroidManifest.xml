@@ -1,6 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.tencent_wemeet">
+<!--    忽略电池优化,锁屏防止被杀死-->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <application tools:overrideLibrary="com.tencent.wemeet.tmsdk"/>
+   <!-- <application>
+        <service
+            android:name=".WeMeetAidlListenService"
+            android:enabled="true"
+            android:process=":wemeet" />
+        <service
+            android:name=".WeMeetAidlListenWebService"
+            android:enabled="true"
+            android:process=":wemeet.web" />
+    </application>-->
 
-<!--    <application tools:replace="android:label" />-->
 </manifest>

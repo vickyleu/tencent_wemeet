@@ -27,25 +27,16 @@ void DartInitParams::set_sdk_token(std::string_view value_arg) { sdk_token_ = va
 const std::string& DartInitParams::app_name() const { return app_name_; }
 void DartInitParams::set_app_name(std::string_view value_arg) { app_name_ = value_arg; }
 
-const std::string& DartInitParams::server_address() const { return server_address_; }
+const std::string* DartInitParams::server_address() const { return server_address_ ? &(*server_address_) : nullptr; }
+void DartInitParams::set_server_address(const std::string_view* value_arg) { server_address_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt; }
 void DartInitParams::set_server_address(std::string_view value_arg) { server_address_ = value_arg; }
 
-const std::string& DartInitParams::server_domain() const { return server_domain_; }
+const std::string* DartInitParams::server_domain() const { return server_domain_ ? &(*server_domain_) : nullptr; }
+void DartInitParams::set_server_domain(const std::string_view* value_arg) { server_domain_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt; }
 void DartInitParams::set_server_domain(std::string_view value_arg) { server_domain_ = value_arg; }
 
-const std::string& DartInitParams::env_name() const { return env_name_; }
-void DartInitParams::set_env_name(std::string_view value_arg) { env_name_ = value_arg; }
-
-const std::string& DartInitParams::env_id() const { return env_id_; }
-void DartInitParams::set_env_id(std::string_view value_arg) { env_id_ = value_arg; }
-
-const std::string& DartInitParams::env_domain() const { return env_domain_; }
-void DartInitParams::set_env_domain(std::string_view value_arg) { env_domain_ = value_arg; }
-
-bool DartInitParams::env_debug_mode() const { return env_debug_mode_; }
-void DartInitParams::set_env_debug_mode(bool value_arg) { env_debug_mode_ = value_arg; }
-
-const std::string& DartInitParams::prefer_language() const { return prefer_language_; }
+const std::string* DartInitParams::prefer_language() const { return prefer_language_ ? &(*prefer_language_) : nullptr; }
+void DartInitParams::set_prefer_language(const std::string_view* value_arg) { prefer_language_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt; }
 void DartInitParams::set_prefer_language(std::string_view value_arg) { prefer_language_ = value_arg; }
 
 flutter::EncodableMap DartInitParams::ToEncodableMap() const {
@@ -53,13 +44,9 @@ return flutter::EncodableMap{
     {flutter::EncodableValue("sdkId"), flutter::EncodableValue(sdk_id_)},
     {flutter::EncodableValue("sdkToken"), flutter::EncodableValue(sdk_token_)},
     {flutter::EncodableValue("appName"), flutter::EncodableValue(app_name_)},
-    {flutter::EncodableValue("serverAddress"), flutter::EncodableValue(server_address_)},
-    {flutter::EncodableValue("serverDomain"), flutter::EncodableValue(server_domain_)},
-    {flutter::EncodableValue("envName"), flutter::EncodableValue(env_name_)},
-    {flutter::EncodableValue("envId"), flutter::EncodableValue(env_id_)},
-    {flutter::EncodableValue("envDomain"), flutter::EncodableValue(env_domain_)},
-    {flutter::EncodableValue("envDebugMode"), flutter::EncodableValue(env_debug_mode_)},
-    {flutter::EncodableValue("preferLanguage"), flutter::EncodableValue(prefer_language_)},
+    {flutter::EncodableValue("serverAddress"), server_address_ ? flutter::EncodableValue(*server_address_) : flutter::EncodableValue()},
+    {flutter::EncodableValue("serverDomain"), server_domain_ ? flutter::EncodableValue(*server_domain_) : flutter::EncodableValue()},
+    {flutter::EncodableValue("preferLanguage"), prefer_language_ ? flutter::EncodableValue(*prefer_language_) : flutter::EncodableValue()},
   };
 }
 
@@ -86,25 +73,86 @@ DartInitParams::DartInitParams(flutter::EncodableMap map) {
   if (const std::string* pointer_server_domain = std::get_if<std::string>(&encodable_server_domain)) {
     server_domain_ = *pointer_server_domain;
   }
-  auto& encodable_env_name = map.at(flutter::EncodableValue("envName"));
-  if (const std::string* pointer_env_name = std::get_if<std::string>(&encodable_env_name)) {
-    env_name_ = *pointer_env_name;
-  }
-  auto& encodable_env_id = map.at(flutter::EncodableValue("envId"));
-  if (const std::string* pointer_env_id = std::get_if<std::string>(&encodable_env_id)) {
-    env_id_ = *pointer_env_id;
-  }
-  auto& encodable_env_domain = map.at(flutter::EncodableValue("envDomain"));
-  if (const std::string* pointer_env_domain = std::get_if<std::string>(&encodable_env_domain)) {
-    env_domain_ = *pointer_env_domain;
-  }
-  auto& encodable_env_debug_mode = map.at(flutter::EncodableValue("envDebugMode"));
-  if (const bool* pointer_env_debug_mode = std::get_if<bool>(&encodable_env_debug_mode)) {
-    env_debug_mode_ = *pointer_env_debug_mode;
-  }
   auto& encodable_prefer_language = map.at(flutter::EncodableValue("preferLanguage"));
   if (const std::string* pointer_prefer_language = std::get_if<std::string>(&encodable_prefer_language)) {
     prefer_language_ = *pointer_prefer_language;
+  }
+}
+
+
+// DartJoinParam
+
+const std::string& DartJoinParam::meeting_code() const { return meeting_code_; }
+void DartJoinParam::set_meeting_code(std::string_view value_arg) { meeting_code_ = value_arg; }
+
+const std::string& DartJoinParam::user_display_name() const { return user_display_name_; }
+void DartJoinParam::set_user_display_name(std::string_view value_arg) { user_display_name_ = value_arg; }
+
+const std::string& DartJoinParam::password() const { return password_; }
+void DartJoinParam::set_password(std::string_view value_arg) { password_ = value_arg; }
+
+const std::string& DartJoinParam::invite_url() const { return invite_url_; }
+void DartJoinParam::set_invite_url(std::string_view value_arg) { invite_url_ = value_arg; }
+
+bool DartJoinParam::mic_on() const { return mic_on_; }
+void DartJoinParam::set_mic_on(bool value_arg) { mic_on_ = value_arg; }
+
+bool DartJoinParam::camera_on() const { return camera_on_; }
+void DartJoinParam::set_camera_on(bool value_arg) { camera_on_ = value_arg; }
+
+bool DartJoinParam::speaker_on() const { return speaker_on_; }
+void DartJoinParam::set_speaker_on(bool value_arg) { speaker_on_ = value_arg; }
+
+bool DartJoinParam::face_beauty_on() const { return face_beauty_on_; }
+void DartJoinParam::set_face_beauty_on(bool value_arg) { face_beauty_on_ = value_arg; }
+
+flutter::EncodableMap DartJoinParam::ToEncodableMap() const {
+return flutter::EncodableMap{
+    {flutter::EncodableValue("meetingCode"), flutter::EncodableValue(meeting_code_)},
+    {flutter::EncodableValue("userDisplayName"), flutter::EncodableValue(user_display_name_)},
+    {flutter::EncodableValue("password"), flutter::EncodableValue(password_)},
+    {flutter::EncodableValue("inviteUrl"), flutter::EncodableValue(invite_url_)},
+    {flutter::EncodableValue("micOn"), flutter::EncodableValue(mic_on_)},
+    {flutter::EncodableValue("cameraOn"), flutter::EncodableValue(camera_on_)},
+    {flutter::EncodableValue("speakerOn"), flutter::EncodableValue(speaker_on_)},
+    {flutter::EncodableValue("faceBeautyOn"), flutter::EncodableValue(face_beauty_on_)},
+  };
+}
+
+DartJoinParam::DartJoinParam() {}
+
+DartJoinParam::DartJoinParam(flutter::EncodableMap map) {
+  auto& encodable_meeting_code = map.at(flutter::EncodableValue("meetingCode"));
+  if (const std::string* pointer_meeting_code = std::get_if<std::string>(&encodable_meeting_code)) {
+    meeting_code_ = *pointer_meeting_code;
+  }
+  auto& encodable_user_display_name = map.at(flutter::EncodableValue("userDisplayName"));
+  if (const std::string* pointer_user_display_name = std::get_if<std::string>(&encodable_user_display_name)) {
+    user_display_name_ = *pointer_user_display_name;
+  }
+  auto& encodable_password = map.at(flutter::EncodableValue("password"));
+  if (const std::string* pointer_password = std::get_if<std::string>(&encodable_password)) {
+    password_ = *pointer_password;
+  }
+  auto& encodable_invite_url = map.at(flutter::EncodableValue("inviteUrl"));
+  if (const std::string* pointer_invite_url = std::get_if<std::string>(&encodable_invite_url)) {
+    invite_url_ = *pointer_invite_url;
+  }
+  auto& encodable_mic_on = map.at(flutter::EncodableValue("micOn"));
+  if (const bool* pointer_mic_on = std::get_if<bool>(&encodable_mic_on)) {
+    mic_on_ = *pointer_mic_on;
+  }
+  auto& encodable_camera_on = map.at(flutter::EncodableValue("cameraOn"));
+  if (const bool* pointer_camera_on = std::get_if<bool>(&encodable_camera_on)) {
+    camera_on_ = *pointer_camera_on;
+  }
+  auto& encodable_speaker_on = map.at(flutter::EncodableValue("speakerOn"));
+  if (const bool* pointer_speaker_on = std::get_if<bool>(&encodable_speaker_on)) {
+    speaker_on_ = *pointer_speaker_on;
+  }
+  auto& encodable_face_beauty_on = map.at(flutter::EncodableValue("faceBeautyOn"));
+  if (const bool* pointer_face_beauty_on = std::get_if<bool>(&encodable_face_beauty_on)) {
+    face_beauty_on_ = *pointer_face_beauty_on;
   }
 }
 
@@ -113,6 +161,9 @@ flutter::EncodableValue WeMeetApiCodecSerializer::ReadValueOfType(uint8_t type, 
   switch (type) {
     case 128:    
       return flutter::CustomEncodableValue(DartInitParams(std::get<flutter::EncodableMap>(ReadValue(stream))));
+    
+    case 129:    
+      return flutter::CustomEncodableValue(DartJoinParam(std::get<flutter::EncodableMap>(ReadValue(stream))));
     
     default:    
       return flutter::StandardCodecSerializer::ReadValueOfType(type, stream);
@@ -124,6 +175,11 @@ void WeMeetApiCodecSerializer::WriteValue(const flutter::EncodableValue& value, 
     if (custom_value->type() == typeid(DartInitParams)) {
       stream->WriteByte(128);
       WriteValue(std::any_cast<DartInitParams>(*custom_value).ToEncodableMap(), stream);
+      return;
+    }
+    if (custom_value->type() == typeid(DartJoinParam)) {
+      stream->WriteByte(129);
+      WriteValue(std::any_cast<DartJoinParam>(*custom_value).ToEncodableMap(), stream);
       return;
     }
   }
@@ -139,7 +195,7 @@ const flutter::StandardMessageCodec& WeMeetApi::GetCodec() {
 void WeMeetApi::SetUp(flutter::BinaryMessenger* binary_messenger, WeMeetApi* api) {
   {
     auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
-        binary_messenger, "dev.flutter.pigeon.WeMeetApi.init", &GetCodec());
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.initWeMeet", &GetCodec());
     if (api != nullptr) {
       channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
         flutter::EncodableMap wrapped;
@@ -152,7 +208,7 @@ void WeMeetApi::SetUp(flutter::BinaryMessenger* binary_messenger, WeMeetApi* api
             return;
           }
           const auto& param_arg = std::any_cast<const DartInitParams&>(std::get<flutter::CustomEncodableValue>(encodable_param_arg));
-          std::optional<FlutterError> output = api->Init(param_arg);
+          std::optional<FlutterError> output = api->InitWeMeet(param_arg);
           if (output.has_value()) {
             wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
           } else {
@@ -170,16 +226,384 @@ void WeMeetApi::SetUp(flutter::BinaryMessenger* binary_messenger, WeMeetApi* api
   }
   {
     auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
-        binary_messenger, "dev.flutter.pigeon.WeMeetApi.release", &GetCodec());
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.jumpToHistory", &GetCodec());
     if (api != nullptr) {
       channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
         flutter::EncodableMap wrapped;
         try {
-          std::optional<FlutterError> output = api->Release();
+          std::optional<FlutterError> output = api->JumpToHistory();
           if (output.has_value()) {
             wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
           } else {
             wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue());
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.notifyPrivacyGranted", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          std::optional<FlutterError> output = api->NotifyPrivacyGranted();
+          if (output.has_value()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue());
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.isInitialized", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          ErrorOr<bool> output = api->IsInitialized();
+          if (output.has_error()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.error()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue(std::move(output).TakeValue()));
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.loginWeMeet", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          const auto& args = std::get<flutter::EncodableList>(message);
+          const auto& encodable_sso_url_arg = args.at(0);
+          if (encodable_sso_url_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("sso_url_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& sso_url_arg = std::get<std::string>(encodable_sso_url_arg);
+          std::optional<FlutterError> output = api->LoginWeMeet(sso_url_arg);
+          if (output.has_value()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue());
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.isLoggedIn", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          ErrorOr<bool> output = api->IsLoggedIn();
+          if (output.has_error()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.error()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue(std::move(output).TakeValue()));
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.joinMeeting", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          const auto& args = std::get<flutter::EncodableList>(message);
+          const auto& encodable_join_param_arg = args.at(0);
+          if (encodable_join_param_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("join_param_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& join_param_arg = std::any_cast<const DartJoinParam&>(std::get<flutter::CustomEncodableValue>(encodable_join_param_arg));
+          std::optional<FlutterError> output = api->JoinMeeting(join_param_arg);
+          if (output.has_value()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue());
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.leaveMeeting", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          std::optional<FlutterError> output = api->LeaveMeeting();
+          if (output.has_value()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue());
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.releaseWeMeet", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          std::optional<FlutterError> output = api->ReleaseWeMeet();
+          if (output.has_value()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue());
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.logout", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          std::optional<FlutterError> output = api->Logout();
+          if (output.has_value()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue());
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.refreshSDKToken", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          const auto& args = std::get<flutter::EncodableList>(message);
+          const auto& encodable_new_sdk_token_arg = args.at(0);
+          if (encodable_new_sdk_token_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("new_sdk_token_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& new_sdk_token_arg = std::get<std::string>(encodable_new_sdk_token_arg);
+          ErrorOr<int64_t> output = api->RefreshSDKToken(new_sdk_token_arg);
+          if (output.has_error()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.error()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue(std::move(output).TakeValue()));
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.showMeetingDetailView", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          const auto& args = std::get<flutter::EncodableList>(message);
+          const auto& encodable_meeting_id_arg = args.at(0);
+          if (encodable_meeting_id_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("meeting_id_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& meeting_id_arg = std::get<std::string>(encodable_meeting_id_arg);
+          const auto& encodable_current_sub_meeting_id_arg = args.at(1);
+          if (encodable_current_sub_meeting_id_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("current_sub_meeting_id_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& current_sub_meeting_id_arg = std::get<std::string>(encodable_current_sub_meeting_id_arg);
+          const auto& encodable_start_time_arg = args.at(2);
+          if (encodable_start_time_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("start_time_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& start_time_arg = std::get<std::string>(encodable_start_time_arg);
+          const auto& encodable_is_history_arg = args.at(3);
+          if (encodable_is_history_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("is_history_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& is_history_arg = std::get<bool>(encodable_is_history_arg);
+          std::optional<FlutterError> output = api->ShowMeetingDetailView(meeting_id_arg, current_sub_meeting_id_arg, start_time_arg, is_history_arg);
+          if (output.has_value()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue());
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.jumpUrlWithLoginStatus", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          const auto& args = std::get<flutter::EncodableList>(message);
+          const auto& encodable_target_url_arg = args.at(0);
+          if (encodable_target_url_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("target_url_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& target_url_arg = std::get<std::string>(encodable_target_url_arg);
+          std::optional<FlutterError> output = api->JumpUrlWithLoginStatus(target_url_arg);
+          if (output.has_value()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue());
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.getUrlWithLoginStatus", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          const auto& args = std::get<flutter::EncodableList>(message);
+          const auto& encodable_target_url_arg = args.at(0);
+          if (encodable_target_url_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("target_url_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& target_url_arg = std::get<std::string>(encodable_target_url_arg);
+          ErrorOr<std::string> output = api->GetUrlWithLoginStatus(target_url_arg);
+          if (output.has_error()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.error()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue(std::move(output).TakeValue()));
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.getCurrentSDKToken", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          ErrorOr<std::string> output = api->GetCurrentSDKToken();
+          if (output.has_error()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.error()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue(std::move(output).TakeValue()));
           }
         }
         catch (const std::exception& exception) {
@@ -208,4 +632,77 @@ flutter::EncodableMap WeMeetApi::WrapError(const FlutterError& error) {
   });
 }
 
+// Generated class from Pigeon that represents Flutter messages that can be called from C++.
+WeMeetHostApi::WeMeetHostApi(flutter::BinaryMessenger* binary_messenger) {
+  this->binary_messenger_ = binary_messenger;
+}
+
+const flutter::StandardMessageCodec& WeMeetHostApi::GetCodec() {
+  return flutter::StandardMessageCodec::GetInstance(&flutter::StandardCodecSerializer::GetInstance());
+}
+
+void WeMeetHostApi::sdkTokenInvalid(std::function<void(void)>&& callback) {
+  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+      binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.sdkTokenInvalid", &GetCodec());
+  channel->Send(flutter::EncodableValue(), [callback](const uint8_t* reply, size_t reply_size) {
+    callback();
+  });
+}
+void WeMeetHostApi::sdkInitSuccess(std::function<void(void)>&& callback) {
+  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+      binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.sdkInitSuccess", &GetCodec());
+  channel->Send(flutter::EncodableValue(), [callback](const uint8_t* reply, size_t reply_size) {
+    callback();
+  });
+}
+void WeMeetHostApi::loginFailed(int64_t code_arg, std::optional<std::string> msg_arg, std::function<void(void)>&& callback) {
+  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+      binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.loginFailed", &GetCodec());
+  channel->Send(flutter::EncodableList { flutter::CustomEncodableValue(code_arg), flutter::CustomEncodableValue(msg_arg) }, [callback](const uint8_t* reply, size_t reply_size) {
+    callback();
+  });
+}
+void WeMeetHostApi::loginSuccess(std::function<void(void)>&& callback) {
+  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+      binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.loginSuccess", &GetCodec());
+  channel->Send(flutter::EncodableValue(), [callback](const uint8_t* reply, size_t reply_size) {
+    callback();
+  });
+}
+void WeMeetHostApi::onLeaveMeeting(int64_t type_arg, int64_t code_arg, const std::string& msg_arg, const std::string& meeting_code_arg, std::function<void(void)>&& callback) {
+  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+      binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting", &GetCodec());
+  channel->Send(flutter::EncodableList { flutter::CustomEncodableValue(type_arg), flutter::CustomEncodableValue(code_arg), flutter::CustomEncodableValue(msg_arg), flutter::CustomEncodableValue(meeting_code_arg) }, [callback](const uint8_t* reply, size_t reply_size) {
+    callback();
+  });
+}
+void WeMeetHostApi::sdkInitFailed(std::function<void(void)>&& callback) {
+  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+      binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.sdkInitFailed", &GetCodec());
+  channel->Send(flutter::EncodableValue(), [callback](const uint8_t* reply, size_t reply_size) {
+    callback();
+  });
+}
+// Generated class from Pigeon that represents Flutter messages that can be called from C++.
+WeMeetAndroidGrantedHostApi::WeMeetAndroidGrantedHostApi(flutter::BinaryMessenger* binary_messenger) {
+  this->binary_messenger_ = binary_messenger;
+}
+
+const flutter::StandardMessageCodec& WeMeetAndroidGrantedHostApi::GetCodec() {
+  return flutter::StandardMessageCodec::GetInstance(&flutter::StandardCodecSerializer::GetInstance());
+}
+
+void WeMeetAndroidGrantedHostApi::initPrivacyNeedGrant(std::function<void(std::optional<bool>)>&& callback) {
+  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+      binary_messenger_, "dev.flutter.pigeon.WeMeetAndroidGrantedHostApi.initPrivacyNeedGrant", &GetCodec());
+  channel->Send(flutter::EncodableValue(), [callback](const uint8_t* reply, size_t reply_size) {
+    std::unique_ptr<flutter::EncodableValue> decoded_reply = GetCodec().DecodeMessage(reply, reply_size);
+    flutter::EncodableValue args = *(flutter::EncodableValue*)(decoded_reply.release());
+    std::optional<bool> output{};
+    if (const bool* pointer_output = std::get_if<bool>(&args)) {
+      output = *pointer_output;
+    }
+    callback(output);
+  });
+}
 }  // namespace pigeon

@@ -13,30 +13,53 @@ import FlutterMacOS
 
 /// Generated class from Pigeon.
 
+/// 错误码
+enum DartErrorCode: Int {
+  case success = 0
+  case serverConfigFail = -1001
+  case invalidAuthCode = -1002
+  case logoutInMeeting = -1003
+  case unknown = -1005
+  case userNotAuthorized = -1006
+  case userInMeeting = -1007
+  case invalidParam = -1008
+  case invalidMeetingCode = -1009
+  case invalidNickname = -1010
+  case duplicateInitCall = -1011
+  case accountAlreadyLogin = -1012
+  case sdkNotInitialized = -1013
+  case syncCallTimeout = -1014
+  case notInMeeting = -1015
+  case cancelJoin = -1016
+  case isLogining = -1017
+  case loginNetError = -1018
+  case tokenVerifyFailed = -1019
+  case childProcessCrash = -1020
+  case multiAccountLoginConflict = -1021
+  case joinMeetingServiceFailed = -1022
+  case invalidJsonString = -1024
+  case proxySetFailed = -1025
+}
+
 ///Generated class from Pigeon that represents data sent in messages.
 struct DartInitParams {
+  /// sdk的id
   var sdkId: String
+  /// sdk的token,不是登录的idToken
   var sdkToken: String
+  /// 应用名称
   var appName: String
-  var serverAddress: String
-  var serverDomain: String
-  var envName: String
-  var envId: String
-  var envDomain: String
-  var envDebugMode: Bool
-  var preferLanguage: String
+  var serverAddress: String? = nil
+  var serverDomain: String? = nil
+  var preferLanguage: String? = nil
 
   static func fromMap(_ map: [String: Any?]) -> DartInitParams? {
     let sdkId = map["sdkId"] as! String
     let sdkToken = map["sdkToken"] as! String
     let appName = map["appName"] as! String
-    let serverAddress = map["serverAddress"] as! String
-    let serverDomain = map["serverDomain"] as! String
-    let envName = map["envName"] as! String
-    let envId = map["envId"] as! String
-    let envDomain = map["envDomain"] as! String
-    let envDebugMode = map["envDebugMode"] as! Bool
-    let preferLanguage = map["preferLanguage"] as! String
+    let serverAddress = map["serverAddress"] as? String 
+    let serverDomain = map["serverDomain"] as? String 
+    let preferLanguage = map["preferLanguage"] as? String 
 
     return DartInitParams(
       sdkId: sdkId,
@@ -44,10 +67,6 @@ struct DartInitParams {
       appName: appName,
       serverAddress: serverAddress,
       serverDomain: serverDomain,
-      envName: envName,
-      envId: envId,
-      envDomain: envDomain,
-      envDebugMode: envDebugMode,
       preferLanguage: preferLanguage
     )
   }
@@ -58,11 +77,61 @@ struct DartInitParams {
       "appName": appName,
       "serverAddress": serverAddress,
       "serverDomain": serverDomain,
-      "envName": envName,
-      "envId": envId,
-      "envDomain": envDomain,
-      "envDebugMode": envDebugMode,
       "preferLanguage": preferLanguage
+    ]
+  }
+}
+
+///Generated class from Pigeon that represents data sent in messages.
+struct DartJoinParam {
+  /// 会议号
+  var meetingCode: String
+  /// 用户名
+  var userDisplayName: String
+  /// 会议密码
+  var password: String
+  /// 邀请链接
+  var inviteUrl: String
+  /// 是否开启麦克风
+  var micOn: Bool
+  /// 是否开启摄像头
+  var cameraOn: Bool
+  /// 是否开启扬声器
+  var speakerOn: Bool
+  /// 是否开启美颜
+  var faceBeautyOn: Bool
+
+  static func fromMap(_ map: [String: Any?]) -> DartJoinParam? {
+    let meetingCode = map["meetingCode"] as! String
+    let userDisplayName = map["userDisplayName"] as! String
+    let password = map["password"] as! String
+    let inviteUrl = map["inviteUrl"] as! String
+    let micOn = map["micOn"] as! Bool
+    let cameraOn = map["cameraOn"] as! Bool
+    let speakerOn = map["speakerOn"] as! Bool
+    let faceBeautyOn = map["faceBeautyOn"] as! Bool
+
+    return DartJoinParam(
+      meetingCode: meetingCode,
+      userDisplayName: userDisplayName,
+      password: password,
+      inviteUrl: inviteUrl,
+      micOn: micOn,
+      cameraOn: cameraOn,
+      speakerOn: speakerOn,
+      faceBeautyOn: faceBeautyOn
+    )
+  }
+  func toMap() -> [String: Any?] {
+    return [
+      "meetingCode": meetingCode,
+      "userDisplayName": userDisplayName,
+      "password": password,
+      "inviteUrl": inviteUrl,
+      "micOn": micOn,
+      "cameraOn": cameraOn,
+      "speakerOn": speakerOn,
+      "faceBeautyOn": faceBeautyOn
     ]
   }
 }
@@ -71,6 +140,8 @@ private class WeMeetApiCodecReader: FlutterStandardReader {
     switch type {
       case 128:
         return DartInitParams.fromMap(self.readValue() as! [String: Any])      
+      case 129:
+        return DartJoinParam.fromMap(self.readValue() as! [String: Any])      
       default:
         return super.readValue(ofType: type)
       
@@ -81,6 +152,9 @@ private class WeMeetApiCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
     if let value = value as? DartInitParams {
       super.writeByte(128)
+      super.writeValue(value.toMap())
+    } else if let value = value as? DartJoinParam {
+      super.writeByte(129)
       super.writeValue(value.toMap())
     } else {
       super.writeValue(value)
@@ -104,8 +178,43 @@ class WeMeetApiCodec: FlutterStandardMessageCodec {
 
 ///Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol WeMeetApi {
-  func init(param: DartInitParams)
-  func release()
+  /// 初始化SDK并设置回调代理，通过SDKCallback.onSDKInitializeResult回调来返回初始化结果。
+  /// 初始化成功后，重复调用无效。
+  /// 除getSDKVersion之外，在调用的所有接口函数之前，必须第一个先调用该函数。
+  /// 按照个保法要求，App需要在用户同意了隐私协议之后才可以调用该初始化函数。
+  func initWeMeet(param: DartInitParams)
+  /// 跳转历史会议界面
+  func jumpToHistory()
+  /// 通知android隐私协议已授权
+  func notifyPrivacyGranted()
+  /// 判断是否已初始化SDK成功
+  func isInitialized() -> Bool
+  /// 发起登录请求，登录结果会在回调AuthenticationCallback.onLogin返回。
+  func loginWeMeet(ssoUrl: String)
+  /// 判断是否已登录
+  func isLoggedIn() -> Bool
+  /// 发起入会请求，结果会在回调PreMeetingCallback.onJoinMeeting返回。登录完成后，才可调用。
+  /// 如果想使用JoinParam参数中缺省的默认值，请使用joinMeetingByJSON函数
+  func joinMeeting(joinParam: DartJoinParam)
+  /// 发起离会请求，结果会在回调InMeetingCallback.onLeaveMeeting返回
+  func leaveMeeting()
+  /// 释放资源
+  func releaseWeMeet()
+  /// 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。
+  func logout()
+  /// 更新SDK Token，替换掉过期或快过期的SDK Token。
+  func refreshSDKToken(newSdkToken: String) -> Int32
+  /// 显示某一个具体会议的界面。
+  /// 登陆完成后，才可调用。
+  /// 如果输入错误的meeting_id或者current_sub_meeting_id，会议页面中有的字段则会显示’-‘；
+  /// 如果输入错误的start_time可能导致页面加载失败，设置准确的start_time参数接口执行效率更高；
+  func showMeetingDetailView(meetingId: String, currentSubMeetingId: String, startTime: String, isHistory: Bool)
+  /// 带登录态去打开目标地址，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+  func jumpUrlWithLoginStatus(targetUrl: String)
+  /// 获取一个带登录态的URL链接，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+  func getUrlWithLoginStatus(targetUrl: String) -> String
+  /// 获取当前SDK Token的值。
+  func getCurrentSDKToken() -> String
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -114,25 +223,244 @@ class WeMeetApiSetup {
   static var codec: FlutterStandardMessageCodec { WeMeetApiCodec.shared }
   /// Sets up an instance of `WeMeetApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: WeMeetApi?) {
-    let initChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.init", binaryMessenger: binaryMessenger, codec: codec)
+    /// 初始化SDK并设置回调代理，通过SDKCallback.onSDKInitializeResult回调来返回初始化结果。
+    /// 初始化成功后，重复调用无效。
+    /// 除getSDKVersion之外，在调用的所有接口函数之前，必须第一个先调用该函数。
+    /// 按照个保法要求，App需要在用户同意了隐私协议之后才可以调用该初始化函数。
+    let initWeMeetChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.initWeMeet", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      initChannel.setMessageHandler { message, reply in
+      initWeMeetChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let paramArg = args[0] as! DartInitParams
-        api.init(param: paramArg)
+        api.initWeMeet(param: paramArg)
         reply(nil)
       }
     } else {
-      initChannel.setMessageHandler(nil)
+      initWeMeetChannel.setMessageHandler(nil)
     }
-    let releaseChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.release", binaryMessenger: binaryMessenger, codec: codec)
+    /// 跳转历史会议界面
+    let jumpToHistoryChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.jumpToHistory", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      releaseChannel.setMessageHandler { _, reply in
-        api.release()
+      jumpToHistoryChannel.setMessageHandler { _, reply in
+        api.jumpToHistory()
         reply(nil)
       }
     } else {
-      releaseChannel.setMessageHandler(nil)
+      jumpToHistoryChannel.setMessageHandler(nil)
+    }
+    /// 通知android隐私协议已授权
+    let notifyPrivacyGrantedChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.notifyPrivacyGranted", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      notifyPrivacyGrantedChannel.setMessageHandler { _, reply in
+        api.notifyPrivacyGranted()
+        reply(nil)
+      }
+    } else {
+      notifyPrivacyGrantedChannel.setMessageHandler(nil)
+    }
+    /// 判断是否已初始化SDK成功
+    let isInitializedChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.isInitialized", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      isInitializedChannel.setMessageHandler { _, reply in
+        let result = api.isInitialized()
+        reply(wrapResult(result))
+      }
+    } else {
+      isInitializedChannel.setMessageHandler(nil)
+    }
+    /// 发起登录请求，登录结果会在回调AuthenticationCallback.onLogin返回。
+    let loginWeMeetChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.loginWeMeet", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      loginWeMeetChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let ssoUrlArg = args[0] as! String
+        api.loginWeMeet(ssoUrl: ssoUrlArg)
+        reply(nil)
+      }
+    } else {
+      loginWeMeetChannel.setMessageHandler(nil)
+    }
+    /// 判断是否已登录
+    let isLoggedInChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.isLoggedIn", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      isLoggedInChannel.setMessageHandler { _, reply in
+        let result = api.isLoggedIn()
+        reply(wrapResult(result))
+      }
+    } else {
+      isLoggedInChannel.setMessageHandler(nil)
+    }
+    /// 发起入会请求，结果会在回调PreMeetingCallback.onJoinMeeting返回。登录完成后，才可调用。
+    /// 如果想使用JoinParam参数中缺省的默认值，请使用joinMeetingByJSON函数
+    let joinMeetingChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.joinMeeting", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      joinMeetingChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let joinParamArg = args[0] as! DartJoinParam
+        api.joinMeeting(joinParam: joinParamArg)
+        reply(nil)
+      }
+    } else {
+      joinMeetingChannel.setMessageHandler(nil)
+    }
+    /// 发起离会请求，结果会在回调InMeetingCallback.onLeaveMeeting返回
+    let leaveMeetingChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.leaveMeeting", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      leaveMeetingChannel.setMessageHandler { _, reply in
+        api.leaveMeeting()
+        reply(nil)
+      }
+    } else {
+      leaveMeetingChannel.setMessageHandler(nil)
+    }
+    /// 释放资源
+    let releaseWeMeetChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.releaseWeMeet", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      releaseWeMeetChannel.setMessageHandler { _, reply in
+        api.releaseWeMeet()
+        reply(nil)
+      }
+    } else {
+      releaseWeMeetChannel.setMessageHandler(nil)
+    }
+    /// 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。
+    let logoutChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.logout", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      logoutChannel.setMessageHandler { _, reply in
+        api.logout()
+        reply(nil)
+      }
+    } else {
+      logoutChannel.setMessageHandler(nil)
+    }
+    /// 更新SDK Token，替换掉过期或快过期的SDK Token。
+    let refreshSDKTokenChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.refreshSDKToken", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      refreshSDKTokenChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let newSdkTokenArg = args[0] as! String
+        let result = api.refreshSDKToken(newSdkToken: newSdkTokenArg)
+        reply(wrapResult(result))
+      }
+    } else {
+      refreshSDKTokenChannel.setMessageHandler(nil)
+    }
+    /// 显示某一个具体会议的界面。
+    /// 登陆完成后，才可调用。
+    /// 如果输入错误的meeting_id或者current_sub_meeting_id，会议页面中有的字段则会显示’-‘；
+    /// 如果输入错误的start_time可能导致页面加载失败，设置准确的start_time参数接口执行效率更高；
+    let showMeetingDetailViewChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.showMeetingDetailView", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      showMeetingDetailViewChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let meetingIdArg = args[0] as! String
+        let currentSubMeetingIdArg = args[1] as! String
+        let startTimeArg = args[2] as! String
+        let isHistoryArg = args[3] as! Bool
+        api.showMeetingDetailView(meetingId: meetingIdArg, currentSubMeetingId: currentSubMeetingIdArg, startTime: startTimeArg, isHistory: isHistoryArg)
+        reply(nil)
+      }
+    } else {
+      showMeetingDetailViewChannel.setMessageHandler(nil)
+    }
+    /// 带登录态去打开目标地址，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+    let jumpUrlWithLoginStatusChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.jumpUrlWithLoginStatus", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      jumpUrlWithLoginStatusChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let targetUrlArg = args[0] as! String
+        api.jumpUrlWithLoginStatus(targetUrl: targetUrlArg)
+        reply(nil)
+      }
+    } else {
+      jumpUrlWithLoginStatusChannel.setMessageHandler(nil)
+    }
+    /// 获取一个带登录态的URL链接，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+    let getUrlWithLoginStatusChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.getUrlWithLoginStatus", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getUrlWithLoginStatusChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let targetUrlArg = args[0] as! String
+        let result = api.getUrlWithLoginStatus(targetUrl: targetUrlArg)
+        reply(wrapResult(result))
+      }
+    } else {
+      getUrlWithLoginStatusChannel.setMessageHandler(nil)
+    }
+    /// 获取当前SDK Token的值。
+    let getCurrentSDKTokenChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.getCurrentSDKToken", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getCurrentSDKTokenChannel.setMessageHandler { _, reply in
+        let result = api.getCurrentSDKToken()
+        reply(wrapResult(result))
+      }
+    } else {
+      getCurrentSDKTokenChannel.setMessageHandler(nil)
+    }
+  }
+}
+///Generated class from Pigeon that represents Flutter messages that can be called from Swift.
+class WeMeetHostApi {
+  private let binaryMessenger: FlutterBinaryMessenger
+  init(binaryMessenger: FlutterBinaryMessenger){
+    self.binaryMessenger = binaryMessenger
+  }
+  /// 当前登录失效了
+  func sdkTokenInvalid(completion: @escaping () -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.sdkTokenInvalid", binaryMessenger: binaryMessenger)
+    channel.sendMessage(nil) { _ in
+      completion()
+    }
+  }
+  /// 非阻塞通知sdk初始化成功
+  func sdkInitSuccess(completion: @escaping () -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.sdkInitSuccess", binaryMessenger: binaryMessenger)
+    channel.sendMessage(nil) { _ in
+      completion()
+    }
+  }
+  ///登录失败了
+  func loginFailed(code codeArg: Int32, msg msgArg: String?, completion: @escaping () -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.loginFailed", binaryMessenger: binaryMessenger)
+    channel.sendMessage([codeArg, msgArg]) { _ in
+      completion()
+    }
+  }
+  /// 非住宿通知登录成功
+  func loginSuccess(completion: @escaping () -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.loginSuccess", binaryMessenger: binaryMessenger)
+    channel.sendMessage(nil) { _ in
+      completion()
+    }
+  }
+  /// 离开会议： 离会类型，1：用户自身操作离会；2：被踢出会议；3：会议结束
+  /// 结果码：0表示成功；其他值表示失败
+  func onLeaveMeeting(type typeArg: Int32, code codeArg: Int32, msg msgArg: String, meetingCode meetingCodeArg: String, completion: @escaping () -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting", binaryMessenger: binaryMessenger)
+    channel.sendMessage([typeArg, codeArg, msgArg, meetingCodeArg]) { _ in
+      completion()
+    }
+  }
+  /// 非阻塞通知sdk初始化失败
+  func sdkInitFailed(completion: @escaping () -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.sdkInitFailed", binaryMessenger: binaryMessenger)
+    channel.sendMessage(nil) { _ in
+      completion()
+    }
+  }
+}
+///Generated class from Pigeon that represents Flutter messages that can be called from Swift.
+class WeMeetAndroidGrantedHostApi {
+  private let binaryMessenger: FlutterBinaryMessenger
+  init(binaryMessenger: FlutterBinaryMessenger){
+    self.binaryMessenger = binaryMessenger
+  }
+  /// 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
+  func initPrivacyNeedGrant(completion: @escaping (Bool?) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetAndroidGrantedHostApi.initPrivacyNeedGrant", binaryMessenger: binaryMessenger)
+    channel.sendMessage(nil) { response in
+      let result = response as? Bool
+      completion(result)
     }
   }
 }
