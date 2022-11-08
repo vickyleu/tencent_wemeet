@@ -139,7 +139,7 @@ const flutter::StandardMessageCodec& WeMeetApi::GetCodec() {
 void WeMeetApi::SetUp(flutter::BinaryMessenger* binary_messenger, WeMeetApi* api) {
   {
     auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
-        binary_messenger, "dev.flutter.pigeon.WeMeetApi.init", &GetCodec());
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.initWeMeet", &GetCodec());
     if (api != nullptr) {
       channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
         flutter::EncodableMap wrapped;
@@ -152,7 +152,7 @@ void WeMeetApi::SetUp(flutter::BinaryMessenger* binary_messenger, WeMeetApi* api
             return;
           }
           const auto& param_arg = std::any_cast<const DartInitParams&>(std::get<flutter::CustomEncodableValue>(encodable_param_arg));
-          std::optional<FlutterError> output = api->Init(param_arg);
+          std::optional<FlutterError> output = api->InitWeMeet(param_arg);
           if (output.has_value()) {
             wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
           } else {
@@ -170,12 +170,12 @@ void WeMeetApi::SetUp(flutter::BinaryMessenger* binary_messenger, WeMeetApi* api
   }
   {
     auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
-        binary_messenger, "dev.flutter.pigeon.WeMeetApi.release", &GetCodec());
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.releaseWeMeet", &GetCodec());
     if (api != nullptr) {
       channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
         flutter::EncodableMap wrapped;
         try {
-          std::optional<FlutterError> output = api->Release();
+          std::optional<FlutterError> output = api->ReleaseWeMeet();
           if (output.has_value()) {
             wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
           } else {

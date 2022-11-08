@@ -134,8 +134,8 @@ class WeMeetApi {
   WeMeetApi(const WeMeetApi&) = delete;
   WeMeetApi& operator=(const WeMeetApi&) = delete;
   virtual ~WeMeetApi() { };
-  virtual std::optional<FlutterError> Init(const DartInitParams& param) = 0;
-  virtual std::optional<FlutterError> Release() = 0;
+  virtual std::optional<FlutterError> InitWeMeet(const DartInitParams& param) = 0;
+  virtual std::optional<FlutterError> ReleaseWeMeet() = 0;
 
   // The codec used by WeMeetApi.
   static const flutter::StandardMessageCodec& GetCodec();

@@ -84,8 +84,8 @@ private object WeMeetApiCodec : StandardMessageCodec() {
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface WeMeetApi {
-  fun init(param: DartInitParams)
-  fun release()
+  fun initWeMeet(param: DartInitParams)
+  fun releaseWeMeet()
 
   companion object {
     /** The codec used by WeMeetApi. */
@@ -96,14 +96,14 @@ interface WeMeetApi {
     @Suppress("UNCHECKED_CAST")
     fun setUp(binaryMessenger: BinaryMessenger, api: WeMeetApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.init", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.initWeMeet", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val wrapped = hashMapOf<String, Any?>()
             try {
               val args = message as List<Any?>
               val paramArg = args[0] as DartInitParams
-              api.init(paramArg)
+              api.initWeMeet(paramArg)
               wrapped["result"] = null
             } catch (exception: Error) {
               wrapped["error"] = wrapError(exception)
@@ -115,12 +115,12 @@ interface WeMeetApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.release", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.releaseWeMeet", codec)
         if (api != null) {
           channel.setMessageHandler { _, reply ->
             val wrapped = hashMapOf<String, Any?>()
             try {
-              api.release()
+              api.releaseWeMeet()
               wrapped["result"] = null
             } catch (exception: Error) {
               wrapped["error"] = wrapError(exception)

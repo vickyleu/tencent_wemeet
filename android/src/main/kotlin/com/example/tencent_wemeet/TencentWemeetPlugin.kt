@@ -10,31 +10,22 @@ import io.flutter.plugins.DartInitParams
 import io.flutter.plugins.WeMeetApi
 
 /** TencentWemeetPlugin */
-class TencentWemeetPlugin : FlutterPlugin, ActivityAware, DefaultLifecycleObserver {
+class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi {
 
-    private lateinit var flutterApi: MyApi
-
-    private class MyApi : WeMeetApi {
-        override fun init(param: DartInitParams) {
-
-            WeMeetController.init(param)
-        }
-
-        override fun release() {
-
-        }
-    }
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        flutterApi = MyApi()
-        WeMeetApi.setUp(flutterPluginBinding.binaryMessenger, flutterApi)
+        WeMeetApi.setUp(flutterPluginBinding.binaryMessenger, this)
+    }
+    override fun initWeMeet(param: DartInitParams) {
+        WeMeetController.init(param.toKotlin())
     }
 
+    override fun releaseWeMeet() {
+        WeMeetController.deAttach()
+    }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-        if (::flutterApi.isInitialized) {
-            flutterApi.release()
-        }
+            releaseWeMeet()
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
@@ -53,14 +44,12 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, DefaultLifecycleObserv
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
         onAttachedToActivity(binding)
     }
-
-
 }
 
 private fun DartInitParams.toKotlin(): InitParams {
     return InitParams.Builder()
         .setPreferLanguage(preferLanguage)
-        .setPrivateParams(serverDomain)
+        .setPrivateParams(serverAddress,serverDomain)
         .setSaasParams(sdkId, sdkToken)
         .build()
 }

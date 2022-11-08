@@ -28,7 +28,6 @@ class DartInitParams {
 
 @HostApi()
 abstract class WeMeetApi {
-  void init(DartInitParams param);
-
-  void release();
+  void initWeMeet(DartInitParams param);
+  void releaseWeMeet();
 }

@@ -98,9 +98,9 @@ class WeMeetApi {
 
   static const MessageCodec<Object?> codec = _WeMeetApiCodec();
 
-  Future<void> init(DartInitParams arg_param) async {
+  Future<void> initWeMeet(DartInitParams arg_param) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WeMeetApi.init', codec, binaryMessenger: _binaryMessenger);
+        'dev.flutter.pigeon.WeMeetApi.initWeMeet', codec, binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_param]) as Map<Object?, Object?>?;
     if (replyMap == null) {
@@ -120,9 +120,9 @@ class WeMeetApi {
     }
   }
 
-  Future<void> release() async {
+  Future<void> releaseWeMeet() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.WeMeetApi.release', codec, binaryMessenger: _binaryMessenger);
+        'dev.flutter.pigeon.WeMeetApi.releaseWeMeet', codec, binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(null) as Map<Object?, Object?>?;
     if (replyMap == null) {

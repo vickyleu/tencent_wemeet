@@ -104,8 +104,8 @@ class WeMeetApiCodec: FlutterStandardMessageCodec {
 
 ///Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol WeMeetApi {
-  func init(param: DartInitParams)
-  func release()
+  func initWeMeet(param: DartInitParams)
+  func releaseWeMeet()
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -114,25 +114,25 @@ class WeMeetApiSetup {
   static var codec: FlutterStandardMessageCodec { WeMeetApiCodec.shared }
   /// Sets up an instance of `WeMeetApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: WeMeetApi?) {
-    let initChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.init", binaryMessenger: binaryMessenger, codec: codec)
+    let initWeMeetChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.initWeMeet", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      initChannel.setMessageHandler { message, reply in
+      initWeMeetChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
         let paramArg = args[0] as! DartInitParams
-        api.init(param: paramArg)
+        api.initWeMeet(param: paramArg)
         reply(nil)
       }
     } else {
-      initChannel.setMessageHandler(nil)
+      initWeMeetChannel.setMessageHandler(nil)
     }
-    let releaseChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.release", binaryMessenger: binaryMessenger, codec: codec)
+    let releaseWeMeetChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.releaseWeMeet", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
-      releaseChannel.setMessageHandler { _, reply in
-        api.release()
+      releaseWeMeetChannel.setMessageHandler { _, reply in
+        api.releaseWeMeet()
         reply(nil)
       }
     } else {
-      releaseChannel.setMessageHandler(nil)
+      releaseWeMeetChannel.setMessageHandler(nil)
     }
   }
 }
