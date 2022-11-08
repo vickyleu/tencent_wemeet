@@ -1,0 +1,1 @@
+{"name":"ring","path":"ring_module","version":"3.6.200.16","dependencies":{"runtime":"3.6.200.16"},"schemes":["wemeet://page/ring/ringing"],"ioswrapper":"WMRingModuleWrapper","contributes":{},"description":"邀请响铃，预定会议或者会中通过企业通讯录邀请触发对端响铃（包括TPNS通知和CallKit）"}

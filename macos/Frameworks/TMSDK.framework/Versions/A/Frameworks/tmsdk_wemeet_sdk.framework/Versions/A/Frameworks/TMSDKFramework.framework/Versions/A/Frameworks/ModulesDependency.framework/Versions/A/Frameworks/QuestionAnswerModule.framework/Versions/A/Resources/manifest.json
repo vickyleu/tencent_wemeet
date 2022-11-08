@@ -1,0 +1,1 @@
+{"name":"question_answer","path":"question_answer_module","version":"3.6.200.16","dependencies":{"runtime":"3.6.200.16"},"schemes":["wemeet://page/question_answer","wemeet://page/chat_qa"],"contributes":{"contributes:app.toolbar":[],"contributes:app.sidebar_tab_in_meeting":[],"contributes:app.official_app":[]},"ioswrapper":"WMQuestionAnswerModuleWrapper","description":"会中的问答功能"}

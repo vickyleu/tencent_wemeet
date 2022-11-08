@@ -1,0 +1,17 @@
+{
+    "version": "20220118_mbms_unet4_edge_hor_epoch_40_pc",
+    "name": "model",
+    "width": 288,
+    "height": 160,
+    "gpu_model": "model_metal",
+    "gpu_model_runningmode": [
+		3,
+        4,
+        12,
+        13
+	],
+    "output_name": [
+        "Softmax_0",
+        "Softmax_1"
+    ]
+}

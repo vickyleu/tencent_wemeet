@@ -1,0 +1,10 @@
+{
+    "version": "20210415150557",
+    "model_name": "sr_model",
+    "sharp_mode": 0,
+	"input_blob": "Input0_0",
+	"output_blob": "Eltwise6_6",
+    "zero_point": [127],
+    "scale":[0.9406419992446899],
+    "static_qat_model":1
+}

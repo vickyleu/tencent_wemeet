@@ -1,0 +1,6 @@
+framework module TencentMeetingSDK {
+  umbrella header "TencentMeetingSDK.h"
+
+  export *
+  module * { export * }
+}

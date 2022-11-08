@@ -1,0 +1,111 @@
+{
+    "layer_cnt": 6,
+    "blob_cnt": 6,
+    "layer_info": [
+        {
+            "layer_type": "Input",
+            "layer_name": "Input_0",
+            "input_blob_cnt": 0,
+            "output_blob_cnt": 1,
+            "input_blobs": [],
+            "output_blobs": [
+                "Input_0_0"
+            ],
+            "layer_param": {},
+            "offset_in_bin": 0,
+            "size_in_bin": 0
+        },
+        {
+            "layer_type": "CKSUVDistance",
+            "layer_name": "CKSUVDistance_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Input_0_0"
+            ],
+            "output_blobs": [
+                "CKSUVDistance_0_0"
+            ],
+            "layer_param": {
+                "r": 44,
+                "g": 151,
+                "b": 79
+            },
+            "offset_in_bin": 0,
+            "size_in_bin": 0
+        },
+        {
+            "layer_type": "Filter",
+            "layer_name": "Filter_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "CKSUVDistance_0_0"
+            ],
+            "output_blobs": [
+                "Filter_0_0"
+            ],
+            "layer_param": {
+                "kernel_w": 3,
+                "kernel_h": 3
+            },
+            "offset_in_bin": 0,
+            "size_in_bin": 0
+        },
+        {
+            "layer_type": "CKAlphaAdjust",
+            "layer_name": "CKAlphaAdjust_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Filter_0_0"
+            ],
+            "output_blobs": [
+                "CKAlphaAdjust_0_0"
+            ],
+            "layer_param": {
+                "similarity": 0.300,
+                "smoothness": 0.001,
+                "spill": 0.001
+            },
+            "offset_in_bin": 0,
+            "size_in_bin": 0
+        },
+        {
+            "layer_type": "Filter",
+            "layer_name": "Filter_1",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "CKAlphaAdjust_0_0"
+            ],
+            "output_blobs": [
+                "Filter_1_0"
+            ],
+            "layer_param": {
+                "kernel_w": 5,
+                "kernel_h": 5
+            },
+            "offset_in_bin": 0,
+            "size_in_bin": 0
+        },
+        {
+            "layer_type": "CKAlphaMap",
+            "layer_name": "CKAlphaMap_0",
+            "input_blob_cnt": 1,
+            "output_blob_cnt": 1,
+            "input_blobs": [
+                "Filter_1_0"
+            ],
+            "output_blobs": [
+                "CKAlphaMap_0_0"
+            ],
+            "layer_param": {
+                "lower": 0.3,
+                "upper": 0.7
+            },
+            "offset_in_bin": 0,
+            "size_in_bin": 0
+        }
+    ]
+}

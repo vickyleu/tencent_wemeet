@@ -1,0 +1,14 @@
+//
+//  WeMeetFramework.xcconfig
+//  WeMeetFramework
+//
+//  Created by 祝熙怡 on 2020/8/27.
+//  Copyright © 2020 tencent. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+APP_COMMON_OUTPUT_PATH = ../../../../../../app_common/output/OSX/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+SDK_OUTPUT_PATH = ../../../../../../sdk/output/OSX/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+
+WEMEET_APP_COMMON_LINK = -framework wemeet_app_sdk -framework wemeet_base -framework wemeet_framework -framework wemeet_qt

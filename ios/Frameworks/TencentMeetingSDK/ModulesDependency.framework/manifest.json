@@ -1,0 +1,1052 @@
+{
+    "name": "ModulesDependency",
+    "ioswrapper": "ModulesDependencyWrapper",
+    "preload": 1,
+    "dependencies": {
+        "runtime": "3.6.200.20"
+    },
+    "modules": [
+        {
+            "name": "account",
+            "path": "account_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/profile/aboutus",
+                "wemeet://page/profile",
+                "wemeet://page/payinfo",
+                "wemeet://page/profile/business_card_list",
+                "wemeet://page/profile/business_card_switch",
+                "wemeet://page/profile/business_card_edit",
+                "wemeet://page/inmeeting/business_card_detail",
+                "wemeet://page/premeeting/join/business_card_choose",
+                "wemeet://page/inmeeting/business_card_choose",
+                "wemeet://page/profile/nickname",
+                "wemeet://page/profile/email",
+                "wemeet://page/profile/unbind_wechat",
+                "wemeet://page/profile/short_profile",
+                "wemeet://page/profile/authentication",
+                "wemeet://page/profile/email_authentication"
+            ],
+            "ioswrapper": "WMAccountModuleWrapper",
+            "contributes": {
+                "contributes:settings.setting_tabs": []
+            },
+            "description": "帐户信息",
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        },
+        {
+            "name": "appbox",
+            "path": "appbox_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/web_app"
+            ],
+            "commands": [],
+            "ioswrapper": "WMAppboxModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:app.inmeeting_main": []
+            },
+            "description": "toolbar上的应用按钮,应用可以抽象理解为两组应用的集合，包括官方应用和第三方应用，点击应用按钮可见官方应用，但是第三方应用需要特殊配置",
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        },
+        {
+            "name": "audio",
+            "path": "audio_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [],
+            "ioswrapper": "AudioModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:settings.setting_tabs": [],
+                "contributes:app.inmeeting_main": [],
+                "contributes:app.inmeeting_float": [],
+                "contributes:app.official_app": [],
+                "contributes:voice_activated_container_contributes": []
+            },
+            "description": "会议中音频界面、toolbar音频逻辑"
+        },
+        {
+            "name": "breakout_room",
+            "path": "breakout_room_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://breakout_room/init",
+                "wemeet://page/breakout_room",
+                "wemeet://page/breakout_room/create_select",
+                "wemeet://page/breakout_room/assignment",
+                "wemeet://page/breakout_room/change_name",
+                "wemeet://page/breakout_room/setting",
+                "wemeet://page/breakout_room/member_list",
+                "wemeet://page/breakout_room/room_list",
+                "wemeet://page/breakout_room/broadcast_im"
+            ],
+            "activation_events": [
+                "on_meeting_scene:inmeeting.init"
+            ],
+            "contributes": {},
+            "ioswrapper": "BreakoutRoomModuleWrapper",
+            "description": "分组会议"
+        },
+        {
+            "name": "call_kit",
+            "path": "call_kit_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [],
+            "ioswrapper": "WMCallKitModuleWrapper",
+            "contributes": {},
+            "description": "CallKit"
+        },
+        {
+            "name": "caption",
+            "path": "caption_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/caption/caption_whole",
+                "wemeet://page/caption/caption_setting"
+            ],
+            "commands": [
+                "Caption_CallFuncGetCaptionInfo",
+                "Caption_CallFuncGetCaptionCount",
+                "Caption_CallFuncControlShow",
+                "Caption_EventCaptionWholeClick"
+            ],
+            "ioswrapper": "WMCaptionModuleWrapper",
+            "contributes": {
+                "contributes.app.Toolbar": [],
+                "contributes:app.official_app": [],
+                "contributes:app.inmeeting_main": [],
+                "contributes:app.inmeeting_float": [
+                    {
+                        "extension": "extension.caption.caption_meeting_text",
+                        "platform": [
+                            "OS_DESKTOP"
+                        ]
+                    }
+                ],
+                "contributes:app.caption_text_screen_float_container": [
+                    {
+                        "extension": "extension.caption.caption_screen_meeting_text",
+                        "platform": [
+                            "OS_DESKTOP"
+                        ]
+                    }
+                ]
+            },
+            "description": "字幕"
+        },
+        {
+            "name": "chat",
+            "path": "chat_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/meeting_notice",
+                "wemeet://page/inmeeting/chat",
+                "wemeet://page/chatrecord",
+                "wemeet://page/inmeeting/emoji_bullet",
+                "wemeet://page/chat_control/manual_check",
+                "wemeet://page/chat_control/webview",
+                "wemeet://page/inmeeting/setting/chat",
+                "wemeet://page/inmeeting/emoji_bullet",
+                "wemeet://page/inmeeting/emoji_bullet",
+                "wemeet://page/chat_file_preview",
+                "wemeet://page/chat_file_download",
+                "wemeet://page/chatrecord/chat_file_download"
+            ],
+            "ioswrapper": "ChatModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [
+                    {
+                        "extension": "extension:chat"
+                    }
+                ]
+            },
+            "activation_events": [
+                "on_startup_finished"
+            ],
+            "description": "聊天（im）"
+        },
+        {
+            "name": "company_contacts",
+            "path": "company_contacts_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/company_contacts",
+                "wemeet://page/company_contact_info",
+                "wemeet://page/company_contact_invite_list",
+                "wemeet://page/company_contact_invite_1v1"
+            ],
+            "commands": [],
+            "ioswrapper": "WMCompanyContactsModuleWrapper",
+            "contributesid": [],
+            "contributes": {},
+            "description": "企业组织架构",
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        },
+        {
+            "name": "docs",
+            "path": "docs_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/docs"
+            ],
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:app.schedule_meeting": [],
+                "contributes:app.meeting_info": [],
+                "contributes:app.official_app": []
+            },
+            "ioswrapper": "WMDocsModuleWrapper",
+            "description": "会议内文档"
+        },
+        {
+            "name": "gift",
+            "path": "gift_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [],
+            "ioswrapper": "WMGiftModuleWrapper",
+            "contributes": {
+                "contributes:app.inmeeting_float": []
+            },
+            "description": ""
+        },
+        {
+            "name": "handsup",
+            "path": "handsup_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [],
+            "ioswrapper": "HandsupModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:app.official_app": []
+            },
+            "description": "会中举手"
+        },
+        {
+            "name": "historical_meetings",
+            "path": "historical_meetings_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/history/meeting_list",
+                "wemeet://page/history/meeting_info"
+            ],
+            "ioswrapper": "WMHistoricalMeetingsModuleWrapper",
+            "contributes": {},
+            "description": "历史会议"
+        },
+        {
+            "name": "idea",
+            "path": "idea_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/meeting_idea",
+                "wemeet://page/meeting_idea_list"
+            ],
+            "ioswrapper": "WMIdeaModuleWrapper",
+            "contributes": {
+                "contributes:app.sidebar_tab_in_meeting": [],
+                "contributes:app.toolbox": [],
+                "contributes:app.toolbar": [],
+                "contributes:app.official_app": []
+            },
+            "description": "个人笔记",
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        },
+        {
+            "name": "invite",
+            "path": "invite_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/pstninvite",
+                "wemeet://page/share/meeting",
+                "wemeet://page/inmeeting/meetinginfo",
+                "wemeet://page/share/after_schedule"
+            ],
+            "ioswrapper": "InviteModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:app.meeting_info": [],
+                "contributes:app.schedule_meeting": [],
+                "contributes:app.official_app": []
+            },
+            "description": "邀请"
+        },
+        {
+            "name": "join_meeting",
+            "path": "join_meeting_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/premeeting/join",
+                "wemeet://page/join_meeting/init",
+                "wemeet://page/meeting_card"
+            ],
+            "contributes": {
+                "contributes:app.home_navigation": [],
+                "contributes:app.inmeeting_top": []
+            },
+            "ioswrapper": "JoinMeetingModuleWrapper",
+            "description": "加入会议",
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        },
+        {
+            "name": "login",
+            "path": "login_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/login/password_login",
+                "wemeet://page/login/sms_code_login",
+                "wemeet://page/sso_input_domain",
+                "wemeet://page/sso_input_email",
+                "wemeet://page/sso_login",
+                "wemeet://page/register",
+                "wemeet://page/login/select_account",
+                "wemeet://page/login/switch_login",
+                "wemeet://page/common/check_phone_number",
+                "wemeet://page/login/email_authentication",
+                "wemeet://page/join/guest_check_phone",
+                "wemeet://page/login/init",
+                "wemeet://page/register/set_password",
+                "wemeet://page/email_register",
+                "wemeet://page/login/email_login",
+                "wemeet://page/profile/reset_password",
+                "wemeet://page/common/check_sms_code",
+                "wemeet://page/common/check_email_code",
+                "wemeet://page/registration_compliance",
+                "wemeet://page/bind_phone",
+                "wemeet://page/login/qrscan_login",
+                "wemeet://page/profile/confirm_wechat_binding"
+            ],
+            "contributes": {},
+            "ioswrapper": "LoginModuleWrapper",
+            "description": "登陆",
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        },
+        {
+            "name": "media_process",
+            "path": "media_process_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/inmeeting/setting/facebeauty",
+                "wemeet://page/inmeeting/setting/backgroundblur"
+            ],
+            "ioswrapper": "WMMediaProcessModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:settings.setting_tabs": [],
+                "contributes:app.official_app": [],
+                "contributes:app.toolbox": []
+            },
+            "description": "虚拟背景+美颜",
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        },
+        {
+            "name": "meeting_live",
+            "path": "meeting_live_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/watch_live",
+                "wemeet://page/inmeeting/live",
+                "wemeet://page/meeting_live_setting",
+                "wemeet://page/overseas_live"
+            ],
+            "ioswrapper": "MeetingLiveModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:app.schedule_meeting": [],
+                "contributes:app.meeting_info": [],
+                "contributes:app.official_app": []
+            },
+            "description": "直播"
+        },
+        {
+            "name": "meeting_room",
+            "path": "meeting_room_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/meeting_room"
+            ],
+            "ioswrapper": "WMMeetingRoomModuleWrapper",
+            "contributes": {
+                "contributes:app.schedule_meeting": [
+                    {
+                        "extension": "extension:meeting_room.meeting_room_schedule_setting"
+                    }
+                ],
+                "contributes:app.meeting_info": []
+            },
+            "description": "预定会议时选择会议室"
+        },
+        {
+            "name": "member",
+            "path": "member_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/inmeeting/member/select_members",
+                "wemeet://page/inmeeting/member/expand_selected_members",
+                "wemeet://page/inmeeting/member_list",
+                "wemeet://page/inmeeting/members",
+                "wemeet://page/inmeeting/webinar_members",
+                "wemeet://page/inmeeting/raise_hand_member_list",
+                "wemeet://page/inmeeting/member/host_key"
+            ],
+            "ioswrapper": "MemberModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:app.sidebar_tab_in_meeting": [],
+                "contributes:app.official_app": [],
+                "contributes:app.schedule_meeting": [],
+                "contributes:app.meeting_info": []
+            },
+            "description": "成员管理"
+        },
+        {
+            "name": "misc",
+            "path": "misc_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/webinar_trail"
+            ],
+            "ioswrapper": "MiscModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:settings.setting_tabs": [],
+                "contributes:app.official_app": []
+            },
+            "activation_events": [
+                "on_startup_finished"
+            ],
+            "description": "工具集"
+        },
+        {
+            "name": "period_meeting",
+            "path": "period_meeting_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/period_meeting_list",
+                "wemeet://page/period_meeting_recurring_setting",
+                "wemeet://page/period_meeting_until_setting",
+                "wemeet://page/period_meeting_custom_repeat_setting"
+            ],
+            "ioswrapper": "WMPeriodMeetingModuleWrapper",
+            "contributes": {},
+            "description": "周期性会议",
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        },
+        {
+            "name": "proxy",
+            "path": "proxy_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/network_proxy_setting"
+            ],
+            "ioswrapper": "WMProxyModuleWrapper",
+            "contributes": {
+                "contributes:settings.setting_tabs": []
+            },
+            "description": "代理设置"
+        },
+        {
+            "name": "question_answer",
+            "path": "question_answer_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/question_answer",
+                "wemeet://page/chat_qa"
+            ],
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:app.sidebar_tab_in_meeting": [],
+                "contributes:app.official_app": []
+            },
+            "ioswrapper": "WMQuestionAnswerModuleWrapper",
+            "description": "会中的问答功能"
+        },
+        {
+            "name": "quick_meeting",
+            "path": "quick_meeting_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/quick_meeting_setting",
+                "wemeet://page/quick_meeting/init"
+            ],
+            "ioswrapper": "QuickMeetingModuleWrapper",
+            "contributes": {
+                "contributes:app.home_navigation": []
+            },
+            "description": "快速会议",
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        },
+        {
+            "name": "record",
+            "path": "record_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/history/cloud_record_list",
+                "wemeet://page/cloud_record_share_setting",
+                "wemeet://page/cloud_record_share_sheet",
+                "wemeet://page/premeeting/auto_record",
+                "wemeet://page/cloud_record_setting",
+                "wemeet://page/transcode_progress",
+                "wemeet://page/record_local_setting"
+            ],
+            "ioswrapper": "RecordModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:app.schedule_meeting": [],
+                "contributes:settings.setting_tabs": [],
+                "contributes:app.inmeeting_float": [],
+                "contributes:app.screen_info": [],
+                "contributes:app.official_app": []
+            },
+            "activation_app_model_events": [
+                {
+                    "model_type": 1000018,
+                    "event_id": [
+                        0,
+                        32,
+                        29
+                    ]
+                }
+            ],
+            "description": "录制"
+        },
+        {
+            "name": "red_packet",
+            "path": "red_packet_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/bonus_pay",
+                "wemeet://page/red_packet_sender",
+                "wemeet://page/red_packet_gallery",
+                "wemeet://page/red_packet_detail",
+                "wemeet://page/single_red_packet_gallery"
+            ],
+            "ioswrapper": "RedPacketModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:app.official_app": []
+            },
+            "description": "红包"
+        },
+        {
+            "name": "ring",
+            "path": "ring_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/ring/ringing"
+            ],
+            "ioswrapper": "WMRingModuleWrapper",
+            "contributes": {},
+            "description": "邀请响铃，预定会议或者会中通过企业通讯录邀请触发对端响铃（包括TPNS通知和CallKit）"
+        },
+        {
+            "name": "rooms_meeting",
+            "path": "rooms_meeting_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/rooms_meeting_setting",
+                "wemeet://page/rooms_meeting/init",
+                "wemeet://page/rooms_video",
+                "wemeet://page/rooms_cast_code_tips"
+            ],
+            "ioswrapper": "RoomsMeetingModuleWrapper",
+            "contributes": {
+                "contributes:app.home_navigation": []
+            },
+            "description": "投屏会议",
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        },
+        {
+            "name": "safety",
+            "path": "safety_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/inmeeting/kickout"
+            ],
+            "ioswrapper": "SafetyModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:app.official_app": []
+            },
+            "description": "安全"
+        },
+        {
+            "name": "scan_qrcode",
+            "path": "scan_qrcode_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/scan_qrcode"
+            ],
+            "ioswrapper": "WMScanQrcodeModuleWrapper",
+            "contributes": {},
+            "description": "",
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        },
+        {
+            "name": "schedule_meeting",
+            "path": "schedule_meeting_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/premeeting/schedule",
+                "wemeet://page/premeeting/meetinginfo",
+                "wemeet://page/premeeting/schedule_select",
+                "wemeet://page/premeeting/schedule_invite",
+                "wemeet://page/schedule_meeting/init",
+                "wemeet://page/premeeting/invite",
+                "wemeet://page/shedule_select",
+                "wemeet://page/after_schedule_guide",
+                "wemeet://page/after_schedule_guide_notification_setting",
+                "wemeet://page/premeeting/schedule/mute_on_join"
+            ],
+            "ioswrapper": "ScheduleMeetingModuleWrapper",
+            "contributes": {
+                "contributes:app.home_navigation": []
+            },
+            "description": "预定会议",
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        },
+        {
+            "name": "screen_share",
+            "path": "screen_share_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/inmeeting/window_share",
+                "wemeet://page/inmeeting/picture_in_picture",
+                "wemeet://page/inmeeting/annotation",
+                "wemeet://page/inmeeting/annotation_toolbar",
+                "wemeet://page/inmeeting/whiteboard",
+                "wemeet://page/inmeeting/whiteboard_text",
+                "wemeet://page/inmeeting/whiteboard_brush_item",
+                "wemeet://page/inmeeting/whiteboard_toolbar",
+                "wemeet://page/inmeeting/whiteboard_container",
+                "wemeet://page/inmeeting/cooperation_toolbar",
+                "wemeet://page/inmeeting/cooperation",
+                "wemeet://page/inmeeting/cooperationSetting",
+                "wemeet://page/watermark",
+                "wemeet://page/inmeeting/share_local_render",
+                "wemeet://page/inmeeting/share_tracker",
+                "wemeet://page/inmeeting/notification_screen_share_time",
+                "wemeet://page/inmeeting/remote_control_member_select",
+                "wemeet://page/inmeeting/screen_zoom_status_bar",
+                "wemeet://page/inmeeting/ppt_control_members_select"
+            ],
+            "ioswrapper": "ScreenShareModuleWrapper",
+            "activation_events": [
+                "on_meeting_scene:inmeeting.join_complete"
+            ],
+            "contributes": {
+                "contributes:app.schedule_meeting": [
+                    {
+                        "extension": "extension:screen_share.water_mark_schedule_setting"
+                    }
+                ],
+                "contributes:in_meeting.video_render": [
+                    {
+                        "extension": "extension:screen_share.remote_control",
+                        "platform": [
+                            "OS_MACOSX"
+                        ]
+                    }
+                ],
+                "contributes:in_meeting.window_top": [
+                    {
+                        "extension": "extension:screen_share.zoom",
+                        "platform": [
+                            "OS_DESKTOP"
+                        ]
+                    },
+                    {
+                        "extension": "extension:screen_share.audio",
+                        "platform": [
+                            "OS_DESKTOP"
+                        ]
+                    }
+                ],
+                "contributes:in_meeting.top_screen_share": [
+                    {
+                        "extension": "extension:screen_share.meeting_info",
+                        "platform": [
+                            "OS_DESKTOP"
+                        ]
+                    }
+                ],
+                "contributes:app.inmeeting_main": [
+                    {
+                        "extension": "extension:screen_share.control",
+                        "platform": [
+                            "OS_IOS"
+                        ]
+                    },
+                    {
+                        "extension": "extension:screen_share.whiteboard",
+                        "platform": [
+                            "OS_IOS"
+                        ]
+                    },
+                    {
+                        "extension": "extension:screen_share.cooperation_board",
+                        "platform": [
+                            "OS_IOS"
+                        ]
+                    }
+                ],
+                "contributes:app.toolbar": [
+                    {
+                        "extension": "extension:screen_share"
+                    },
+                    {
+                        "extension": "extension:tool_bar.annotation",
+                        "platform": [
+                            "OS_DESKTOP"
+                        ]
+                    },
+                    {
+                        "extension": "extension:screen_share.participate_cooperation",
+                        "platform": [
+                            "OS_MOBILE"
+                        ]
+                    },
+                    {
+                        "extension": "extension:screen_share.stop_member_share",
+                        "platform": [
+                            "OS_MOBILE"
+                        ]
+                    }
+                ],
+                "contributes:app.screen_info": [
+                    {
+                        "extension": "extension:screen_share.small_bar",
+                        "platform": [
+                            "OS_DESKTOP"
+                        ]
+                    },
+                    {
+                        "extension": "extension:record.remote_control_status_bar",
+                        "platform": [
+                            "OS_WIN"
+                        ]
+                    }
+                ],
+                "contributes:app.inmeeting_float": [
+                    {
+                        "extension": "extension:screen_share.remind_timer_crad",
+                        "platform": [
+                            "OS_DESKTOP"
+                        ]
+                    },
+                    {
+                        "extension": "extension:screen_share.ppt_control_card",
+                        "platform": [
+                            "OS_DESKTOP"
+                        ]
+                    }
+                ],
+                "contributes:app.caption_text_screen_float_container": [
+                    {
+                        "extension": "extension:screen_share.remind_timer_crad",
+                        "platform": [
+                            "OS_DESKTOP"
+                        ]
+                    }
+                ]
+            },
+            "description": "屏幕共享"
+        },
+        {
+            "name": "settings",
+            "path": "settings_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/setting",
+                "wemeet://page/inmeeting/setting",
+                "wemeet://page/inmeeting/setting_for_mobile",
+                "wemeet://page/setting_sync_calendar",
+                "wemeet://page/calendar_setting_guide",
+                "wemeet://page/personal_meeting_setting",
+                "wemeet://page/language_select",
+                "wemeet://page/network_detect",
+                "wemeet://page/speaker_enhance_setting",
+                "wemeet://page/voice_print_prepare",
+                "wemeet://page/voice_print_earphone_model",
+                "wemeet://page/voice_print_detect_noise",
+                "wemeet://page/voice_print_recording",
+                "wemeet://page/quality_monitor/network_detector",
+                "wemeet://page/quality_monitor/chart"
+            ],
+            "activation_events": [
+                "on_startup_finished"
+            ],
+            "ioswrapper": "SettingsModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:app.schedule_meeting": [],
+                "contributes:settings.setting_tabs": [],
+                "contributes:app.official_app": [],
+                "contributes:float_speaking_wnd.window_top": []
+            },
+            "description": "会议设置"
+        },
+        {
+            "name": "sim_interpret",
+            "path": "sim_interpret_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/simultaneous",
+                "wemeet://page/simultaneous_channel",
+                "wemeet://page/simultaneous/fake"
+            ],
+            "activation_events": [
+                "on_meeting_scene:inmeeting.join_complete"
+            ],
+            "ioswrapper": "SimInterpretModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:app.schedule_meeting": [],
+                "contributes:app.meeting_info": [],
+                "contributes:app.inmeeting_float": [],
+                "contributes:app.official_app": []
+            },
+            "description": "同声传译(简称同传)"
+        },
+        {
+            "name": "splash",
+            "path": "splash_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/splash",
+                "wemeet://page/splash/carousel"
+            ],
+            "ioswrapper": "WMSplashModuleWrapper",
+            "contributes": {},
+            "description": "",
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        },
+        {
+            "name": "video",
+            "path": "video_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [],
+            "ioswrapper": "VideoModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [],
+                "contributes:app.inmeeting_main": [],
+                "contributes:settings.setting_tabs": [],
+                "contributes:app.official_app": [],
+                "contributes:voice_activated_container_contributes": []
+            },
+            "description": "视频"
+        },
+        {
+            "name": "vote",
+            "path": "vote_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/vote_list"
+            ],
+            "ioswrapper": "VoteModuleWrapper",
+            "contributes": {
+                "contributes:app.toolbar": [
+                    {
+                        "extension": "extension:vote.toolbar"
+                    }
+                ],
+                "contributes:app.schedule_meeting": [
+                    {
+                        "extension": "extension:vote.schedule_setting"
+                    }
+                ],
+                "contributes:app.meeting_info": [],
+                "contributes:app.toolbox": [
+                    {
+                        "extension": "extension:tool_box_vote",
+                        "platform": [
+                            "OS_DESKTOP"
+                        ]
+                    }
+                ]
+            },
+            "description": "会中投票"
+        },
+        {
+            "name": "warmup_media",
+            "path": "warmup_media_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "schemes": [
+                "wemeet://page/warmup_media"
+            ],
+            "ioswrapper": "WMWarmupMediaModuleWrapper",
+            "contributes": {},
+            "description": ""
+        },
+        {
+            "name": "web_share",
+            "path": "web_share_module",
+            "version": "3.6.200.20",
+            "dependencies": {
+                "runtime": "3.6.200.20"
+            },
+            "commands": [],
+            "ioswrapper": "WMWebShareModuleWrapper",
+            "contributes": {
+                "contributes:screen_share.select_doc": [],
+                "contributes:app.inmeeting_main": [],
+                "contributes:video.float_entrance": []
+            },
+            "description": "Share document in meeting.",
+            "schemes": [
+                "wemeet://page/share_web_doc_authorize"
+            ],
+            "activation_events": [
+                "on_startup_finished"
+            ]
+        }
+    ],
+    "path": "",
+    "schemes": [],
+    "contributes": {},
+    "description": "iOS组件化，多个静态库融合而成的动态库",
+    "version": "3.6.200.20"
+}

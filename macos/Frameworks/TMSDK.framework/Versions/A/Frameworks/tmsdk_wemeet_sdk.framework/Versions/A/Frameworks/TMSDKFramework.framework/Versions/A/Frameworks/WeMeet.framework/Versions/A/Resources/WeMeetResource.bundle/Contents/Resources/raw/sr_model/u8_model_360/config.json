@@ -1,0 +1,8 @@
+{
+    "version": "yt_v1_2000",
+    "model_name": "yt_sr_model",
+    "sharp_mode": 0,
+    "input_blob": "Input0_0",
+    "output_blob": "Eltwise6_6",
+    "static_qat_model":1
+}

@@ -1,0 +1,40 @@
+{
+    "name": "YTParvatiDriverBlockList",
+    "description": "优图美颜驱动禁用列表",
+    "driver_block_list_win": [
+        {
+            "vendor_id": "0x8086",
+            "driver_name": "",
+            "umd_version_high_h": 14,
+            "umd_version_high_l": 51,
+            "umd_version_low_h": 11,
+            "umd_version_low_l": 5437,
+            "system_version_high": 5,
+            "system_version_low": 2
+        },
+        {
+            "vendor_id": "0x10DE",
+            "driver_name": "",
+            "umd_version_high_h": 9,
+            "umd_version_high_l": 18,
+            "umd_version_low_h": 13,
+            "umd_version_low_l": 4196,
+            "system_version_high": 5,
+            "system_version_low": 2
+        }
+    ],
+    "driver_block_list_mac": [
+	    {        
+            "system_model": "all_devices",
+            "system_version_high": 10,
+            "system_version_low": 10,
+            "system_version_patch": 1
+        }
+    ],
+    "driver_block_list_specified": [
+        "0x10DE_21.21.13.4201",
+		"0x10DE_9.18.13.4174",
+		"0x10DE_9.18.13.908",
+        "0x8086_27.20.100.8682"
+    ]
+}

@@ -1,0 +1,9 @@
+{
+  "model_file": "chromakey.json",
+  "weight_file": "chromakey.bin",
+  "search_model_file": "chromakey_search.json",
+  "search_weight_file": "chromakey_search.bin",
+  "color_adjust_node": "CKAlphaAdjust_0",
+  "key_adjust_node": "CKUVDistance_0",
+  "model_type": "free_size"
+}

@@ -1,0 +1,1 @@
+{"name":"tool_box_timer","path":"tool_box_timer_module","version":"3.6.200.16","dependencies":{"runtime":"3.6.200.16"},"schemes":["wemeet://page/tool_box_timer","wemeet://page/inmeeting/dialog_screen_share_time"],"ioswrapper":"ToolBoxTimerModuleWrapper","contributes":{"contributes:app.toolbox":[],"contributes:app.official_app":[],"contributes:app.toolbar":[]},"description":"计时器"}

@@ -1,0 +1,229 @@
+{
+  "dynamic_quantization": false,
+  "quant_table": [
+    {
+      "input_tensor_qat_scale": [],
+      "input_tensor_qat_zero": [],
+      "layer_name": "Input0",
+      "layer_type": "Input",
+      "output_tensor_qat_scale": [
+        0.8987995386123657
+      ],
+      "output_tensor_qat_zero": [
+        127
+      ],
+      "weight_qat_scale": [],
+      "weight_qat_zero": []
+    },
+    {
+      "input_tensor_qat_scale": [
+        0.8987995386123657
+      ],
+      "input_tensor_qat_zero": [
+        127
+      ],
+      "layer_name": "ConvolutionReLU1",
+      "layer_type": "ConvolutionReLU",
+      "output_tensor_qat_scale": [
+        0.8539751768112183
+      ],
+      "output_tensor_qat_zero": [
+        0
+      ],
+      "weight_qat_scale": [
+        0.0305863656103611,
+        0.017331598326563835,
+        0.018160300329327583,
+        0.01612589694559574,
+        0.015572967939078808,
+        0.012125630863010883,
+        0.02583058923482895,
+        0.007743108086287975
+      ],
+      "weight_qat_zero": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "input_tensor_qat_scale": [
+        0.8539751768112183
+      ],
+      "input_tensor_qat_zero": [
+        0
+      ],
+      "layer_name": "ConvolutionReLU2",
+      "layer_type": "ConvolutionReLU",
+      "output_tensor_qat_scale": [
+        0.9580846428871155
+      ],
+      "output_tensor_qat_zero": [
+        0
+      ],
+      "weight_qat_scale": [
+        0.014732709154486656,
+        0.013719625771045685,
+        0.01788211427628994,
+        0.014793789014220238,
+        0.00978128146380186,
+        0.01107298955321312,
+        0.014445221982896328,
+        0.021855710074305534
+      ],
+      "weight_qat_zero": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "input_tensor_qat_scale": [
+        0.9580846428871155
+      ],
+      "input_tensor_qat_zero": [
+        0
+      ],
+      "layer_name": "ConvolutionReLU3",
+      "layer_type": "ConvolutionReLU",
+      "output_tensor_qat_scale": [
+        0.6430162787437439
+      ],
+      "output_tensor_qat_zero": [
+        0
+      ],
+      "weight_qat_scale": [
+        0.012787382118403912,
+        0.00651832390576601,
+        0.0109185129404068,
+        0.006862264592200518,
+        0.006940146442502737,
+        0.012016470544040203,
+        0.009619229473173618,
+        0.01109723374247551
+      ],
+      "weight_qat_zero": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "input_tensor_qat_scale": [
+        0.6430162787437439
+      ],
+      "input_tensor_qat_zero": [
+        0
+      ],
+      "layer_name": "ConvolutionReLU4",
+      "layer_type": "ConvolutionReLU",
+      "output_tensor_qat_scale": [
+        0.45060303807258606
+      ],
+      "output_tensor_qat_zero": [
+        0
+      ],
+      "weight_qat_scale": [
+        0.013886231929063797,
+        0.008482259698212147,
+        0.0084456792101264,
+        0.010830911807715893,
+        0.009927417151629925,
+        0.014416906051337719,
+        0.017850840464234352,
+        0.009854436852037907
+      ],
+      "weight_qat_zero": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "input_tensor_qat_scale": [
+        0.45060303807258606
+      ],
+      "input_tensor_qat_zero": [
+        0
+      ],
+      "layer_name": "Convolution5",
+      "layer_type": "Convolution",
+      "output_tensor_qat_scale": [
+        0.45014944672584534
+      ],
+      "output_tensor_qat_zero": [
+        128
+      ],
+      "weight_qat_scale": [
+        0.010919062420725822,
+        0.00941200740635395,
+        0.010618937201797962,
+        0.010292530059814453
+      ],
+      "weight_qat_zero": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "input_tensor_qat_scale": [
+        0.45014944672584534,
+        0.8987995386123657
+      ],
+      "input_tensor_qat_zero": [
+        128,
+        127
+      ],
+      "layer_name": "Eltwise6",
+      "layer_type": "Eltwise",
+      "output_tensor_qat_scale": [
+        0.9366735219955444
+      ],
+      "output_tensor_qat_zero": [
+        127
+      ],
+      "weight_qat_scale": [],
+      "weight_qat_zero": []
+    },
+    {
+      "input_tensor_qat_scale": [
+        0.9366735219955444
+      ],
+      "input_tensor_qat_zero": [
+        127
+      ],
+      "layer_name": "PixelShuffle7",
+      "layer_type": "PixelShuffle",
+      "output_tensor_qat_scale": [
+        0.9366735219955444
+      ],
+      "output_tensor_qat_zero": [
+        127
+      ],
+      "weight_qat_scale": [],
+      "weight_qat_zero": []
+    }
+  ]
+}

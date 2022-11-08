@@ -1,0 +1,1 @@
+{"name":"warmup_media","path":"warmup_media_module","version":"3.6.200.16","dependencies":{"runtime":"3.6.200.16"},"schemes":["wemeet://page/warmup_media"],"ioswrapper":"WMWarmupMediaModuleWrapper","contributes":{},"description":""}

@@ -1,0 +1,1 @@
+{"name":"tm_sdk","path":"tm_sdk_module","version":"3.6.200.20","dependencies":{"runtime":"3.6.200.20"},"schemes":[],"commands":["SDK_CallFuncGetSDKInMeetingConfig"],"ioswrapper":"WMTmSdkModuleWrapper","contributes":{},"description":"私有化sdk、SaaS sdk","activation_events":["on_startup_finished"]}

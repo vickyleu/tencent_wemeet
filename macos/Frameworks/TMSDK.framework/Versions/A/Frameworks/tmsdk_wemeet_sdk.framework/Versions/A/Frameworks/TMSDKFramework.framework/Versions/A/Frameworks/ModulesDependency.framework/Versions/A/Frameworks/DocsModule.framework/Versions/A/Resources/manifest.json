@@ -1,0 +1,1 @@
+{"name":"docs","path":"docs_module","version":"3.6.200.16","dependencies":{"runtime":"3.6.200.16"},"schemes":["wemeet://page/docs"],"contributes":{"contributes:app.toolbar":[],"contributes:app.schedule_meeting":[],"contributes:app.meeting_info":[],"contributes:app.official_app":[]},"ioswrapper":"WMDocsModuleWrapper","description":"会议内文档"}

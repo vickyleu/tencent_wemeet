@@ -1,0 +1,23 @@
+//
+//  WeMeetFramework.xcconfig
+//  WeMeetFramework
+//
+//  Created by 祝熙怡 on 2020/8/27.
+//  Copyright © 2020 tencent. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+XCAST_NAME = xcast
+
+MARKETING_VERSION = 999.999.999
+CURRENT_PROJECT_VERSION = 999
+
+#include? "../../../../../sdk/third_party/xcast/OSX/xcast.xcconfig"
+
+APP_COMMON_OUTPUT_PATH = ../../../../../app_common/output/OSX/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+SDK_OUTPUT_PATH = ../../../../../sdk/output/OSX/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+
+WEMEET_APP_COMMON_LINK = -ObjC -framework wemeet_app_sdk -framework wemeet_base -framework wemeet_framework  -framework ${XCAST_NAME}
+
+WEMEET_BASE_LINK = -framework wemeet_base

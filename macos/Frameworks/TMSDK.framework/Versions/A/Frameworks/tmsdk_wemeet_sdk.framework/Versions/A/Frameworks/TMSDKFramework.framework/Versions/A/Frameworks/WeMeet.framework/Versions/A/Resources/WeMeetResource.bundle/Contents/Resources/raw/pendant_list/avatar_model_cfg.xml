@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<stream>
+  <iq type="result">
+    <avatar_model>
+      <avatar_model_list>
+        <model platform="iOS" min_version="2.17.0.0" max_version="999.999.999.999" resource_url="https://wemeet-resupdate-1256380422.file.myqcloud.com/wemeet_ytavatar_model/cc5f34deac9d39cb36b3ae16e20cce40.zip" resource_md5="cc5f34deac9d39cb36b3ae16e20cce40"/>
+        <model platform="Android" min_version="2.18.0.0" max_version="999.999.999.999" resource_url="https://updatecdn.meeting.qq.com/resource-update/9eda617ee18f17fcdac14c4aaec07ae8/model_android_2.2.12.zip" resource_md5="9eda617ee18f17fcdac14c4aaec07ae8"/>
+        <model platform="Mac" min_version="2.17.0.0" max_version="999.999.999.999" resource_url="https://wemeet-resupdate-1256380422.file.myqcloud.com/wemeet_ytavatar_model/cc5f34deac9d39cb36b3ae16e20cce40.zip" resource_md5="cc5f34deac9d39cb36b3ae16e20cce40"/>
+        <model platform="Windows" min_version="2.17.0.0" max_version="999.999.999.999" resource_url="https://wemeet-resupdate-1256380422.file.myqcloud.com/wemeet_ytavatar_model/cc5f34deac9d39cb36b3ae16e20cce40.zip" resource_md5="cc5f34deac9d39cb36b3ae16e20cce40"/>
+      </avatar_model_list>
+    </avatar_model>
+  </iq>
+</stream>

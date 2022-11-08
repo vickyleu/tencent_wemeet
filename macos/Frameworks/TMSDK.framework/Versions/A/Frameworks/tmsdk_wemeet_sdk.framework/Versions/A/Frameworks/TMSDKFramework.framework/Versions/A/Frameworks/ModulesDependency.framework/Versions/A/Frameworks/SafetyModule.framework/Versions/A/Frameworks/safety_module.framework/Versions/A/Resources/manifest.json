@@ -1,0 +1,1 @@
+{"name":"safety","path":"safety_module","version":"3.6.200.16","dependencies":{"runtime":"3.6.200.16"},"schemes":["wemeet://page/inmeeting/kickout"],"ioswrapper":"SafetyModuleWrapper","contributes":{"contributes:app.toolbar":[],"contributes:app.official_app":[]},"description":"安全"}

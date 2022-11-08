@@ -1,0 +1,9 @@
+{
+    "version": "20200329_pc",
+    "model_name": "qk18nf4",
+    "sharp_mode": 0,
+	"input_blob": "Input_0_0",
+	"output_blob": "Power_1_0",
+    "width": 640,
+    "height": 360
+}
