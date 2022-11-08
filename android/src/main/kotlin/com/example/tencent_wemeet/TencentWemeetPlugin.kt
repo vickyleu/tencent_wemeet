@@ -3,10 +3,12 @@ package com.example.tencent_wemeet
 
 import androidx.lifecycle.DefaultLifecycleObserver
 import com.tencent.wemeet.tmsdk.data.InitParams
+import com.tencent.wemeet.tmsdk.data.JoinParams
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugins.DartInitParams
+import io.flutter.plugins.DartTMJoinParam
 import io.flutter.plugins.WeMeetApi
 
 /** TencentWemeetPlugin */
@@ -17,11 +19,22 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi {
         WeMeetApi.setUp(flutterPluginBinding.binaryMessenger, this)
     }
     override fun initWeMeet(param: DartInitParams) {
-        WeMeetController.init(param.toKotlin())
+        WeMeetController.get().init(param.toKotlin())
+    }
+
+    override fun loginWeMeet(ssoUrl: String) {
+        WeMeetController.get().login(ssoUrl)
+    }
+    override fun joinMeeting(joinParam: DartTMJoinParam) {
+        WeMeetController.get().join(joinParam.toKotlin())
+    }
+
+    override fun leaveMeeting() {
+        WeMeetController.get().leave()
     }
 
     override fun releaseWeMeet() {
-        WeMeetController.deAttach()
+        WeMeetController.get().deAttach()
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
@@ -29,12 +42,12 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi {
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        WeMeetController.attach(binding.activity.application)
+        WeMeetController.get().attach(binding.activity.application)
     }
 
 
     override fun onDetachedFromActivity() {
-        WeMeetController.deAttach()
+        WeMeetController.get().deAttach()
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
@@ -51,6 +64,19 @@ private fun DartInitParams.toKotlin(): InitParams {
         .setPreferLanguage(preferLanguage)
         .setPrivateParams(serverAddress,serverDomain)
         .setSaasParams(sdkId, sdkToken)
+        .build()
+}
+
+
+private fun DartTMJoinParam.toKotlin(): JoinParams {
+    return JoinParams.Builder(meetingCode)
+        .setCameraOn(cameraOn)
+        .setInviteUrl(inviteUrl)
+        .setUserDisplayName(userDisplayName)
+        .setPassword(password)
+        .setMicOn(micOn)
+        .setFaceBeautyOn(faceBeautyOn)
+        .setSpeakerOn(speakerOn)
         .build()
 }
 

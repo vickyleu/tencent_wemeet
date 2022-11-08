@@ -59,6 +59,54 @@ data class DartInitParams (
     return map
   }
 }
+
+/** Generated class from Pigeon that represents data sent in messages. */
+data class DartTMJoinParam (
+  /** 会议号 */
+  val meetingCode: String,
+  /** 用户名 */
+  val userDisplayName: String,
+  /** 会议密码 */
+  val password: String,
+  /** 邀请链接 */
+  val inviteUrl: String,
+  /** 是否开启麦克风 */
+  val micOn: Boolean,
+  /** 是否开启摄像头 */
+  val cameraOn: Boolean,
+  /** 是否开启扬声器 */
+  val speakerOn: Boolean,
+  val faceBeautyOn: Boolean
+
+) {
+  companion object {
+    @Suppress("UNCHECKED_CAST")
+    fun fromMap(map: Map<String, Any?>): DartTMJoinParam {
+      val meetingCode = map["meetingCode"] as String
+      val userDisplayName = map["userDisplayName"] as String
+      val password = map["password"] as String
+      val inviteUrl = map["inviteUrl"] as String
+      val micOn = map["micOn"] as Boolean
+      val cameraOn = map["cameraOn"] as Boolean
+      val speakerOn = map["speakerOn"] as Boolean
+      val faceBeautyOn = map["faceBeautyOn"] as Boolean
+
+      return DartTMJoinParam(meetingCode, userDisplayName, password, inviteUrl, micOn, cameraOn, speakerOn, faceBeautyOn)
+    }
+  }
+  fun toMap(): Map<String, Any?> {
+    val map = mutableMapOf<String, Any?>()
+    map["meetingCode"] = meetingCode
+    map["userDisplayName"] = userDisplayName
+    map["password"] = password
+    map["inviteUrl"] = inviteUrl
+    map["micOn"] = micOn
+    map["cameraOn"] = cameraOn
+    map["speakerOn"] = speakerOn
+    map["faceBeautyOn"] = faceBeautyOn
+    return map
+  }
+}
 @Suppress("UNCHECKED_CAST")
 private object WeMeetApiCodec : StandardMessageCodec() {
   override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
@@ -66,6 +114,11 @@ private object WeMeetApiCodec : StandardMessageCodec() {
       128.toByte() -> {
         return (readValue(buffer) as? Map<String, Any?>)?.let {
           DartInitParams.fromMap(it)
+        }
+      }
+      129.toByte() -> {
+        return (readValue(buffer) as? Map<String, Any?>)?.let {
+          DartTMJoinParam.fromMap(it)
         }
       }
       else -> super.readValueOfType(type, buffer)
@@ -77,6 +130,10 @@ private object WeMeetApiCodec : StandardMessageCodec() {
         stream.write(128)
         writeValue(stream, value.toMap())
       }
+      is DartTMJoinParam -> {
+        stream.write(129)
+        writeValue(stream, value.toMap())
+      }
       else -> super.writeValue(stream, value)
     }
   }
@@ -85,6 +142,9 @@ private object WeMeetApiCodec : StandardMessageCodec() {
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface WeMeetApi {
   fun initWeMeet(param: DartInitParams)
+  fun loginWeMeet(ssoUrl: String)
+  fun joinMeeting(joinParam: DartTMJoinParam)
+  fun leaveMeeting()
   fun releaseWeMeet()
 
   companion object {
@@ -104,6 +164,61 @@ interface WeMeetApi {
               val args = message as List<Any?>
               val paramArg = args[0] as DartInitParams
               api.initWeMeet(paramArg)
+              wrapped["result"] = null
+            } catch (exception: Error) {
+              wrapped["error"] = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.loginWeMeet", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val wrapped = hashMapOf<String, Any?>()
+            try {
+              val args = message as List<Any?>
+              val ssoUrlArg = args[0] as String
+              api.loginWeMeet(ssoUrlArg)
+              wrapped["result"] = null
+            } catch (exception: Error) {
+              wrapped["error"] = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.joinMeeting", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val wrapped = hashMapOf<String, Any?>()
+            try {
+              val args = message as List<Any?>
+              val joinParamArg = args[0] as DartTMJoinParam
+              api.joinMeeting(joinParamArg)
+              wrapped["result"] = null
+            } catch (exception: Error) {
+              wrapped["error"] = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.leaveMeeting", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            val wrapped = hashMapOf<String, Any?>()
+            try {
+              api.leaveMeeting()
               wrapped["result"] = null
             } catch (exception: Error) {
               wrapped["error"] = wrapError(exception)

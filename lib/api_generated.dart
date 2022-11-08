@@ -64,12 +64,72 @@ class DartInitParams {
   }
 }
 
+class DartTMJoinParam {
+  DartTMJoinParam({
+    required this.meetingCode,
+    required this.userDisplayName,
+    required this.password,
+    required this.inviteUrl,
+    required this.micOn,
+    required this.cameraOn,
+    required this.speakerOn,
+    required this.faceBeautyOn,
+  });
+
+  /// 会议号
+  String meetingCode;
+  /// 用户名
+  String userDisplayName;
+  /// 会议密码
+  String password;
+  /// 邀请链接
+  String inviteUrl;
+  /// 是否开启麦克风
+  bool micOn;
+  /// 是否开启摄像头
+  bool cameraOn;
+  /// 是否开启扬声器
+  bool speakerOn;
+  bool faceBeautyOn;
+
+  Object encode() {
+    final Map<Object?, Object?> pigeonMap = <Object?, Object?>{};
+    pigeonMap['meetingCode'] = meetingCode;
+    pigeonMap['userDisplayName'] = userDisplayName;
+    pigeonMap['password'] = password;
+    pigeonMap['inviteUrl'] = inviteUrl;
+    pigeonMap['micOn'] = micOn;
+    pigeonMap['cameraOn'] = cameraOn;
+    pigeonMap['speakerOn'] = speakerOn;
+    pigeonMap['faceBeautyOn'] = faceBeautyOn;
+    return pigeonMap;
+  }
+
+  static DartTMJoinParam decode(Object message) {
+    final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
+    return DartTMJoinParam(
+      meetingCode: pigeonMap['meetingCode']! as String,
+      userDisplayName: pigeonMap['userDisplayName']! as String,
+      password: pigeonMap['password']! as String,
+      inviteUrl: pigeonMap['inviteUrl']! as String,
+      micOn: pigeonMap['micOn']! as bool,
+      cameraOn: pigeonMap['cameraOn']! as bool,
+      speakerOn: pigeonMap['speakerOn']! as bool,
+      faceBeautyOn: pigeonMap['faceBeautyOn']! as bool,
+    );
+  }
+}
+
 class _WeMeetApiCodec extends StandardMessageCodec{
   const _WeMeetApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
     if (value is DartInitParams) {
       buffer.putUint8(128);
+      writeValue(buffer, value.encode());
+    } else 
+    if (value is DartTMJoinParam) {
+      buffer.putUint8(129);
       writeValue(buffer, value.encode());
     } else 
 {
@@ -81,6 +141,9 @@ class _WeMeetApiCodec extends StandardMessageCodec{
     switch (type) {
       case 128:       
         return DartInitParams.decode(readValue(buffer)!);
+      
+      case 129:       
+        return DartTMJoinParam.decode(readValue(buffer)!);
       
       default:      
         return super.readValueOfType(type, buffer);
@@ -103,6 +166,72 @@ class WeMeetApi {
         'dev.flutter.pigeon.WeMeetApi.initWeMeet', codec, binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_param]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error = (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else {
+      return;
+    }
+  }
+
+  Future<void> loginWeMeet(String arg_ssoUrl) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.loginWeMeet', codec, binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(<Object?>[arg_ssoUrl]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error = (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else {
+      return;
+    }
+  }
+
+  Future<void> joinMeeting(DartTMJoinParam arg_joinParam) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.joinMeeting', codec, binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(<Object?>[arg_joinParam]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error = (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+    } else {
+      return;
+    }
+  }
+
+  Future<void> leaveMeeting() async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.leaveMeeting', codec, binaryMessenger: _binaryMessenger);
+    final Map<Object?, Object?>? replyMap =
+        await channel.send(null) as Map<Object?, Object?>?;
     if (replyMap == null) {
       throw PlatformException(
         code: 'channel-error',

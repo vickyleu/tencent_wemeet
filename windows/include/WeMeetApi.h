@@ -110,6 +110,59 @@ class DartInitParams {
 
 };
 
+
+// Generated class from Pigeon that represents data sent in messages.
+class DartTMJoinParam {
+ public:
+  DartTMJoinParam();
+  // 会议号
+  const std::string& meeting_code() const;
+  void set_meeting_code(std::string_view value_arg);
+
+  // 用户名
+  const std::string& user_display_name() const;
+  void set_user_display_name(std::string_view value_arg);
+
+  // 会议密码
+  const std::string& password() const;
+  void set_password(std::string_view value_arg);
+
+  // 邀请链接
+  const std::string& invite_url() const;
+  void set_invite_url(std::string_view value_arg);
+
+  // 是否开启麦克风
+  bool mic_on() const;
+  void set_mic_on(bool value_arg);
+
+  // 是否开启摄像头
+  bool camera_on() const;
+  void set_camera_on(bool value_arg);
+
+  // 是否开启扬声器
+  bool speaker_on() const;
+  void set_speaker_on(bool value_arg);
+
+  bool face_beauty_on() const;
+  void set_face_beauty_on(bool value_arg);
+
+
+ private:
+  DartTMJoinParam(flutter::EncodableMap map);
+  flutter::EncodableMap ToEncodableMap() const;
+  friend class WeMeetApi;
+  friend class WeMeetApiCodecSerializer;
+  std::string meeting_code_;
+  std::string user_display_name_;
+  std::string password_;
+  std::string invite_url_;
+  bool mic_on_;
+  bool camera_on_;
+  bool speaker_on_;
+  bool face_beauty_on_;
+
+};
+
 class WeMeetApiCodecSerializer : public flutter::StandardCodecSerializer {
  public:
 
@@ -135,6 +188,9 @@ class WeMeetApi {
   WeMeetApi& operator=(const WeMeetApi&) = delete;
   virtual ~WeMeetApi() { };
   virtual std::optional<FlutterError> InitWeMeet(const DartInitParams& param) = 0;
+  virtual std::optional<FlutterError> LoginWeMeet(const std::string& sso_url) = 0;
+  virtual std::optional<FlutterError> JoinMeeting(const DartTMJoinParam& join_param) = 0;
+  virtual std::optional<FlutterError> LeaveMeeting() = 0;
   virtual std::optional<FlutterError> ReleaseWeMeet() = 0;
 
   // The codec used by WeMeetApi.
