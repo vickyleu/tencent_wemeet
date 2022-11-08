@@ -66,11 +66,66 @@ struct DartInitParams {
     ]
   }
 }
+
+///Generated class from Pigeon that represents data sent in messages.
+struct DartTMJoinParam {
+  /// 会议号
+  var meetingCode: String
+  /// 用户名
+  var userDisplayName: String
+  /// 会议密码
+  var password: String
+  /// 邀请链接
+  var inviteUrl: String
+  /// 是否开启麦克风
+  var micOn: Bool
+  /// 是否开启摄像头
+  var cameraOn: Bool
+  /// 是否开启扬声器
+  var speakerOn: Bool
+  var faceBeautyOn: Bool
+
+  static func fromMap(_ map: [String: Any?]) -> DartTMJoinParam? {
+    let meetingCode = map["meetingCode"] as! String
+    let userDisplayName = map["userDisplayName"] as! String
+    let password = map["password"] as! String
+    let inviteUrl = map["inviteUrl"] as! String
+    let micOn = map["micOn"] as! Bool
+    let cameraOn = map["cameraOn"] as! Bool
+    let speakerOn = map["speakerOn"] as! Bool
+    let faceBeautyOn = map["faceBeautyOn"] as! Bool
+
+    return DartTMJoinParam(
+      meetingCode: meetingCode,
+      userDisplayName: userDisplayName,
+      password: password,
+      inviteUrl: inviteUrl,
+      micOn: micOn,
+      cameraOn: cameraOn,
+      speakerOn: speakerOn,
+      faceBeautyOn: faceBeautyOn
+    )
+  }
+  func toMap() -> [String: Any?] {
+    return [
+      "meetingCode": meetingCode,
+      "userDisplayName": userDisplayName,
+      "password": password,
+      "inviteUrl": inviteUrl,
+      "micOn": micOn,
+      "cameraOn": cameraOn,
+      "speakerOn": speakerOn,
+      "faceBeautyOn": faceBeautyOn
+    ]
+  }
+}
 private class WeMeetApiCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
       case 128:
         return DartInitParams.fromMap(self.readValue() as! [String: Any])      
+      case 129:
+        return DartTMJoinParam.fromMap(self.readValue() as! [String: Any])      
       default:
         return super.readValue(ofType: type)
       
@@ -81,6 +136,9 @@ private class WeMeetApiCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
     if let value = value as? DartInitParams {
       super.writeByte(128)
+      super.writeValue(value.toMap())
+    } else if let value = value as? DartTMJoinParam {
+      super.writeByte(129)
       super.writeValue(value.toMap())
     } else {
       super.writeValue(value)
@@ -105,6 +163,9 @@ class WeMeetApiCodec: FlutterStandardMessageCodec {
 ///Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol WeMeetApi {
   func initWeMeet(param: DartInitParams)
+  func loginWeMeet(ssoUrl: String)
+  func joinMeeting(joinParam: DartTMJoinParam)
+  func leaveMeeting()
   func releaseWeMeet()
 }
 
@@ -124,6 +185,37 @@ class WeMeetApiSetup {
       }
     } else {
       initWeMeetChannel.setMessageHandler(nil)
+    }
+    let loginWeMeetChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.loginWeMeet", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      loginWeMeetChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let ssoUrlArg = args[0] as! String
+        api.loginWeMeet(ssoUrl: ssoUrlArg)
+        reply(nil)
+      }
+    } else {
+      loginWeMeetChannel.setMessageHandler(nil)
+    }
+    let joinMeetingChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.joinMeeting", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      joinMeetingChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let joinParamArg = args[0] as! DartTMJoinParam
+        api.joinMeeting(joinParam: joinParamArg)
+        reply(nil)
+      }
+    } else {
+      joinMeetingChannel.setMessageHandler(nil)
+    }
+    let leaveMeetingChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.leaveMeeting", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      leaveMeetingChannel.setMessageHandler { _, reply in
+        api.leaveMeeting()
+        reply(nil)
+      }
+    } else {
+      leaveMeetingChannel.setMessageHandler(nil)
     }
     let releaseWeMeetChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.releaseWeMeet", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {

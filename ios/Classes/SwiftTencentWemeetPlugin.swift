@@ -10,6 +10,19 @@ public class SwiftTencentWemeetPlugin: NSObject, FlutterPlugin, WeMeetApi {
     func initWeMeet(param: DartInitParams) {
         WeMeetController.instance.attach( toSwift(param))
     }
+
+    func loginWeMeet(ssoUrl: String) {
+        WeMeetController.instance.login(ssoUrl)
+    }
+
+    func joinMeeting(joinParam: DartTMJoinParam) {
+        WeMeetController.instance.join(toSwift(joinParam))
+    }
+
+    func leaveMeeting() {
+        WeMeetController.instance.leave()
+    }
+
     func releaseWeMeet() {
         WeMeetController.instance.deAttach()
     }
@@ -24,6 +37,18 @@ func toSwift(_ p:DartInitParams)->TMInitParam {
     param.orgDomain = p.serverDomain
 
     return param
+}
+func toSwift(_ p:DartTMJoinParam)->TMJoinParam {
+    let joinParam = TMJoinParam()
+    joinParam.meetingCode = p.meetingCode
+    joinParam.userDisplayName = p.userDisplayName
+    joinParam.password = p.password
+    joinParam.inviteUrl = p.inviteUrl
+    joinParam.cameraOn = p.cameraOn
+    joinParam.micOn = p.micOn
+    joinParam.speakerOn = p.speakerOn
+    joinParam.faceBeautyOn = p.faceBeautyOn
+    return joinParam
 }
 
 
