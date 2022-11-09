@@ -2,6 +2,7 @@ import Flutter
 import UIKit
 import TencentMeetingSDK
 public class SwiftTencentWemeetPlugin: NSObject, FlutterPlugin, WeMeetApi {
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
         let instance = SwiftTencentWemeetPlugin()
         WeMeetApiSetup.setUp(binaryMessenger: registrar.messenger(), api: instance)
@@ -28,7 +29,21 @@ public class SwiftTencentWemeetPlugin: NSObject, FlutterPlugin, WeMeetApi {
     }
 
     func logout() {
+        WeMeetController.instance.logout()
     }
+    
+    func isInitialized() -> Bool {
+        WeMeetController.instance.isInitialized()
+    }
+    
+    func refreshSDKToken(newSdkToken: String) -> Int32 {
+        return Int32(WeMeetController.instance.refreshSDKToken(newSdkToken))
+    }
+    
+    func isLoggedIn() -> Bool {
+        return WeMeetController.instance.isLoggedIn()
+    }
+
 }
 
 func toSwift(_ p:DartInitParams)->TMInitParam {

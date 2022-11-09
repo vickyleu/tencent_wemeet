@@ -58,6 +58,18 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback {
         TMSDK.getAccountService().logout()
     }
 
+    fun isInitialized(): Boolean {
+        return TMSDK.isInitialized()
+    }
+
+    fun isLoggedIn(): Boolean {
+        return TMSDK.getAccountService().isLoggedIn()
+    }
+
+    fun refreshSDKToken(newSdkToken: String): Long {
+        return TMSDK.refreshSDKToken(newSdkToken).toLong()
+    }
+
     companion object {
         private var instance: WeMeetController? = null
             get() {

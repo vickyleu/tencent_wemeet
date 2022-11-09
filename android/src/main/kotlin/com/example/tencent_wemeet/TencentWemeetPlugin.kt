@@ -22,9 +22,18 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi {
         WeMeetController.get().init(param.toKotlin())
     }
 
+    override fun isInitialized(): Boolean {
+        return  WeMeetController.get().isInitialized()
+    }
+
     override fun loginWeMeet(ssoUrl: String) {
         WeMeetController.get().login(ssoUrl)
     }
+
+    override fun isLoggedIn(): Boolean {
+        return WeMeetController.get().isLoggedIn()
+    }
+
     override fun joinMeeting(joinParam: DartTMJoinParam) {
         WeMeetController.get().join(joinParam.toKotlin())
     }
@@ -39,6 +48,10 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi {
 
     override fun logout() {
         WeMeetController.get().logout()
+    }
+
+    override fun refreshSDKToken(newSdkToken: String): Long {
+        return WeMeetController.get().refreshSDKToken(newSdkToken)
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {

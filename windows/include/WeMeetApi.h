@@ -16,6 +16,34 @@ namespace pigeon {
 
 // Generated class from Pigeon.
 
+// 错误码
+enum class DartTMErrorCode {
+  success = 0,
+  serverConfigFail = 1,
+  invalidAuthCode = 2,
+  logoutInMeeting = 3,
+  unknown = 4,
+  userNotAuthorized = 5,
+  userInMeeting = 6,
+  invalidParam = 7,
+  invalidMeetingCode = 8,
+  invalidNickname = 9,
+  duplicateInitCall = 10,
+  accountAlreadyLogin = 11,
+  sdkNotInitialized = 12,
+  syncCallTimeout = 13,
+  notInMeeting = 14,
+  cancelJoin = 15,
+  isLogining = 16,
+  loginNetError = 17,
+  tokenVerifyFailed = 18,
+  childProcessCrash = 19,
+  multiAccountLoginConflict = 20,
+  joinMeetingServiceFailed = 21,
+  invalidJsonString = 22,
+  proxySetFailed = 23
+};
+
 class FlutterError {
  public:
   FlutterError(const std::string& code)
@@ -146,6 +174,9 @@ class DartTMJoinParam {
   bool face_beauty_on() const;
   void set_face_beauty_on(bool value_arg);
 
+  int64_t value() const;
+  void set_value(int64_t value_arg);
+
 
  private:
   DartTMJoinParam(flutter::EncodableMap map);
@@ -160,6 +191,7 @@ class DartTMJoinParam {
   bool camera_on_;
   bool speaker_on_;
   bool face_beauty_on_;
+  int64_t value_;
 
 };
 
@@ -187,13 +219,27 @@ class WeMeetApi {
   WeMeetApi(const WeMeetApi&) = delete;
   WeMeetApi& operator=(const WeMeetApi&) = delete;
   virtual ~WeMeetApi() { };
+  // 初始化SDK并设置回调代理，通过SDKCallback.onSDKInitializeResult回调来返回初始化结果。
+  // 初始化成功后，重复调用无效。
+  // 除getSDKVersion之外，在调用的所有接口函数之前，必须第一个先调用该函数。
+  // 按照个保法要求，App需要在用户同意了隐私协议之后才可以调用该初始化函数。
   virtual std::optional<FlutterError> InitWeMeet(const DartInitParams& param) = 0;
+  // 判断是否已初始化SDK成功
+  virtual ErrorOr<bool> IsInitialized() = 0;
+  // 发起登录请求，登录结果会在回调AuthenticationCallback.onLogin返回。
   virtual std::optional<FlutterError> LoginWeMeet(const std::string& sso_url) = 0;
+  // 判断是否已登录
+  virtual ErrorOr<bool> IsLoggedIn() = 0;
+  // 发起入会请求，结果会在回调PreMeetingCallback.onJoinMeeting返回。登录完成后，才可调用。
+  // 如果想使用JoinParam参数中缺省的默认值，请使用joinMeetingByJSON函数
   virtual std::optional<FlutterError> JoinMeeting(const DartTMJoinParam& join_param) = 0;
+  // 发起离会请求，结果会在回调InMeetingCallback.onLeaveMeeting返回
   virtual std::optional<FlutterError> LeaveMeeting() = 0;
   virtual std::optional<FlutterError> ReleaseWeMeet() = 0;
   // 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。
   virtual std::optional<FlutterError> Logout() = 0;
+  // 更新SDK Token，替换掉过期或快过期的SDK Token。
+  virtual ErrorOr<int64_t> RefreshSDKToken(const std::string& new_sdk_token) = 0;
 
   // The codec used by WeMeetApi.
   static const flutter::StandardMessageCodec& GetCodec();

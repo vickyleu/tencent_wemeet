@@ -13,6 +13,34 @@ import FlutterMacOS
 
 /// Generated class from Pigeon.
 
+/// 错误码
+enum DartTMErrorCode: Int {
+  case success = 0
+  case serverConfigFail = 1
+  case invalidAuthCode = 2
+  case logoutInMeeting = 3
+  case unknown = 4
+  case userNotAuthorized = 5
+  case userInMeeting = 6
+  case invalidParam = 7
+  case invalidMeetingCode = 8
+  case invalidNickname = 9
+  case duplicateInitCall = 10
+  case accountAlreadyLogin = 11
+  case sdkNotInitialized = 12
+  case syncCallTimeout = 13
+  case notInMeeting = 14
+  case cancelJoin = 15
+  case isLogining = 16
+  case loginNetError = 17
+  case tokenVerifyFailed = 18
+  case childProcessCrash = 19
+  case multiAccountLoginConflict = 20
+  case joinMeetingServiceFailed = 21
+  case invalidJsonString = 22
+  case proxySetFailed = 23
+}
+
 ///Generated class from Pigeon that represents data sent in messages.
 struct DartInitParams {
   var sdkId: String
@@ -84,6 +112,7 @@ struct DartTMJoinParam {
   /// 是否开启扬声器
   var speakerOn: Bool
   var faceBeautyOn: Bool
+  var value: Int32
 
   static func fromMap(_ map: [String: Any?]) -> DartTMJoinParam? {
     let meetingCode = map["meetingCode"] as! String
@@ -94,6 +123,7 @@ struct DartTMJoinParam {
     let cameraOn = map["cameraOn"] as! Bool
     let speakerOn = map["speakerOn"] as! Bool
     let faceBeautyOn = map["faceBeautyOn"] as! Bool
+    let value = map["value"] as! Int32
 
     return DartTMJoinParam(
       meetingCode: meetingCode,
@@ -103,7 +133,8 @@ struct DartTMJoinParam {
       micOn: micOn,
       cameraOn: cameraOn,
       speakerOn: speakerOn,
-      faceBeautyOn: faceBeautyOn
+      faceBeautyOn: faceBeautyOn,
+      value: value
     )
   }
   func toMap() -> [String: Any?] {
@@ -115,7 +146,8 @@ struct DartTMJoinParam {
       "micOn": micOn,
       "cameraOn": cameraOn,
       "speakerOn": speakerOn,
-      "faceBeautyOn": faceBeautyOn
+      "faceBeautyOn": faceBeautyOn,
+      "value": value
     ]
   }
 }
@@ -162,13 +194,27 @@ class WeMeetApiCodec: FlutterStandardMessageCodec {
 
 ///Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol WeMeetApi {
+  /// 初始化SDK并设置回调代理，通过SDKCallback.onSDKInitializeResult回调来返回初始化结果。
+  /// 初始化成功后，重复调用无效。
+  /// 除getSDKVersion之外，在调用的所有接口函数之前，必须第一个先调用该函数。
+  /// 按照个保法要求，App需要在用户同意了隐私协议之后才可以调用该初始化函数。
   func initWeMeet(param: DartInitParams)
+  /// 判断是否已初始化SDK成功
+  func isInitialized() -> Bool
+  /// 发起登录请求，登录结果会在回调AuthenticationCallback.onLogin返回。
   func loginWeMeet(ssoUrl: String)
+  /// 判断是否已登录
+  func isLoggedIn() -> Bool
+  /// 发起入会请求，结果会在回调PreMeetingCallback.onJoinMeeting返回。登录完成后，才可调用。
+  /// 如果想使用JoinParam参数中缺省的默认值，请使用joinMeetingByJSON函数
   func joinMeeting(joinParam: DartTMJoinParam)
+  /// 发起离会请求，结果会在回调InMeetingCallback.onLeaveMeeting返回
   func leaveMeeting()
   func releaseWeMeet()
   /// 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。
   func logout()
+  /// 更新SDK Token，替换掉过期或快过期的SDK Token。
+  func refreshSDKToken(newSdkToken: String) -> Int32
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -177,6 +223,10 @@ class WeMeetApiSetup {
   static var codec: FlutterStandardMessageCodec { WeMeetApiCodec.shared }
   /// Sets up an instance of `WeMeetApi` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: WeMeetApi?) {
+    /// 初始化SDK并设置回调代理，通过SDKCallback.onSDKInitializeResult回调来返回初始化结果。
+    /// 初始化成功后，重复调用无效。
+    /// 除getSDKVersion之外，在调用的所有接口函数之前，必须第一个先调用该函数。
+    /// 按照个保法要求，App需要在用户同意了隐私协议之后才可以调用该初始化函数。
     let initWeMeetChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.initWeMeet", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       initWeMeetChannel.setMessageHandler { message, reply in
@@ -188,6 +238,17 @@ class WeMeetApiSetup {
     } else {
       initWeMeetChannel.setMessageHandler(nil)
     }
+    /// 判断是否已初始化SDK成功
+    let isInitializedChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.isInitialized", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      isInitializedChannel.setMessageHandler { _, reply in
+        let result = api.isInitialized()
+        reply(wrapResult(result))
+      }
+    } else {
+      isInitializedChannel.setMessageHandler(nil)
+    }
+    /// 发起登录请求，登录结果会在回调AuthenticationCallback.onLogin返回。
     let loginWeMeetChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.loginWeMeet", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       loginWeMeetChannel.setMessageHandler { message, reply in
@@ -199,6 +260,18 @@ class WeMeetApiSetup {
     } else {
       loginWeMeetChannel.setMessageHandler(nil)
     }
+    /// 判断是否已登录
+    let isLoggedInChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.isLoggedIn", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      isLoggedInChannel.setMessageHandler { _, reply in
+        let result = api.isLoggedIn()
+        reply(wrapResult(result))
+      }
+    } else {
+      isLoggedInChannel.setMessageHandler(nil)
+    }
+    /// 发起入会请求，结果会在回调PreMeetingCallback.onJoinMeeting返回。登录完成后，才可调用。
+    /// 如果想使用JoinParam参数中缺省的默认值，请使用joinMeetingByJSON函数
     let joinMeetingChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.joinMeeting", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       joinMeetingChannel.setMessageHandler { message, reply in
@@ -210,6 +283,7 @@ class WeMeetApiSetup {
     } else {
       joinMeetingChannel.setMessageHandler(nil)
     }
+    /// 发起离会请求，结果会在回调InMeetingCallback.onLeaveMeeting返回
     let leaveMeetingChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.leaveMeeting", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       leaveMeetingChannel.setMessageHandler { _, reply in
@@ -237,6 +311,18 @@ class WeMeetApiSetup {
       }
     } else {
       logoutChannel.setMessageHandler(nil)
+    }
+    /// 更新SDK Token，替换掉过期或快过期的SDK Token。
+    let refreshSDKTokenChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.refreshSDKToken", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      refreshSDKTokenChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let newSdkTokenArg = args[0] as! String
+        let result = api.refreshSDKToken(newSdkToken: newSdkTokenArg)
+        reply(wrapResult(result))
+      }
+    } else {
+      refreshSDKTokenChannel.setMessageHandler(nil)
     }
   }
 }

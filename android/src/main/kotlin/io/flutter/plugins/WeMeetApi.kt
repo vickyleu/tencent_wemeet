@@ -13,6 +13,40 @@ import java.nio.ByteBuffer
 
 /** Generated class from Pigeon. */
 
+/** 错误码 */
+enum class DartTMErrorCode(val raw: Int) {
+  SUCCESS(0),
+  SERVERCONFIGFAIL(1),
+  INVALIDAUTHCODE(2),
+  LOGOUTINMEETING(3),
+  UNKNOWN(4),
+  USERNOTAUTHORIZED(5),
+  USERINMEETING(6),
+  INVALIDPARAM(7),
+  INVALIDMEETINGCODE(8),
+  INVALIDNICKNAME(9),
+  DUPLICATEINITCALL(10),
+  ACCOUNTALREADYLOGIN(11),
+  SDKNOTINITIALIZED(12),
+  SYNCCALLTIMEOUT(13),
+  NOTINMEETING(14),
+  CANCELJOIN(15),
+  ISLOGINING(16),
+  LOGINNETERROR(17),
+  TOKENVERIFYFAILED(18),
+  CHILDPROCESSCRASH(19),
+  MULTIACCOUNTLOGINCONFLICT(20),
+  JOINMEETINGSERVICEFAILED(21),
+  INVALIDJSONSTRING(22),
+  PROXYSETFAILED(23);
+
+  companion object {
+    fun ofRaw(raw: Int): DartTMErrorCode? {
+      return values().firstOrNull { it.raw == raw }
+    }
+  }
+}
+
 /** Generated class from Pigeon that represents data sent in messages. */
 data class DartInitParams (
   val sdkId: String,
@@ -76,7 +110,8 @@ data class DartTMJoinParam (
   val cameraOn: Boolean,
   /** 是否开启扬声器 */
   val speakerOn: Boolean,
-  val faceBeautyOn: Boolean
+  val faceBeautyOn: Boolean,
+  val value: Long
 
 ) {
   companion object {
@@ -90,8 +125,9 @@ data class DartTMJoinParam (
       val cameraOn = map["cameraOn"] as Boolean
       val speakerOn = map["speakerOn"] as Boolean
       val faceBeautyOn = map["faceBeautyOn"] as Boolean
+      val value = map["value"] as Long
 
-      return DartTMJoinParam(meetingCode, userDisplayName, password, inviteUrl, micOn, cameraOn, speakerOn, faceBeautyOn)
+      return DartTMJoinParam(meetingCode, userDisplayName, password, inviteUrl, micOn, cameraOn, speakerOn, faceBeautyOn, value)
     }
   }
   fun toMap(): Map<String, Any?> {
@@ -104,6 +140,7 @@ data class DartTMJoinParam (
     map["cameraOn"] = cameraOn
     map["speakerOn"] = speakerOn
     map["faceBeautyOn"] = faceBeautyOn
+    map["value"] = value
     return map
   }
 }
@@ -141,13 +178,31 @@ private object WeMeetApiCodec : StandardMessageCodec() {
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface WeMeetApi {
+  /**
+   * 初始化SDK并设置回调代理，通过SDKCallback.onSDKInitializeResult回调来返回初始化结果。
+   * 初始化成功后，重复调用无效。
+   * 除getSDKVersion之外，在调用的所有接口函数之前，必须第一个先调用该函数。
+   * 按照个保法要求，App需要在用户同意了隐私协议之后才可以调用该初始化函数。
+   */
   fun initWeMeet(param: DartInitParams)
+  /** 判断是否已初始化SDK成功 */
+  fun isInitialized(): Boolean
+  /** 发起登录请求，登录结果会在回调AuthenticationCallback.onLogin返回。 */
   fun loginWeMeet(ssoUrl: String)
+  /** 判断是否已登录 */
+  fun isLoggedIn(): Boolean
+  /**
+   * 发起入会请求，结果会在回调PreMeetingCallback.onJoinMeeting返回。登录完成后，才可调用。
+   * 如果想使用JoinParam参数中缺省的默认值，请使用joinMeetingByJSON函数
+   */
   fun joinMeeting(joinParam: DartTMJoinParam)
+  /** 发起离会请求，结果会在回调InMeetingCallback.onLeaveMeeting返回 */
   fun leaveMeeting()
   fun releaseWeMeet()
   /** 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。 */
   fun logout()
+  /** 更新SDK Token，替换掉过期或快过期的SDK Token。 */
+  fun refreshSDKToken(newSdkToken: String): Long
 
   companion object {
     /** The codec used by WeMeetApi. */
@@ -177,6 +232,22 @@ interface WeMeetApi {
         }
       }
       run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.isInitialized", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            val wrapped = hashMapOf<String, Any?>()
+            try {
+              wrapped["result"] = api.isInitialized()
+            } catch (exception: Error) {
+              wrapped["error"] = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
         val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.loginWeMeet", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
@@ -186,6 +257,22 @@ interface WeMeetApi {
               val ssoUrlArg = args[0] as String
               api.loginWeMeet(ssoUrlArg)
               wrapped["result"] = null
+            } catch (exception: Error) {
+              wrapped["error"] = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.isLoggedIn", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            val wrapped = hashMapOf<String, Any?>()
+            try {
+              wrapped["result"] = api.isLoggedIn()
             } catch (exception: Error) {
               wrapped["error"] = wrapError(exception)
             }
@@ -256,6 +343,24 @@ interface WeMeetApi {
             try {
               api.logout()
               wrapped["result"] = null
+            } catch (exception: Error) {
+              wrapped["error"] = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.refreshSDKToken", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val wrapped = hashMapOf<String, Any?>()
+            try {
+              val args = message as List<Any?>
+              val newSdkTokenArg = args[0] as String
+              wrapped["result"] = api.refreshSDKToken(newSdkTokenArg)
             } catch (exception: Error) {
               wrapped["error"] = wrapError(exception)
             }

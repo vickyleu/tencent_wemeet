@@ -42,6 +42,18 @@ class WeMeetController: NSObject,TMSDKProtocol, TMPreMeetingProtocol,TMInMeeting
     func logout() {
         TencentMeetingSDK.instance().getAccountService().logout()
     }
+    
+    func isInitialized() -> Bool {
+        TencentMeetingSDK.instance().isInitialized()
+    }
+    
+    func refreshSDKToken(_ newSdkToken: String) -> Int {
+        return TencentMeetingSDK.instance().refreshSDKToken(newSdkToken).rawValue
+    }
+    
+    func isLoggedIn() -> Bool {
+        return TencentMeetingSDK.instance().getAccountService().isLoggedIn()
+    }
 
 
     // MARK: - TMAuthenticationProtocol
