@@ -17,31 +17,31 @@ namespace pigeon {
 // Generated class from Pigeon.
 
 // 错误码
-enum class DartTMErrorCode {
+enum class DartErrorCode {
   success = 0,
-  serverConfigFail = 1,
-  invalidAuthCode = 2,
-  logoutInMeeting = 3,
-  unknown = 4,
-  userNotAuthorized = 5,
-  userInMeeting = 6,
-  invalidParam = 7,
-  invalidMeetingCode = 8,
-  invalidNickname = 9,
-  duplicateInitCall = 10,
-  accountAlreadyLogin = 11,
-  sdkNotInitialized = 12,
-  syncCallTimeout = 13,
-  notInMeeting = 14,
-  cancelJoin = 15,
-  isLogining = 16,
-  loginNetError = 17,
-  tokenVerifyFailed = 18,
-  childProcessCrash = 19,
-  multiAccountLoginConflict = 20,
-  joinMeetingServiceFailed = 21,
-  invalidJsonString = 22,
-  proxySetFailed = 23
+  serverConfigFail = -1001,
+  invalidAuthCode = -1002,
+  logoutInMeeting = -1003,
+  unknown = -1005,
+  userNotAuthorized = -1006,
+  userInMeeting = -1007,
+  invalidParam = -1008,
+  invalidMeetingCode = -1009,
+  invalidNickname = -1010,
+  duplicateInitCall = -1011,
+  accountAlreadyLogin = -1012,
+  sdkNotInitialized = -1013,
+  syncCallTimeout = -1014,
+  notInMeeting = -1015,
+  cancelJoin = -1016,
+  isLogining = -1017,
+  loginNetError = -1018,
+  tokenVerifyFailed = -1019,
+  childProcessCrash = -1020,
+  multiAccountLoginConflict = -1021,
+  joinMeetingServiceFailed = -1022,
+  invalidJsonString = -1024,
+  proxySetFailed = -1025
 };
 
 class FlutterError {
@@ -78,6 +78,7 @@ template<class T> class ErrorOr {
 
  private:
   friend class WeMeetApi;
+  friend class WeMeetHostApi;
   ErrorOr() = default;
   T TakeValue() && { return std::get<T>(std::move(v_)); }
 
@@ -89,34 +90,28 @@ template<class T> class ErrorOr {
 class DartInitParams {
  public:
   DartInitParams();
+  // sdk的id
   const std::string& sdk_id() const;
   void set_sdk_id(std::string_view value_arg);
 
+  // sdk的token,不是登录的idToken
   const std::string& sdk_token() const;
   void set_sdk_token(std::string_view value_arg);
 
+  // 应用名称
   const std::string& app_name() const;
   void set_app_name(std::string_view value_arg);
 
-  const std::string& server_address() const;
+  const std::string* server_address() const;
+  void set_server_address(const std::string_view* value_arg);
   void set_server_address(std::string_view value_arg);
 
-  const std::string& server_domain() const;
+  const std::string* server_domain() const;
+  void set_server_domain(const std::string_view* value_arg);
   void set_server_domain(std::string_view value_arg);
 
-  const std::string& env_name() const;
-  void set_env_name(std::string_view value_arg);
-
-  const std::string& env_id() const;
-  void set_env_id(std::string_view value_arg);
-
-  const std::string& env_domain() const;
-  void set_env_domain(std::string_view value_arg);
-
-  bool env_debug_mode() const;
-  void set_env_debug_mode(bool value_arg);
-
-  const std::string& prefer_language() const;
+  const std::string* prefer_language() const;
+  void set_prefer_language(const std::string_view* value_arg);
   void set_prefer_language(std::string_view value_arg);
 
 
@@ -125,24 +120,22 @@ class DartInitParams {
   flutter::EncodableMap ToEncodableMap() const;
   friend class WeMeetApi;
   friend class WeMeetApiCodecSerializer;
+  friend class WeMeetHostApi;
+  friend class WeMeetHostApiCodecSerializer;
   std::string sdk_id_;
   std::string sdk_token_;
   std::string app_name_;
-  std::string server_address_;
-  std::string server_domain_;
-  std::string env_name_;
-  std::string env_id_;
-  std::string env_domain_;
-  bool env_debug_mode_;
-  std::string prefer_language_;
+  std::optional<std::string> server_address_;
+  std::optional<std::string> server_domain_;
+  std::optional<std::string> prefer_language_;
 
 };
 
 
 // Generated class from Pigeon that represents data sent in messages.
-class DartTMJoinParam {
+class DartJoinParam {
  public:
-  DartTMJoinParam();
+  DartJoinParam();
   // 会议号
   const std::string& meeting_code() const;
   void set_meeting_code(std::string_view value_arg);
@@ -171,18 +164,18 @@ class DartTMJoinParam {
   bool speaker_on() const;
   void set_speaker_on(bool value_arg);
 
+  // 是否开启美颜
   bool face_beauty_on() const;
   void set_face_beauty_on(bool value_arg);
 
-  int64_t value() const;
-  void set_value(int64_t value_arg);
-
 
  private:
-  DartTMJoinParam(flutter::EncodableMap map);
+  DartJoinParam(flutter::EncodableMap map);
   flutter::EncodableMap ToEncodableMap() const;
   friend class WeMeetApi;
   friend class WeMeetApiCodecSerializer;
+  friend class WeMeetHostApi;
+  friend class WeMeetHostApiCodecSerializer;
   std::string meeting_code_;
   std::string user_display_name_;
   std::string password_;
@@ -191,7 +184,6 @@ class DartTMJoinParam {
   bool camera_on_;
   bool speaker_on_;
   bool face_beauty_on_;
-  int64_t value_;
 
 };
 
@@ -224,6 +216,10 @@ class WeMeetApi {
   // 除getSDKVersion之外，在调用的所有接口函数之前，必须第一个先调用该函数。
   // 按照个保法要求，App需要在用户同意了隐私协议之后才可以调用该初始化函数。
   virtual std::optional<FlutterError> InitWeMeet(const DartInitParams& param) = 0;
+  // 跳转历史会议界面
+  virtual std::optional<FlutterError> JumpToHistory() = 0;
+  // 通知android隐私协议已授权
+  virtual std::optional<FlutterError> NotifyPrivacyGranted() = 0;
   // 判断是否已初始化SDK成功
   virtual ErrorOr<bool> IsInitialized() = 0;
   // 发起登录请求，登录结果会在回调AuthenticationCallback.onLogin返回。
@@ -232,9 +228,10 @@ class WeMeetApi {
   virtual ErrorOr<bool> IsLoggedIn() = 0;
   // 发起入会请求，结果会在回调PreMeetingCallback.onJoinMeeting返回。登录完成后，才可调用。
   // 如果想使用JoinParam参数中缺省的默认值，请使用joinMeetingByJSON函数
-  virtual std::optional<FlutterError> JoinMeeting(const DartTMJoinParam& join_param) = 0;
+  virtual std::optional<FlutterError> JoinMeeting(const DartJoinParam& join_param) = 0;
   // 发起离会请求，结果会在回调InMeetingCallback.onLeaveMeeting返回
   virtual std::optional<FlutterError> LeaveMeeting() = 0;
+  // 释放资源
   virtual std::optional<FlutterError> ReleaseWeMeet() = 0;
   // 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。
   virtual std::optional<FlutterError> Logout() = 0;
@@ -250,6 +247,25 @@ class WeMeetApi {
 
  protected:
   WeMeetApi() = default;
+
+};
+
+// Generated class from Pigeon that represents Flutter messages that can be called from C++.
+class WeMeetHostApi {
+ private:
+  flutter::BinaryMessenger* binary_messenger_;
+
+ public:
+  WeMeetHostApi(flutter::BinaryMessenger* binary_messenger);
+  static const flutter::StandardMessageCodec& GetCodec();
+  // 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
+  void initPrivacyNeedGrant(std::function<void(bool)>&& callback);
+  // 当前登录失效了
+  void sdkTokenInvalid(std::function<void(void)>&& callback);
+  // 非阻塞通知sdk初始化成功
+  void sdkInitSuccess(std::function<void(void)>&& callback);
+  // 非住宿通知登录成功
+  void loginSuccess(std::function<void(void)>&& callback);
 
 };
 }  // namespace pigeon

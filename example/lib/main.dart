@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tencent_wemeet/api_generated.dart';
 import 'package:tencent_wemeet/tencent_wemeet.dart';
 
 void main() {
@@ -15,35 +16,68 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  final _tencentWemeetPlugin = TencentWemeet();
+class _MyAppState extends State<MyApp> with WeMeetHostApi {
+  bool isPrivacyNeedGrant = false;
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    TencentWemeet.registerCallback(this);
+    Future.delayed(const Duration(seconds: 3)).then((value) {
+      initPlatformState();
+    });
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await _tencentWemeetPlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+
+      final params = DartInitParams(
+          sdkId: 'xxxxxxxxx',
+          sdkToken:
+              'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+          appName: '',
+          preferLanguage: '中文');
+      await TencentWemeet.initWeMeet(params);
+
+      // TencentWemeet.tokenInvalid();
+    } on PlatformException catch (e) {
+      print("e:$e result");
     }
+  }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
+  @override
+  void sdkInitSuccess() {
+    print("initWeMeet result");
+    Future.delayed(const Duration(seconds: 1)).then((value) async {
+      const host = 'https://meetingxxxxxx-idp.id.meeting.qq.com/cidp/custom/ai-xxxxxxxxx/ai-xxxxxxxxxxx?id_token=';
+      const idToken = 'xxxxxxxxxxxxxxxxxx';
+      await TencentWemeet.loginMeeting('$host$idToken');
+      print("loginMeeting result");
+    });
+  }
 
-    setState(() {
-      _platformVersion = platformVersion;
+  @override
+  void loginSuccess() {
+
+    /*final joinParam = DartJoinParam(
+        meetingCode: 'xxxxx',
+        userDisplayName: '哎哟喂',
+        password: '',
+        // password: 'xxxx',
+        inviteUrl: '',
+        micOn: true,
+        cameraOn: true,
+        speakerOn: true,
+        faceBeautyOn: true);
+    Future.delayed(const Duration(seconds: 1)).then((value) async {
+      await TencentWemeet.joinMeeting(joinParam);
+      print("joinMeeting result");
+    });*/
+
+    Future.delayed(const Duration(seconds: 1)).then((value) async {
+      await TencentWemeet.jumpToHistory();
+      print("jumpToHistory result");
     });
   }
 
@@ -55,9 +89,19 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Text('Running on: \n'),
         ),
       ),
     );
+  }
+
+  @override
+  void sdkTokenInvalid() {
+    // TODO: implement sdkTokenInvalid
+  }
+
+  @override
+  Future<bool> initPrivacyNeedGrant() async {
+    return isPrivacyNeedGrant;
   }
 }

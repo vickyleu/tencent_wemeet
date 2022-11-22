@@ -2,21 +2,30 @@ import Flutter
 import UIKit
 import TencentMeetingSDK
 public class SwiftTencentWemeetPlugin: NSObject, FlutterPlugin, WeMeetApi {
+    func notifyPrivacyGranted() {
+     //only for android
+    }
+    
+    static var hostApi: WeMeetHostApi?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
+        print("SwiftTencentWemeetPlugin  register")
         let instance = SwiftTencentWemeetPlugin()
         WeMeetApiSetup.setUp(binaryMessenger: registrar.messenger(), api: instance)
+        hostApi = WeMeetHostApi.init(binaryMessenger: registrar.messenger())
     }
 
     func initWeMeet(param: DartInitParams) {
+        print("SwiftTencentWemeetPlugin  initWeMeet")
         WeMeetController.instance.attach( toSwift(param))
     }
 
     func loginWeMeet(ssoUrl: String) {
+        print("SwiftTencentWemeetPlugin  loginWeMeet ssoUrl")
         WeMeetController.instance.login(ssoUrl)
     }
 
-    func joinMeeting(joinParam: DartTMJoinParam) {
+    func joinMeeting(joinParam: DartJoinParam) {
         WeMeetController.instance.join(toSwift(joinParam))
     }
 
@@ -48,15 +57,15 @@ public class SwiftTencentWemeetPlugin: NSObject, FlutterPlugin, WeMeetApi {
 
 func toSwift(_ p:DartInitParams)->TMInitParam {
     let param = TMInitParam()
-    param.preferLanguage = p.preferLanguage
+    param.preferLanguage = p.preferLanguage ?? "zh-cn"
     param.sdkId = p.sdkId
     param.sdkToken = p.sdkToken
-    param.serverAddress = p.serverAddress
-    param.orgDomain = p.serverDomain
+    param.serverAddress = p.serverAddress ?? ""
+    param.orgDomain = p.serverDomain ?? ""
 
     return param
 }
-func toSwift(_ p:DartTMJoinParam)->TMJoinParam {
+func toSwift(_ p:DartJoinParam)->TMJoinParam {
     let joinParam = TMJoinParam()
     joinParam.meetingCode = p.meetingCode
     joinParam.userDisplayName = p.userDisplayName

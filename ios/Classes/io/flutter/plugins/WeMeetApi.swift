@@ -14,57 +14,52 @@ import FlutterMacOS
 /// Generated class from Pigeon.
 
 /// 错误码
-enum DartTMErrorCode: Int {
+enum DartErrorCode: Int {
   case success = 0
-  case serverConfigFail = 1
-  case invalidAuthCode = 2
-  case logoutInMeeting = 3
-  case unknown = 4
-  case userNotAuthorized = 5
-  case userInMeeting = 6
-  case invalidParam = 7
-  case invalidMeetingCode = 8
-  case invalidNickname = 9
-  case duplicateInitCall = 10
-  case accountAlreadyLogin = 11
-  case sdkNotInitialized = 12
-  case syncCallTimeout = 13
-  case notInMeeting = 14
-  case cancelJoin = 15
-  case isLogining = 16
-  case loginNetError = 17
-  case tokenVerifyFailed = 18
-  case childProcessCrash = 19
-  case multiAccountLoginConflict = 20
-  case joinMeetingServiceFailed = 21
-  case invalidJsonString = 22
-  case proxySetFailed = 23
+  case serverConfigFail = -1001
+  case invalidAuthCode = -1002
+  case logoutInMeeting = -1003
+  case unknown = -1005
+  case userNotAuthorized = -1006
+  case userInMeeting = -1007
+  case invalidParam = -1008
+  case invalidMeetingCode = -1009
+  case invalidNickname = -1010
+  case duplicateInitCall = -1011
+  case accountAlreadyLogin = -1012
+  case sdkNotInitialized = -1013
+  case syncCallTimeout = -1014
+  case notInMeeting = -1015
+  case cancelJoin = -1016
+  case isLogining = -1017
+  case loginNetError = -1018
+  case tokenVerifyFailed = -1019
+  case childProcessCrash = -1020
+  case multiAccountLoginConflict = -1021
+  case joinMeetingServiceFailed = -1022
+  case invalidJsonString = -1024
+  case proxySetFailed = -1025
 }
 
 ///Generated class from Pigeon that represents data sent in messages.
 struct DartInitParams {
+  /// sdk的id
   var sdkId: String
+  /// sdk的token,不是登录的idToken
   var sdkToken: String
+  /// 应用名称
   var appName: String
-  var serverAddress: String
-  var serverDomain: String
-  var envName: String
-  var envId: String
-  var envDomain: String
-  var envDebugMode: Bool
-  var preferLanguage: String
+  var serverAddress: String? = nil
+  var serverDomain: String? = nil
+  var preferLanguage: String? = nil
 
   static func fromMap(_ map: [String: Any?]) -> DartInitParams? {
     let sdkId = map["sdkId"] as! String
     let sdkToken = map["sdkToken"] as! String
     let appName = map["appName"] as! String
-    let serverAddress = map["serverAddress"] as! String
-    let serverDomain = map["serverDomain"] as! String
-    let envName = map["envName"] as! String
-    let envId = map["envId"] as! String
-    let envDomain = map["envDomain"] as! String
-    let envDebugMode = map["envDebugMode"] as! Bool
-    let preferLanguage = map["preferLanguage"] as! String
+    let serverAddress = map["serverAddress"] as? String 
+    let serverDomain = map["serverDomain"] as? String 
+    let preferLanguage = map["preferLanguage"] as? String 
 
     return DartInitParams(
       sdkId: sdkId,
@@ -72,10 +67,6 @@ struct DartInitParams {
       appName: appName,
       serverAddress: serverAddress,
       serverDomain: serverDomain,
-      envName: envName,
-      envId: envId,
-      envDomain: envDomain,
-      envDebugMode: envDebugMode,
       preferLanguage: preferLanguage
     )
   }
@@ -86,17 +77,13 @@ struct DartInitParams {
       "appName": appName,
       "serverAddress": serverAddress,
       "serverDomain": serverDomain,
-      "envName": envName,
-      "envId": envId,
-      "envDomain": envDomain,
-      "envDebugMode": envDebugMode,
       "preferLanguage": preferLanguage
     ]
   }
 }
 
 ///Generated class from Pigeon that represents data sent in messages.
-struct DartTMJoinParam {
+struct DartJoinParam {
   /// 会议号
   var meetingCode: String
   /// 用户名
@@ -111,10 +98,10 @@ struct DartTMJoinParam {
   var cameraOn: Bool
   /// 是否开启扬声器
   var speakerOn: Bool
+  /// 是否开启美颜
   var faceBeautyOn: Bool
-  var value: Int32
 
-  static func fromMap(_ map: [String: Any?]) -> DartTMJoinParam? {
+  static func fromMap(_ map: [String: Any?]) -> DartJoinParam? {
     let meetingCode = map["meetingCode"] as! String
     let userDisplayName = map["userDisplayName"] as! String
     let password = map["password"] as! String
@@ -123,9 +110,8 @@ struct DartTMJoinParam {
     let cameraOn = map["cameraOn"] as! Bool
     let speakerOn = map["speakerOn"] as! Bool
     let faceBeautyOn = map["faceBeautyOn"] as! Bool
-    let value = map["value"] as! Int32
 
-    return DartTMJoinParam(
+    return DartJoinParam(
       meetingCode: meetingCode,
       userDisplayName: userDisplayName,
       password: password,
@@ -133,8 +119,7 @@ struct DartTMJoinParam {
       micOn: micOn,
       cameraOn: cameraOn,
       speakerOn: speakerOn,
-      faceBeautyOn: faceBeautyOn,
-      value: value
+      faceBeautyOn: faceBeautyOn
     )
   }
   func toMap() -> [String: Any?] {
@@ -146,8 +131,7 @@ struct DartTMJoinParam {
       "micOn": micOn,
       "cameraOn": cameraOn,
       "speakerOn": speakerOn,
-      "faceBeautyOn": faceBeautyOn,
-      "value": value
+      "faceBeautyOn": faceBeautyOn
     ]
   }
 }
@@ -157,7 +141,7 @@ private class WeMeetApiCodecReader: FlutterStandardReader {
       case 128:
         return DartInitParams.fromMap(self.readValue() as! [String: Any])      
       case 129:
-        return DartTMJoinParam.fromMap(self.readValue() as! [String: Any])      
+        return DartJoinParam.fromMap(self.readValue() as! [String: Any])      
       default:
         return super.readValue(ofType: type)
       
@@ -169,7 +153,7 @@ private class WeMeetApiCodecWriter: FlutterStandardWriter {
     if let value = value as? DartInitParams {
       super.writeByte(128)
       super.writeValue(value.toMap())
-    } else if let value = value as? DartTMJoinParam {
+    } else if let value = value as? DartJoinParam {
       super.writeByte(129)
       super.writeValue(value.toMap())
     } else {
@@ -199,6 +183,10 @@ protocol WeMeetApi {
   /// 除getSDKVersion之外，在调用的所有接口函数之前，必须第一个先调用该函数。
   /// 按照个保法要求，App需要在用户同意了隐私协议之后才可以调用该初始化函数。
   func initWeMeet(param: DartInitParams)
+  /// 跳转历史会议界面
+  func jumpToHistory()
+  /// 通知android隐私协议已授权
+  func notifyPrivacyGranted()
   /// 判断是否已初始化SDK成功
   func isInitialized() -> Bool
   /// 发起登录请求，登录结果会在回调AuthenticationCallback.onLogin返回。
@@ -207,9 +195,10 @@ protocol WeMeetApi {
   func isLoggedIn() -> Bool
   /// 发起入会请求，结果会在回调PreMeetingCallback.onJoinMeeting返回。登录完成后，才可调用。
   /// 如果想使用JoinParam参数中缺省的默认值，请使用joinMeetingByJSON函数
-  func joinMeeting(joinParam: DartTMJoinParam)
+  func joinMeeting(joinParam: DartJoinParam)
   /// 发起离会请求，结果会在回调InMeetingCallback.onLeaveMeeting返回
   func leaveMeeting()
+  /// 释放资源
   func releaseWeMeet()
   /// 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。
   func logout()
@@ -237,6 +226,26 @@ class WeMeetApiSetup {
       }
     } else {
       initWeMeetChannel.setMessageHandler(nil)
+    }
+    /// 跳转历史会议界面
+    let jumpToHistoryChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.jumpToHistory", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      jumpToHistoryChannel.setMessageHandler { _, reply in
+        api.jumpToHistory()
+        reply(nil)
+      }
+    } else {
+      jumpToHistoryChannel.setMessageHandler(nil)
+    }
+    /// 通知android隐私协议已授权
+    let notifyPrivacyGrantedChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.notifyPrivacyGranted", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      notifyPrivacyGrantedChannel.setMessageHandler { _, reply in
+        api.notifyPrivacyGranted()
+        reply(nil)
+      }
+    } else {
+      notifyPrivacyGrantedChannel.setMessageHandler(nil)
     }
     /// 判断是否已初始化SDK成功
     let isInitializedChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.isInitialized", binaryMessenger: binaryMessenger, codec: codec)
@@ -276,7 +285,7 @@ class WeMeetApiSetup {
     if let api = api {
       joinMeetingChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let joinParamArg = args[0] as! DartTMJoinParam
+        let joinParamArg = args[0] as! DartJoinParam
         api.joinMeeting(joinParam: joinParamArg)
         reply(nil)
       }
@@ -293,6 +302,7 @@ class WeMeetApiSetup {
     } else {
       leaveMeetingChannel.setMessageHandler(nil)
     }
+    /// 释放资源
     let releaseWeMeetChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.releaseWeMeet", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       releaseWeMeetChannel.setMessageHandler { _, reply in
@@ -323,6 +333,42 @@ class WeMeetApiSetup {
       }
     } else {
       refreshSDKTokenChannel.setMessageHandler(nil)
+    }
+  }
+}
+///Generated class from Pigeon that represents Flutter messages that can be called from Swift.
+class WeMeetHostApi {
+  private let binaryMessenger: FlutterBinaryMessenger
+  init(binaryMessenger: FlutterBinaryMessenger){
+    self.binaryMessenger = binaryMessenger
+  }
+  /// 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
+  func initPrivacyNeedGrant(completion: @escaping (Bool) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.initPrivacyNeedGrant", binaryMessenger: binaryMessenger)
+    channel.sendMessage(nil) { response in
+      let result = response as! Bool
+      completion(result)
+    }
+  }
+  /// 当前登录失效了
+  func sdkTokenInvalid(completion: @escaping () -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.sdkTokenInvalid", binaryMessenger: binaryMessenger)
+    channel.sendMessage(nil) { _ in
+      completion()
+    }
+  }
+  /// 非阻塞通知sdk初始化成功
+  func sdkInitSuccess(completion: @escaping () -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.sdkInitSuccess", binaryMessenger: binaryMessenger)
+    channel.sendMessage(nil) { _ in
+      completion()
+    }
+  }
+  /// 非住宿通知登录成功
+  func loginSuccess(completion: @escaping () -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.loginSuccess", binaryMessenger: binaryMessenger)
+    channel.sendMessage(nil) { _ in
+      completion()
     }
   }
 }

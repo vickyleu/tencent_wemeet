@@ -27,25 +27,16 @@ void DartInitParams::set_sdk_token(std::string_view value_arg) { sdk_token_ = va
 const std::string& DartInitParams::app_name() const { return app_name_; }
 void DartInitParams::set_app_name(std::string_view value_arg) { app_name_ = value_arg; }
 
-const std::string& DartInitParams::server_address() const { return server_address_; }
+const std::string* DartInitParams::server_address() const { return server_address_ ? &(*server_address_) : nullptr; }
+void DartInitParams::set_server_address(const std::string_view* value_arg) { server_address_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt; }
 void DartInitParams::set_server_address(std::string_view value_arg) { server_address_ = value_arg; }
 
-const std::string& DartInitParams::server_domain() const { return server_domain_; }
+const std::string* DartInitParams::server_domain() const { return server_domain_ ? &(*server_domain_) : nullptr; }
+void DartInitParams::set_server_domain(const std::string_view* value_arg) { server_domain_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt; }
 void DartInitParams::set_server_domain(std::string_view value_arg) { server_domain_ = value_arg; }
 
-const std::string& DartInitParams::env_name() const { return env_name_; }
-void DartInitParams::set_env_name(std::string_view value_arg) { env_name_ = value_arg; }
-
-const std::string& DartInitParams::env_id() const { return env_id_; }
-void DartInitParams::set_env_id(std::string_view value_arg) { env_id_ = value_arg; }
-
-const std::string& DartInitParams::env_domain() const { return env_domain_; }
-void DartInitParams::set_env_domain(std::string_view value_arg) { env_domain_ = value_arg; }
-
-bool DartInitParams::env_debug_mode() const { return env_debug_mode_; }
-void DartInitParams::set_env_debug_mode(bool value_arg) { env_debug_mode_ = value_arg; }
-
-const std::string& DartInitParams::prefer_language() const { return prefer_language_; }
+const std::string* DartInitParams::prefer_language() const { return prefer_language_ ? &(*prefer_language_) : nullptr; }
+void DartInitParams::set_prefer_language(const std::string_view* value_arg) { prefer_language_ = value_arg ? std::optional<std::string>(*value_arg) : std::nullopt; }
 void DartInitParams::set_prefer_language(std::string_view value_arg) { prefer_language_ = value_arg; }
 
 flutter::EncodableMap DartInitParams::ToEncodableMap() const {
@@ -53,13 +44,9 @@ return flutter::EncodableMap{
     {flutter::EncodableValue("sdkId"), flutter::EncodableValue(sdk_id_)},
     {flutter::EncodableValue("sdkToken"), flutter::EncodableValue(sdk_token_)},
     {flutter::EncodableValue("appName"), flutter::EncodableValue(app_name_)},
-    {flutter::EncodableValue("serverAddress"), flutter::EncodableValue(server_address_)},
-    {flutter::EncodableValue("serverDomain"), flutter::EncodableValue(server_domain_)},
-    {flutter::EncodableValue("envName"), flutter::EncodableValue(env_name_)},
-    {flutter::EncodableValue("envId"), flutter::EncodableValue(env_id_)},
-    {flutter::EncodableValue("envDomain"), flutter::EncodableValue(env_domain_)},
-    {flutter::EncodableValue("envDebugMode"), flutter::EncodableValue(env_debug_mode_)},
-    {flutter::EncodableValue("preferLanguage"), flutter::EncodableValue(prefer_language_)},
+    {flutter::EncodableValue("serverAddress"), server_address_ ? flutter::EncodableValue(*server_address_) : flutter::EncodableValue()},
+    {flutter::EncodableValue("serverDomain"), server_domain_ ? flutter::EncodableValue(*server_domain_) : flutter::EncodableValue()},
+    {flutter::EncodableValue("preferLanguage"), prefer_language_ ? flutter::EncodableValue(*prefer_language_) : flutter::EncodableValue()},
   };
 }
 
@@ -86,22 +73,6 @@ DartInitParams::DartInitParams(flutter::EncodableMap map) {
   if (const std::string* pointer_server_domain = std::get_if<std::string>(&encodable_server_domain)) {
     server_domain_ = *pointer_server_domain;
   }
-  auto& encodable_env_name = map.at(flutter::EncodableValue("envName"));
-  if (const std::string* pointer_env_name = std::get_if<std::string>(&encodable_env_name)) {
-    env_name_ = *pointer_env_name;
-  }
-  auto& encodable_env_id = map.at(flutter::EncodableValue("envId"));
-  if (const std::string* pointer_env_id = std::get_if<std::string>(&encodable_env_id)) {
-    env_id_ = *pointer_env_id;
-  }
-  auto& encodable_env_domain = map.at(flutter::EncodableValue("envDomain"));
-  if (const std::string* pointer_env_domain = std::get_if<std::string>(&encodable_env_domain)) {
-    env_domain_ = *pointer_env_domain;
-  }
-  auto& encodable_env_debug_mode = map.at(flutter::EncodableValue("envDebugMode"));
-  if (const bool* pointer_env_debug_mode = std::get_if<bool>(&encodable_env_debug_mode)) {
-    env_debug_mode_ = *pointer_env_debug_mode;
-  }
   auto& encodable_prefer_language = map.at(flutter::EncodableValue("preferLanguage"));
   if (const std::string* pointer_prefer_language = std::get_if<std::string>(&encodable_prefer_language)) {
     prefer_language_ = *pointer_prefer_language;
@@ -109,36 +80,33 @@ DartInitParams::DartInitParams(flutter::EncodableMap map) {
 }
 
 
-// DartTMJoinParam
+// DartJoinParam
 
-const std::string& DartTMJoinParam::meeting_code() const { return meeting_code_; }
-void DartTMJoinParam::set_meeting_code(std::string_view value_arg) { meeting_code_ = value_arg; }
+const std::string& DartJoinParam::meeting_code() const { return meeting_code_; }
+void DartJoinParam::set_meeting_code(std::string_view value_arg) { meeting_code_ = value_arg; }
 
-const std::string& DartTMJoinParam::user_display_name() const { return user_display_name_; }
-void DartTMJoinParam::set_user_display_name(std::string_view value_arg) { user_display_name_ = value_arg; }
+const std::string& DartJoinParam::user_display_name() const { return user_display_name_; }
+void DartJoinParam::set_user_display_name(std::string_view value_arg) { user_display_name_ = value_arg; }
 
-const std::string& DartTMJoinParam::password() const { return password_; }
-void DartTMJoinParam::set_password(std::string_view value_arg) { password_ = value_arg; }
+const std::string& DartJoinParam::password() const { return password_; }
+void DartJoinParam::set_password(std::string_view value_arg) { password_ = value_arg; }
 
-const std::string& DartTMJoinParam::invite_url() const { return invite_url_; }
-void DartTMJoinParam::set_invite_url(std::string_view value_arg) { invite_url_ = value_arg; }
+const std::string& DartJoinParam::invite_url() const { return invite_url_; }
+void DartJoinParam::set_invite_url(std::string_view value_arg) { invite_url_ = value_arg; }
 
-bool DartTMJoinParam::mic_on() const { return mic_on_; }
-void DartTMJoinParam::set_mic_on(bool value_arg) { mic_on_ = value_arg; }
+bool DartJoinParam::mic_on() const { return mic_on_; }
+void DartJoinParam::set_mic_on(bool value_arg) { mic_on_ = value_arg; }
 
-bool DartTMJoinParam::camera_on() const { return camera_on_; }
-void DartTMJoinParam::set_camera_on(bool value_arg) { camera_on_ = value_arg; }
+bool DartJoinParam::camera_on() const { return camera_on_; }
+void DartJoinParam::set_camera_on(bool value_arg) { camera_on_ = value_arg; }
 
-bool DartTMJoinParam::speaker_on() const { return speaker_on_; }
-void DartTMJoinParam::set_speaker_on(bool value_arg) { speaker_on_ = value_arg; }
+bool DartJoinParam::speaker_on() const { return speaker_on_; }
+void DartJoinParam::set_speaker_on(bool value_arg) { speaker_on_ = value_arg; }
 
-bool DartTMJoinParam::face_beauty_on() const { return face_beauty_on_; }
-void DartTMJoinParam::set_face_beauty_on(bool value_arg) { face_beauty_on_ = value_arg; }
+bool DartJoinParam::face_beauty_on() const { return face_beauty_on_; }
+void DartJoinParam::set_face_beauty_on(bool value_arg) { face_beauty_on_ = value_arg; }
 
-int64_t DartTMJoinParam::value() const { return value_; }
-void DartTMJoinParam::set_value(int64_t value_arg) { value_ = value_arg; }
-
-flutter::EncodableMap DartTMJoinParam::ToEncodableMap() const {
+flutter::EncodableMap DartJoinParam::ToEncodableMap() const {
 return flutter::EncodableMap{
     {flutter::EncodableValue("meetingCode"), flutter::EncodableValue(meeting_code_)},
     {flutter::EncodableValue("userDisplayName"), flutter::EncodableValue(user_display_name_)},
@@ -148,13 +116,12 @@ return flutter::EncodableMap{
     {flutter::EncodableValue("cameraOn"), flutter::EncodableValue(camera_on_)},
     {flutter::EncodableValue("speakerOn"), flutter::EncodableValue(speaker_on_)},
     {flutter::EncodableValue("faceBeautyOn"), flutter::EncodableValue(face_beauty_on_)},
-    {flutter::EncodableValue("value"), flutter::EncodableValue(value_)},
   };
 }
 
-DartTMJoinParam::DartTMJoinParam() {}
+DartJoinParam::DartJoinParam() {}
 
-DartTMJoinParam::DartTMJoinParam(flutter::EncodableMap map) {
+DartJoinParam::DartJoinParam(flutter::EncodableMap map) {
   auto& encodable_meeting_code = map.at(flutter::EncodableValue("meetingCode"));
   if (const std::string* pointer_meeting_code = std::get_if<std::string>(&encodable_meeting_code)) {
     meeting_code_ = *pointer_meeting_code;
@@ -187,11 +154,6 @@ DartTMJoinParam::DartTMJoinParam(flutter::EncodableMap map) {
   if (const bool* pointer_face_beauty_on = std::get_if<bool>(&encodable_face_beauty_on)) {
     face_beauty_on_ = *pointer_face_beauty_on;
   }
-  auto& encodable_value = map.at(flutter::EncodableValue("value"));
-  if (const int32_t* pointer_value = std::get_if<int32_t>(&encodable_value))
-    value_ = *pointer_value;
-  else if (const int64_t* pointer_value_64 = std::get_if<int64_t>(&encodable_value))
-    value_ = *pointer_value_64;
 }
 
 WeMeetApiCodecSerializer::WeMeetApiCodecSerializer() {}
@@ -201,7 +163,7 @@ flutter::EncodableValue WeMeetApiCodecSerializer::ReadValueOfType(uint8_t type, 
       return flutter::CustomEncodableValue(DartInitParams(std::get<flutter::EncodableMap>(ReadValue(stream))));
     
     case 129:    
-      return flutter::CustomEncodableValue(DartTMJoinParam(std::get<flutter::EncodableMap>(ReadValue(stream))));
+      return flutter::CustomEncodableValue(DartJoinParam(std::get<flutter::EncodableMap>(ReadValue(stream))));
     
     default:    
       return flutter::StandardCodecSerializer::ReadValueOfType(type, stream);
@@ -215,9 +177,9 @@ void WeMeetApiCodecSerializer::WriteValue(const flutter::EncodableValue& value, 
       WriteValue(std::any_cast<DartInitParams>(*custom_value).ToEncodableMap(), stream);
       return;
     }
-    if (custom_value->type() == typeid(DartTMJoinParam)) {
+    if (custom_value->type() == typeid(DartJoinParam)) {
       stream->WriteByte(129);
-      WriteValue(std::any_cast<DartTMJoinParam>(*custom_value).ToEncodableMap(), stream);
+      WriteValue(std::any_cast<DartJoinParam>(*custom_value).ToEncodableMap(), stream);
       return;
     }
   }
@@ -247,6 +209,52 @@ void WeMeetApi::SetUp(flutter::BinaryMessenger* binary_messenger, WeMeetApi* api
           }
           const auto& param_arg = std::any_cast<const DartInitParams&>(std::get<flutter::CustomEncodableValue>(encodable_param_arg));
           std::optional<FlutterError> output = api->InitWeMeet(param_arg);
+          if (output.has_value()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue());
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.jumpToHistory", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          std::optional<FlutterError> output = api->JumpToHistory();
+          if (output.has_value()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue());
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.notifyPrivacyGranted", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          std::optional<FlutterError> output = api->NotifyPrivacyGranted();
           if (output.has_value()) {
             wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
           } else {
@@ -353,7 +361,7 @@ void WeMeetApi::SetUp(flutter::BinaryMessenger* binary_messenger, WeMeetApi* api
             reply(wrapped);
             return;
           }
-          const auto& join_param_arg = std::any_cast<const DartTMJoinParam&>(std::get<flutter::CustomEncodableValue>(encodable_join_param_arg));
+          const auto& join_param_arg = std::any_cast<const DartJoinParam&>(std::get<flutter::CustomEncodableValue>(encodable_join_param_arg));
           std::optional<FlutterError> output = api->JoinMeeting(join_param_arg);
           if (output.has_value()) {
             wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
@@ -487,4 +495,47 @@ flutter::EncodableMap WeMeetApi::WrapError(const FlutterError& error) {
   });
 }
 
+// Generated class from Pigeon that represents Flutter messages that can be called from C++.
+WeMeetHostApi::WeMeetHostApi(flutter::BinaryMessenger* binary_messenger) {
+  this->binary_messenger_ = binary_messenger;
+}
+
+const flutter::StandardMessageCodec& WeMeetHostApi::GetCodec() {
+  return flutter::StandardMessageCodec::GetInstance(&flutter::StandardCodecSerializer::GetInstance());
+}
+
+void WeMeetHostApi::initPrivacyNeedGrant(std::function<void(bool)>&& callback) {
+  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+      binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.initPrivacyNeedGrant", &GetCodec());
+  channel->Send(flutter::EncodableValue(), [callback](const uint8_t* reply, size_t reply_size) {
+    std::unique_ptr<flutter::EncodableValue> decoded_reply = GetCodec().DecodeMessage(reply, reply_size);
+    flutter::EncodableValue args = *(flutter::EncodableValue*)(decoded_reply.release());
+    bool output{};
+    if (const bool* pointer_output = std::get_if<bool>(&args)) {
+      output = *pointer_output;
+    }
+    callback(output);
+  });
+}
+void WeMeetHostApi::sdkTokenInvalid(std::function<void(void)>&& callback) {
+  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+      binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.sdkTokenInvalid", &GetCodec());
+  channel->Send(flutter::EncodableValue(), [callback](const uint8_t* reply, size_t reply_size) {
+    callback();
+  });
+}
+void WeMeetHostApi::sdkInitSuccess(std::function<void(void)>&& callback) {
+  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+      binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.sdkInitSuccess", &GetCodec());
+  channel->Send(flutter::EncodableValue(), [callback](const uint8_t* reply, size_t reply_size) {
+    callback();
+  });
+}
+void WeMeetHostApi::loginSuccess(std::function<void(void)>&& callback) {
+  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+      binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.loginSuccess", &GetCodec());
+  channel->Send(flutter::EncodableValue(), [callback](const uint8_t* reply, size_t reply_size) {
+    callback();
+  });
+}
 }  // namespace pigeon

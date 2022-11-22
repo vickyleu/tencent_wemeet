@@ -1,29 +1,58 @@
 package com.example.tencent_wemeet
 
 
-import androidx.lifecycle.DefaultLifecycleObserver
+import android.app.Application
+import android.os.IBinder
+import com.tencent.wemeet.sdk.app.postOnUiThreadAfterWindowAttached
+import com.tencent.wemeet.tmsdk.TMSDK
 import com.tencent.wemeet.tmsdk.data.InitParams
 import com.tencent.wemeet.tmsdk.data.JoinParams
+import com.tencent.xcast.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugins.DartInitParams
-import io.flutter.plugins.DartTMJoinParam
+import io.flutter.plugins.DartJoinParam
 import io.flutter.plugins.WeMeetApi
+import io.flutter.plugins.WeMeetHostApi
 
 /** TencentWemeetPlugin */
-class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi {
+class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi { //,IWeMeetAidlToMainInterface
 
+    companion object {
+        var hostApi: WeMeetHostApi? = null
+    }
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        WeMeetApi.setUp(flutterPluginBinding.binaryMessenger, this)
+        val app = flutterPluginBinding.applicationContext as Application
+        val pName= app.getProcessName()
+        if(pName== app.packageName){
+            android.util.Log.e("onAttachedToActivity","onAttachedToEngine attach:${app.getProcessName()}")
+            WeMeetApi.setUp(flutterPluginBinding.binaryMessenger, this)
+            hostApi = WeMeetHostApi(flutterPluginBinding.binaryMessenger)
+        }
     }
+
     override fun initWeMeet(param: DartInitParams) {
-        WeMeetController.get().init(param.toKotlin())
+        android.util.Log.e("onAttachedToActivity"," attach:initWeMeet")
+        hostApi!!.initPrivacyNeedGrant {
+            val old = WeMeetController.get().isPrivacyNeedGrant
+            WeMeetController.get().setPrivacyNeedGrant(it)
+            if(!it && old){
+            // 变更隐私合规参数了
+              notifyPrivacyGranted()
+            }
+            android.util.Log.e("onAttachedToActivity","setPrivacyNeedGrant attach:")
+            WeMeetController.get().init(param.toKotlin())
+        }
+    }
+
+    override fun jumpToHistory() {
+        WeMeetController.get().jumpToHistory()
     }
 
     override fun isInitialized(): Boolean {
-        return  WeMeetController.get().isInitialized()
+        return WeMeetController.get().isInitialized()
     }
 
     override fun loginWeMeet(ssoUrl: String) {
@@ -34,7 +63,7 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi {
         return WeMeetController.get().isLoggedIn()
     }
 
-    override fun joinMeeting(joinParam: DartTMJoinParam) {
+    override fun joinMeeting(joinParam: DartJoinParam) {
         WeMeetController.get().join(joinParam.toKotlin())
     }
 
@@ -55,11 +84,19 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi {
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-            releaseWeMeet()
+        releaseWeMeet()
+    }
+
+    override fun notifyPrivacyGranted() {
+        WeMeetController.get().notifyPrivacyGranted()
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        WeMeetController.get().attach(binding.activity.application)
+        val pName= binding.activity.application.getProcessName()
+        if(pName== binding.activity.application.packageName){
+            android.util.Log.e("onAttachedToActivity","onAttachedToActivity attach:${binding.activity.application.getProcessName()}")
+            WeMeetController.get().attach(binding.activity.application)
+        }
     }
 
 
@@ -74,18 +111,23 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi {
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
         onAttachedToActivity(binding)
     }
+
+
 }
 
 private fun DartInitParams.toKotlin(): InitParams {
-    return InitParams.Builder()
-        .setPreferLanguage(preferLanguage)
-        .setPrivateParams(serverAddress,serverDomain)
-        .setSaasParams(sdkId, sdkToken)
-        .build()
+    val builder = InitParams.Builder()
+    if (preferLanguage != null) {
+        builder.setPreferLanguage(preferLanguage)
+    }
+    if (serverAddress != null && serverDomain != null) {
+        builder.setPrivateParams(serverAddress, serverDomain)
+    }
+    return builder.setSaasParams(sdkId, sdkToken).build()
 }
 
 
-private fun DartTMJoinParam.toKotlin(): JoinParams {
+private fun DartJoinParam.toKotlin(): JoinParams {
     return JoinParams.Builder(meetingCode)
         .setCameraOn(cameraOn)
         .setInviteUrl(inviteUrl)

@@ -58,9 +58,16 @@ class WeMeetController: NSObject,TMSDKProtocol, TMPreMeetingProtocol,TMInMeeting
 
     // MARK: - TMAuthenticationProtocol
     func onLogin(_ code: TMSDKResult, msg: String) {
-        if code == .errorSuccess{
+        switch code {
+        case .errorSuccess:
             isLoginWeMeet=true
             debugPrint("登录成功!")
+        case .errorTokenVerifyFailed:
+            SwiftTencentWemeetPlugin.hostApi?.sdkTokenInvalid(completion: {
+                
+            })
+        default:
+            return
         }
     }
 
@@ -115,6 +122,14 @@ class WeMeetController: NSObject,TMSDKProtocol, TMPreMeetingProtocol,TMInMeeting
     }
 
     func onResetSDKState(_ code: TMSDKResult, msg: String) {
+        switch code {
+        case .errorTokenVerifyFailed:
+            SwiftTencentWemeetPlugin.hostApi?.sdkTokenInvalid(completion: {
+                
+            })
+        default:
+            return
+        }
     }
 
     func onShowLogsResult(_ code: TMSDKResult, msg: String) {

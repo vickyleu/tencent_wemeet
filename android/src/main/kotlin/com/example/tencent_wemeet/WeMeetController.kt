@@ -1,23 +1,56 @@
 package com.example.tencent_wemeet
 
+import android.annotation.SuppressLint
 import android.app.Application
+import android.content.ComponentName
+import android.content.Context
+import android.content.Context.BIND_AUTO_CREATE
+import android.content.Context.POWER_SERVICE
+import android.content.Intent
+import android.content.ServiceConnection
+import android.net.Uri
+import android.os.IBinder
+import android.os.PowerManager
+import android.provider.Settings
+import android.util.Log
 import com.tencent.wemeet.sdk.app.AppGlobals
 import com.tencent.wemeet.tmsdk.TMErrorCode
 import com.tencent.wemeet.tmsdk.TMSDK
+import com.tencent.wemeet.tmsdk.callback.AuthenticationCallback
 import com.tencent.wemeet.tmsdk.callback.InMeetingCallback
 import com.tencent.wemeet.tmsdk.callback.PreMeetingCallback
 import com.tencent.wemeet.tmsdk.callback.SDKCallback
 import com.tencent.wemeet.tmsdk.data.InitParams
 import com.tencent.wemeet.tmsdk.data.JoinParams
+import io.flutter.plugins.DartErrorCode
 
-class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback {
+class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,
+    AuthenticationCallback, IWeMeetAidlToMainInterface.Stub(), ServiceConnection {
+
+
+    internal var isPrivacyNeedGrant: Boolean = true
 
     private var isLoginWeMeet = false
+        set(value) {
+            if (value && !field) {
+                TencentWemeetPlugin.hostApi?.loginSuccess { }
+            }
+            field = value
+        }
     private var isEnterMeeting = false
+
+    private lateinit var mFlutterBindingContext: Context
 
 
     fun init(param: InitParams) {
-        TMSDK.initialize(param, this)
+        android.util.Log.e("onAttachedToActivity", "initWeMeet $isPrivacyNeedGrant")
+        if (!isPrivacyNeedGrant) {
+            TMSDK.initialize(param, this)
+        }
+    }
+
+    fun jumpToHistory() {
+        TMSDK.getPreMeetingService().showHistoricalMeetingView()
     }
 
 
@@ -25,9 +58,92 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback {
         TMSDK.removeListener()
         TMSDK.uninitialize()
     }
-    fun attach(application: Application) {
-        TMSDK.initOnApplicationCreate(application)
+
+
+    fun notifyPrivacyGranted() {
+        isPrivacyNeedGrant = false
+        if (::mFlutterBindingContext.isInitialized) {
+            TMSDK.notifyPrivacyGranted(mFlutterBindingContext)
+            mBinderMap.values.forEach {
+                it.notifyPrivacyGranted()
+            }
+        }
     }
+
+    fun attach(application: Application) {
+        mFlutterBindingContext = application
+        TMSDK.initOnApplicationCreate(application, isPrivacyNeedGrant)
+//        ignoreBatteryOptimization(application)
+
+        val listenService = Intent(application, WeMeetAidlListenService::class.java)
+        val listenWebService = Intent(application, WeMeetAidlListenWebService::class.java)
+        application.bindService(
+            listenService,
+            this,
+            BIND_AUTO_CREATE
+        )
+        application.bindService(
+            listenWebService,
+            this,
+            BIND_AUTO_CREATE
+        )
+        application.startService(listenService)
+        application.startService(listenWebService)
+    }
+
+    /**
+     * 忽略电池优化
+     */
+
+    public fun ignoreBatteryOptimization(context: Context) {
+        val powerManager = context.getSystemService(POWER_SERVICE) as PowerManager
+        val hasIgnored: Boolean
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            hasIgnored = powerManager.isIgnoringBatteryOptimizations(context.packageName)
+            //  判断当前APP是否有加入电池优化的白名单，如果没有，弹出加入电池优化的白名单的设置对话框。
+            if (!hasIgnored) {
+               /* try {//先调用系统显示 电池优化权限
+                    val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+                    intent.data = Uri.parse("package:${context.packageName}")
+                    context.startActivity(intent)
+                } catch (e: Exception) {//如果失败了则引导用户到电池优化界面
+                    e.printStackTrace()*/
+                    try {
+                        val intent = Intent(Intent.ACTION_MAIN)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        intent.addCategory(Intent.CATEGORY_LAUNCHER)
+                        val cn =
+                            ComponentName.unflattenFromString("com.android.settings/.Settings\$HighPowerApplicationsActivity");
+                        intent.component = cn
+                        context.startActivity(intent)
+                    } catch (ex: Exception) {//如果全部失败则说明没有电池优化功能
+                        ex.printStackTrace()
+                    }
+               /* }*/
+
+            }
+        }
+    }
+
+
+    private val mBinderMap = hashMapOf<String, IWeMeetAidlToServiceInterface>()
+
+    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        val cName = name ?: return
+        val binder = IWeMeetAidlToServiceInterface.Stub.asInterface(service ?: return)
+        binder.launchService(this@WeMeetController, isPrivacyNeedGrant)
+        mBinderMap[cName.shortClassName] = binder
+    }
+
+    override fun onServiceDisconnected(name: ComponentName?) {
+        val cName = name ?: return
+        mBinderMap.remove(cName.shortClassName)
+    }
+
+    override fun loaded() {
+
+    }
+
     fun deAttach() {
         try {
             uninit()
@@ -35,6 +151,9 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback {
         }
         try {
             val app = AppGlobals.application
+            app.unbindService(this)
+            app.stopService(Intent(app, WeMeetAidlListenService::class.java))
+            app.stopService(Intent(app, WeMeetAidlListenWebService::class.java))
             val callback = AppGlobals::class.java.getDeclaredField("mActivityLifecycleCallbacks")
                 .get(null) as Application.ActivityLifecycleCallbacks
             app.unregisterActivityLifecycleCallbacks(callback)
@@ -43,7 +162,12 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback {
     }
 
     fun login(ssoUrl: String) {
-        TMSDK.getAccountService().login(ssoUrl)
+        Log.e("进入会议", "$$:::$ssoUrl")
+        if (!TMSDK.getAccountService().isLoggedIn()) {
+            TMSDK.getAccountService().login(ssoUrl)
+        } else {
+            TencentWemeetPlugin.hostApi?.loginSuccess { }
+        }
     }
 
     fun join(joinParam: JoinParams) {
@@ -71,6 +195,7 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback {
     }
 
     companion object {
+        @SuppressLint("StaticFieldLeak")
         private var instance: WeMeetController? = null
             get() {
                 if (field == null) {
@@ -78,65 +203,99 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback {
                 }
                 return field
             }
-        fun get(): WeMeetController{
-            //细心的小伙伴肯定发现了，这里不用getInstance作为为方法名，是因为在伴生对象声明时，内部已有getInstance方法，所以只能取其他名字
+
+        fun get(): WeMeetController {
             return instance!!
         }
     }
 
+    // MARK: - SDKCallback
     override fun onHandleSchemaResult(code: Int, msg: String) {
-
     }
 
     override fun onHandleWemeetAction(actionType: Int, param: String) {
-
     }
 
     override fun onResetSDKState(code: Int, msg: String) {
-
+        when (code) {
+            -1019 -> {
+                TencentWemeetPlugin.hostApi?.sdkTokenInvalid { }
+            }
+            else -> {}
+        }
     }
 
     override fun onSDKError(code: Int, msg: String) {
-
+        Log.wtf("进入会议", "onSDKError res:${DartErrorCode.ofRaw(code)!!.name} msg:$msg")
     }
 
     override fun onSDKInitializeResult(code: Int, msg: String) {
-        if(code== TMErrorCode.SUCCESS){
+        Log.wtf("进入会议", "onSDKInitializeResult res:${DartErrorCode.ofRaw(code)!!.name} msg:$msg")
+        if (code == TMErrorCode.SUCCESS || code == TMErrorCode.DUPLICATE_INIT_CALL) {
+            Log.wtf("进入会议", "onSDKInitializeResult res:${DartErrorCode.ofRaw(code)!!.name} 成功")
             TMSDK.getInMeetingService().setCallback(this)
             TMSDK.getPreMeetingService().setCallback(this)
+            TMSDK.getAccountService().setCallback(this)
+            TencentWemeetPlugin.hostApi?.sdkInitSuccess { }
         }
     }
 
     override fun onShowLogsResult(code: Int, msg: String) {
-
     }
 
+    // MARK: - InMeetingCallback
     override fun onInviteMeeting(inviteInfo: String, retInfo: String) {
-        TODO("Not yet implemented")
     }
 
     override fun onLeaveMeeting(type: Int, code: Int, msg: String, meetingCode: String) {
-        TODO("Not yet implemented")
+        isEnterMeeting = false
     }
 
     override fun onShowMeetingInfo(meetingInfo: String, retInfo: String) {
-        TODO("Not yet implemented")
     }
 
     override fun onSwitchPiPResult(code: Int, msg: String) {
-        TODO("Not yet implemented")
     }
 
+    // MARK: - PreMeetingCallback
     override fun onActionResult(actionType: Int, code: Int, msg: String) {
-        TODO("Not yet implemented")
     }
 
     override fun onJoinMeeting(resultCode: Int, msg: String, meetingCode: String) {
-        TODO("Not yet implemented")
+        isEnterMeeting = true
+        Log.wtf(
+            "进入会议",
+            "onJoinMeeting res:$${DartErrorCode.ofRaw(resultCode)!!.name} mecode:$meetingCode msg:$msg"
+        )
     }
 
     override fun onShowScreenCastResult(code: Int, msg: String) {
-        TODO("Not yet implemented")
     }
+
+    // MARK: - AuthenticationCallback
+    override fun onJumpUrlWithLoginStatus(code: Int, msg: String?) {
+    }
+
+    override fun onLogin(code: Int, msg: String?) {
+        Log.wtf("进入会议", "onLogin res:${DartErrorCode.ofRaw(code)!!.name} msg:$msg")
+        when (code) {
+            TMErrorCode.SUCCESS -> {
+                isLoginWeMeet = true
+            }
+            -1019 -> {
+                TencentWemeetPlugin.hostApi?.sdkTokenInvalid { }
+            }
+            else -> {}
+        }
+    }
+
+    override fun onLogout(type: Int, code: Int, msg: String?) {
+        isLoginWeMeet = false
+    }
+
+    fun setPrivacyNeedGrant(isPrivacyNeedGrant: Boolean) {
+        this.isPrivacyNeedGrant = isPrivacyNeedGrant
+    }
+
 
 }

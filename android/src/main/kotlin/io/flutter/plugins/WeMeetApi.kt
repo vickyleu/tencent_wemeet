@@ -14,34 +14,34 @@ import java.nio.ByteBuffer
 /** Generated class from Pigeon. */
 
 /** 错误码 */
-enum class DartTMErrorCode(val raw: Int) {
-  SUCCESS(0),
-  SERVERCONFIGFAIL(1),
-  INVALIDAUTHCODE(2),
-  LOGOUTINMEETING(3),
-  UNKNOWN(4),
-  USERNOTAUTHORIZED(5),
-  USERINMEETING(6),
-  INVALIDPARAM(7),
-  INVALIDMEETINGCODE(8),
-  INVALIDNICKNAME(9),
-  DUPLICATEINITCALL(10),
-  ACCOUNTALREADYLOGIN(11),
-  SDKNOTINITIALIZED(12),
-  SYNCCALLTIMEOUT(13),
-  NOTINMEETING(14),
-  CANCELJOIN(15),
-  ISLOGINING(16),
-  LOGINNETERROR(17),
-  TOKENVERIFYFAILED(18),
-  CHILDPROCESSCRASH(19),
-  MULTIACCOUNTLOGINCONFLICT(20),
-  JOINMEETINGSERVICEFAILED(21),
-  INVALIDJSONSTRING(22),
-  PROXYSETFAILED(23);
+enum class DartErrorCode(val raw: Int) {
+  success(0),
+  serverConfigFail(-1001),
+  invalidAuthCode(-1002),
+  logoutInMeeting(-1003),
+  unknown(-1005),
+  userNotAuthorized(-1006),
+  userInMeeting(-1007),
+  invalidParam(-1008),
+  invalidMeetingCode(-1009),
+  invalidNickname(-1010),
+  duplicateInitCall(-1011),
+  accountAlreadyLogin(-1012),
+  sdkNotInitialized(-1013),
+  syncCallTimeout(-1014),
+  notInMeeting(-1015),
+  cancelJoin(-1016),
+  isLogining(-1017),
+  loginNetError(-1018),
+  tokenVerifyFailed(-1019),
+  childProcessCrash(-1020),
+  multiAccountLoginConflict(-1021),
+  joinMeetingServiceFailed(-1022),
+  invalidJsonString(-1024),
+  proxySetFailed(-1025);
 
   companion object {
-    fun ofRaw(raw: Int): DartTMErrorCode? {
+    fun ofRaw(raw: Int): DartErrorCode? {
       return values().firstOrNull { it.raw == raw }
     }
   }
@@ -49,16 +49,15 @@ enum class DartTMErrorCode(val raw: Int) {
 
 /** Generated class from Pigeon that represents data sent in messages. */
 data class DartInitParams (
+  /** sdk的id */
   val sdkId: String,
+  /** sdk的token,不是登录的idToken */
   val sdkToken: String,
+  /** 应用名称 */
   val appName: String,
-  val serverAddress: String,
-  val serverDomain: String,
-  val envName: String,
-  val envId: String,
-  val envDomain: String,
-  val envDebugMode: Boolean,
-  val preferLanguage: String
+  val serverAddress: String? = null,
+  val serverDomain: String? = null,
+  val preferLanguage: String? = null
 
 ) {
   companion object {
@@ -67,15 +66,11 @@ data class DartInitParams (
       val sdkId = map["sdkId"] as String
       val sdkToken = map["sdkToken"] as String
       val appName = map["appName"] as String
-      val serverAddress = map["serverAddress"] as String
-      val serverDomain = map["serverDomain"] as String
-      val envName = map["envName"] as String
-      val envId = map["envId"] as String
-      val envDomain = map["envDomain"] as String
-      val envDebugMode = map["envDebugMode"] as Boolean
-      val preferLanguage = map["preferLanguage"] as String
+      val serverAddress = map["serverAddress"] as? String
+      val serverDomain = map["serverDomain"] as? String
+      val preferLanguage = map["preferLanguage"] as? String
 
-      return DartInitParams(sdkId, sdkToken, appName, serverAddress, serverDomain, envName, envId, envDomain, envDebugMode, preferLanguage)
+      return DartInitParams(sdkId, sdkToken, appName, serverAddress, serverDomain, preferLanguage)
     }
   }
   fun toMap(): Map<String, Any?> {
@@ -83,19 +78,15 @@ data class DartInitParams (
     map["sdkId"] = sdkId
     map["sdkToken"] = sdkToken
     map["appName"] = appName
-    map["serverAddress"] = serverAddress
-    map["serverDomain"] = serverDomain
-    map["envName"] = envName
-    map["envId"] = envId
-    map["envDomain"] = envDomain
-    map["envDebugMode"] = envDebugMode
-    map["preferLanguage"] = preferLanguage
+    serverAddress?.let { map["serverAddress"] = it }
+    serverDomain?.let { map["serverDomain"] = it }
+    preferLanguage?.let { map["preferLanguage"] = it }
     return map
   }
 }
 
 /** Generated class from Pigeon that represents data sent in messages. */
-data class DartTMJoinParam (
+data class DartJoinParam (
   /** 会议号 */
   val meetingCode: String,
   /** 用户名 */
@@ -110,13 +101,13 @@ data class DartTMJoinParam (
   val cameraOn: Boolean,
   /** 是否开启扬声器 */
   val speakerOn: Boolean,
-  val faceBeautyOn: Boolean,
-  val value: Long
+  /** 是否开启美颜 */
+  val faceBeautyOn: Boolean
 
 ) {
   companion object {
     @Suppress("UNCHECKED_CAST")
-    fun fromMap(map: Map<String, Any?>): DartTMJoinParam {
+    fun fromMap(map: Map<String, Any?>): DartJoinParam {
       val meetingCode = map["meetingCode"] as String
       val userDisplayName = map["userDisplayName"] as String
       val password = map["password"] as String
@@ -125,9 +116,8 @@ data class DartTMJoinParam (
       val cameraOn = map["cameraOn"] as Boolean
       val speakerOn = map["speakerOn"] as Boolean
       val faceBeautyOn = map["faceBeautyOn"] as Boolean
-      val value = map["value"] as Long
 
-      return DartTMJoinParam(meetingCode, userDisplayName, password, inviteUrl, micOn, cameraOn, speakerOn, faceBeautyOn, value)
+      return DartJoinParam(meetingCode, userDisplayName, password, inviteUrl, micOn, cameraOn, speakerOn, faceBeautyOn)
     }
   }
   fun toMap(): Map<String, Any?> {
@@ -140,7 +130,6 @@ data class DartTMJoinParam (
     map["cameraOn"] = cameraOn
     map["speakerOn"] = speakerOn
     map["faceBeautyOn"] = faceBeautyOn
-    map["value"] = value
     return map
   }
 }
@@ -155,7 +144,7 @@ private object WeMeetApiCodec : StandardMessageCodec() {
       }
       129.toByte() -> {
         return (readValue(buffer) as? Map<String, Any?>)?.let {
-          DartTMJoinParam.fromMap(it)
+          DartJoinParam.fromMap(it)
         }
       }
       else -> super.readValueOfType(type, buffer)
@@ -167,7 +156,7 @@ private object WeMeetApiCodec : StandardMessageCodec() {
         stream.write(128)
         writeValue(stream, value.toMap())
       }
-      is DartTMJoinParam -> {
+      is DartJoinParam -> {
         stream.write(129)
         writeValue(stream, value.toMap())
       }
@@ -185,6 +174,10 @@ interface WeMeetApi {
    * 按照个保法要求，App需要在用户同意了隐私协议之后才可以调用该初始化函数。
    */
   fun initWeMeet(param: DartInitParams)
+  /** 跳转历史会议界面 */
+  fun jumpToHistory()
+  /** 通知android隐私协议已授权 */
+  fun notifyPrivacyGranted()
   /** 判断是否已初始化SDK成功 */
   fun isInitialized(): Boolean
   /** 发起登录请求，登录结果会在回调AuthenticationCallback.onLogin返回。 */
@@ -195,9 +188,10 @@ interface WeMeetApi {
    * 发起入会请求，结果会在回调PreMeetingCallback.onJoinMeeting返回。登录完成后，才可调用。
    * 如果想使用JoinParam参数中缺省的默认值，请使用joinMeetingByJSON函数
    */
-  fun joinMeeting(joinParam: DartTMJoinParam)
+  fun joinMeeting(joinParam: DartJoinParam)
   /** 发起离会请求，结果会在回调InMeetingCallback.onLeaveMeeting返回 */
   fun leaveMeeting()
+  /** 释放资源 */
   fun releaseWeMeet()
   /** 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。 */
   fun logout()
@@ -221,6 +215,40 @@ interface WeMeetApi {
               val args = message as List<Any?>
               val paramArg = args[0] as DartInitParams
               api.initWeMeet(paramArg)
+              wrapped["result"] = null
+            } catch (exception: Error) {
+              wrapped["error"] = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.jumpToHistory", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            val wrapped = hashMapOf<String, Any?>()
+            try {
+              api.jumpToHistory()
+              wrapped["result"] = null
+            } catch (exception: Error) {
+              wrapped["error"] = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.notifyPrivacyGranted", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            val wrapped = hashMapOf<String, Any?>()
+            try {
+              api.notifyPrivacyGranted()
               wrapped["result"] = null
             } catch (exception: Error) {
               wrapped["error"] = wrapError(exception)
@@ -289,7 +317,7 @@ interface WeMeetApi {
             val wrapped = hashMapOf<String, Any?>()
             try {
               val args = message as List<Any?>
-              val joinParamArg = args[0] as DartTMJoinParam
+              val joinParamArg = args[0] as DartJoinParam
               api.joinMeeting(joinParamArg)
               wrapped["result"] = null
             } catch (exception: Error) {
@@ -370,6 +398,45 @@ interface WeMeetApi {
           channel.setMessageHandler(null)
         }
       }
+    }
+  }
+}
+/** Generated class from Pigeon that represents Flutter messages that can be called from Kotlin. */
+@Suppress("UNCHECKED_CAST")
+class WeMeetHostApi(private val binaryMessenger: BinaryMessenger) {
+  companion object {
+    /** The codec used by WeMeetHostApi. */
+    val codec: MessageCodec<Any?> by lazy {
+      StandardMessageCodec()
+    }
+  }
+  /** 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好 */
+  fun initPrivacyNeedGrant(callback: (Boolean) -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetHostApi.initPrivacyNeedGrant", codec)
+    channel.send(null) {
+      val result = it as Boolean
+      callback(result)
+    }
+  }
+  /** 当前登录失效了 */
+  fun sdkTokenInvalid(callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetHostApi.sdkTokenInvalid", codec)
+    channel.send(null) {
+      callback()
+    }
+  }
+  /** 非阻塞通知sdk初始化成功 */
+  fun sdkInitSuccess(callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetHostApi.sdkInitSuccess", codec)
+    channel.send(null) {
+      callback()
+    }
+  }
+  /** 非住宿通知登录成功 */
+  fun loginSuccess(callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetHostApi.loginSuccess", codec)
+    channel.send(null) {
+      callback()
     }
   }
 }
