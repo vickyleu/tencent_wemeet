@@ -22,6 +22,9 @@ class MockTencentWemeetPlatform
   Future<void> registerNativeCallback(WeMeetHostApi api) async {}
 
   @override
+  Future<void> registerGrantedNativeCallback(WeMeetAndroidGrantedHostApi api) async {}
+
+  @override
   Future<void> joinMeeting(DartJoinParam param) async {}
 
   @override
@@ -72,6 +75,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   final TencentWemeetPlatform initialPlatform = TencentWemeetPlatform.instance;
 
+  TencentWemeet wemeet = TencentWemeet.instance();
   test('$MethodChannelTencentWemeet is the default instance', () {
     expect(initialPlatform, isInstanceOf<MethodChannelTencentWemeet>());
   });
@@ -88,7 +92,7 @@ void main() {
         preferLanguage: '');
     MockTencentWemeetPlatform fakePlatform = MockTencentWemeetPlatform();
     TencentWemeetPlatform.instance = fakePlatform;
-    (await TencentWemeet.initWeMeet(params));
+    (await wemeet.initWeMeet(params));
     expect(Null, Null);
   });
 }

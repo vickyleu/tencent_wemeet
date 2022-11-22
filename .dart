@@ -130,13 +130,17 @@ abstract class WeMeetApi {
 
 @FlutterApi()
 abstract class WeMeetHostApi {
-  /// 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
-  @async
-  bool initPrivacyNeedGrant();
   /// 当前登录失效了
   void sdkTokenInvalid();
   /// 非阻塞通知sdk初始化成功
   void sdkInitSuccess();
   /// 非住宿通知登录成功
   void loginSuccess();
+}
+
+@FlutterApi()
+abstract class WeMeetAndroidGrantedHostApi {
+  /// 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
+  @async
+  bool initPrivacyNeedGrant();
 }

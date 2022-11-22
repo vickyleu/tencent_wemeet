@@ -79,6 +79,7 @@ template<class T> class ErrorOr {
  private:
   friend class WeMeetApi;
   friend class WeMeetHostApi;
+  friend class WeMeetAndroidGrantedHostApi;
   ErrorOr() = default;
   T TakeValue() && { return std::get<T>(std::move(v_)); }
 
@@ -122,6 +123,8 @@ class DartInitParams {
   friend class WeMeetApiCodecSerializer;
   friend class WeMeetHostApi;
   friend class WeMeetHostApiCodecSerializer;
+  friend class WeMeetAndroidGrantedHostApi;
+  friend class WeMeetAndroidGrantedHostApiCodecSerializer;
   std::string sdk_id_;
   std::string sdk_token_;
   std::string app_name_;
@@ -176,6 +179,8 @@ class DartJoinParam {
   friend class WeMeetApiCodecSerializer;
   friend class WeMeetHostApi;
   friend class WeMeetHostApiCodecSerializer;
+  friend class WeMeetAndroidGrantedHostApi;
+  friend class WeMeetAndroidGrantedHostApiCodecSerializer;
   std::string meeting_code_;
   std::string user_display_name_;
   std::string password_;
@@ -258,14 +263,25 @@ class WeMeetHostApi {
  public:
   WeMeetHostApi(flutter::BinaryMessenger* binary_messenger);
   static const flutter::StandardMessageCodec& GetCodec();
-  // 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
-  void initPrivacyNeedGrant(std::function<void(bool)>&& callback);
   // 当前登录失效了
   void sdkTokenInvalid(std::function<void(void)>&& callback);
   // 非阻塞通知sdk初始化成功
   void sdkInitSuccess(std::function<void(void)>&& callback);
   // 非住宿通知登录成功
   void loginSuccess(std::function<void(void)>&& callback);
+
+};
+
+// Generated class from Pigeon that represents Flutter messages that can be called from C++.
+class WeMeetAndroidGrantedHostApi {
+ private:
+  flutter::BinaryMessenger* binary_messenger_;
+
+ public:
+  WeMeetAndroidGrantedHostApi(flutter::BinaryMessenger* binary_messenger);
+  static const flutter::StandardMessageCodec& GetCodec();
+  // 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
+  void initPrivacyNeedGrant(std::function<void(bool)>&& callback);
 
 };
 }  // namespace pigeon

@@ -11,10 +11,7 @@ import com.tencent.xcast.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import io.flutter.plugins.DartInitParams
-import io.flutter.plugins.DartJoinParam
-import io.flutter.plugins.WeMeetApi
-import io.flutter.plugins.WeMeetHostApi
+import io.flutter.plugins.*
 
 /** TencentWemeetPlugin */
 class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi { //,IWeMeetAidlToMainInterface
@@ -23,11 +20,16 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi { //,IWeMeet
         var hostApi: WeMeetHostApi? = null
     }
 
+
+    lateinit var grantedHostApi: WeMeetAndroidGrantedHostApi
+
+
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         val app = flutterPluginBinding.applicationContext as Application
         val pName= app.getProcessName()
         if(pName== app.packageName){
             android.util.Log.e("onAttachedToActivity","onAttachedToEngine attach:${app.getProcessName()}")
+            grantedHostApi = WeMeetAndroidGrantedHostApi(flutterPluginBinding.binaryMessenger)
             WeMeetApi.setUp(flutterPluginBinding.binaryMessenger, this)
             hostApi = WeMeetHostApi(flutterPluginBinding.binaryMessenger)
         }
@@ -35,15 +37,17 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi { //,IWeMeet
 
     override fun initWeMeet(param: DartInitParams) {
         android.util.Log.e("onAttachedToActivity"," attach:initWeMeet")
-        hostApi!!.initPrivacyNeedGrant {
-            val old = WeMeetController.get().isPrivacyNeedGrant
-            WeMeetController.get().setPrivacyNeedGrant(it)
-            if(!it && old){
-            // 变更隐私合规参数了
-              notifyPrivacyGranted()
+        if(::grantedHostApi.isInitialized){
+            grantedHostApi.initPrivacyNeedGrant {
+                val old = WeMeetController.get().isPrivacyNeedGrant
+                WeMeetController.get().setPrivacyNeedGrant(it)
+                if(!it && old){
+                    // 变更隐私合规参数了
+                    notifyPrivacyGranted()
+                }
+                android.util.Log.e("onAttachedToActivity","setPrivacyNeedGrant attach:")
+                WeMeetController.get().init(param.toKotlin())
             }
-            android.util.Log.e("onAttachedToActivity","setPrivacyNeedGrant attach:")
-            WeMeetController.get().init(param.toKotlin())
         }
     }
 

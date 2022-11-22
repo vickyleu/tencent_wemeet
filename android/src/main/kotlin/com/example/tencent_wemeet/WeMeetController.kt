@@ -8,10 +8,9 @@ import android.content.Context.BIND_AUTO_CREATE
 import android.content.Context.POWER_SERVICE
 import android.content.Intent
 import android.content.ServiceConnection
-import android.net.Uri
+import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
-import android.provider.Settings
 import android.util.Log
 import com.tencent.wemeet.sdk.app.AppGlobals
 import com.tencent.wemeet.tmsdk.TMErrorCode
@@ -23,6 +22,7 @@ import com.tencent.wemeet.tmsdk.callback.SDKCallback
 import com.tencent.wemeet.tmsdk.data.InitParams
 import com.tencent.wemeet.tmsdk.data.JoinParams
 import io.flutter.plugins.DartErrorCode
+
 
 class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,
     AuthenticationCallback, IWeMeetAidlToMainInterface.Stub(), ServiceConnection {
@@ -87,8 +87,15 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,
             this,
             BIND_AUTO_CREATE
         )
-        application.startService(listenService)
-        application.startService(listenWebService)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            application.startForegroundService(listenService )
+            application.startForegroundService(listenWebService )
+        } else {
+            application.startService(listenService)
+            application.startService(listenWebService)
+        }
+//        application.startService(listenService)
+//        application.startService(listenWebService)
     }
 
     /**

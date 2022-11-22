@@ -15,6 +15,11 @@ class MethodChannelTencentWemeet extends TencentWemeetPlatform {
   }
 
   @override
+  Future<void> registerGrantedNativeCallback(WeMeetAndroidGrantedHostApi api) async{
+    return WeMeetAndroidGrantedHostApi.setup(api, binaryMessenger: binaryMessenger);
+  }
+
+  @override
   Future<void> initWeMeet(DartInitParams params) async {
     return wemeetApi.initWeMeet(params);
   }

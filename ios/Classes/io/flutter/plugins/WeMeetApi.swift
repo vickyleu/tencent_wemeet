@@ -342,14 +342,6 @@ class WeMeetHostApi {
   init(binaryMessenger: FlutterBinaryMessenger){
     self.binaryMessenger = binaryMessenger
   }
-  /// 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
-  func initPrivacyNeedGrant(completion: @escaping (Bool) -> Void) {
-    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.initPrivacyNeedGrant", binaryMessenger: binaryMessenger)
-    channel.sendMessage(nil) { response in
-      let result = response as! Bool
-      completion(result)
-    }
-  }
   /// 当前登录失效了
   func sdkTokenInvalid(completion: @escaping () -> Void) {
     let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.sdkTokenInvalid", binaryMessenger: binaryMessenger)
@@ -369,6 +361,21 @@ class WeMeetHostApi {
     let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.loginSuccess", binaryMessenger: binaryMessenger)
     channel.sendMessage(nil) { _ in
       completion()
+    }
+  }
+}
+///Generated class from Pigeon that represents Flutter messages that can be called from Swift.
+class WeMeetAndroidGrantedHostApi {
+  private let binaryMessenger: FlutterBinaryMessenger
+  init(binaryMessenger: FlutterBinaryMessenger){
+    self.binaryMessenger = binaryMessenger
+  }
+  /// 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
+  func initPrivacyNeedGrant(completion: @escaping (Bool) -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetAndroidGrantedHostApi.initPrivacyNeedGrant", binaryMessenger: binaryMessenger)
+    channel.sendMessage(nil) { response in
+      let result = response as! Bool
+      completion(result)
     }
   }
 }

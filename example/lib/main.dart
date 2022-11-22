@@ -16,13 +16,14 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with WeMeetHostApi {
+class _MyAppState extends State<MyApp> with WeMeetHostApi , WeMeetAndroidGrantedHostApi{
   bool isPrivacyNeedGrant = false;
 
+  TencentWemeet wemeet = TencentWemeet.instance();
   @override
   void initState() {
     super.initState();
-    TencentWemeet.registerCallback(this);
+    wemeet.registerCallback(this);
     Future.delayed(const Duration(seconds: 3)).then((value) {
       initPlatformState();
     });
@@ -38,7 +39,7 @@ class _MyAppState extends State<MyApp> with WeMeetHostApi {
               'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
           appName: '',
           preferLanguage: '中文');
-      await TencentWemeet.initWeMeet(params);
+      await wemeet.initWeMeet(params);
 
       // TencentWemeet.tokenInvalid();
     } on PlatformException catch (e) {
@@ -52,7 +53,7 @@ class _MyAppState extends State<MyApp> with WeMeetHostApi {
     Future.delayed(const Duration(seconds: 1)).then((value) async {
       const host = 'https://meetingxxxxxx-idp.id.meeting.qq.com/cidp/custom/ai-xxxxxxxxx/ai-xxxxxxxxxxx?id_token=';
       const idToken = 'xxxxxxxxxxxxxxxxxx';
-      await TencentWemeet.loginMeeting('$host$idToken');
+      await wemeet.loginMeeting('$host$idToken');
       print("loginMeeting result");
     });
   }
@@ -76,7 +77,7 @@ class _MyAppState extends State<MyApp> with WeMeetHostApi {
     });*/
 
     Future.delayed(const Duration(seconds: 1)).then((value) async {
-      await TencentWemeet.jumpToHistory();
+      await wemeet.jumpToHistory();
       print("jumpToHistory result");
     });
   }
