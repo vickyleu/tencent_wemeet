@@ -3,7 +3,7 @@
     package="com.example.tencent_wemeet">
 <!--    忽略电池优化,锁屏防止被杀死-->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
-    <application>
+   <!-- <application>
         <service
             android:name=".WeMeetAidlListenService"
             android:enabled="true"
@@ -12,6 +12,6 @@
             android:name=".WeMeetAidlListenWebService"
             android:enabled="true"
             android:process=":wemeet.web" />
-    </application>
+    </application>-->
 
 </manifest>

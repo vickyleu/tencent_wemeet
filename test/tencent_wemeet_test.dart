@@ -30,6 +30,11 @@ class MockTencentWemeetPlatform
   @override
   Future<void> jumpToHistory() async {}
 
+  @override
+  Future<void> notifyPrivacyGranted() {
+    // TODO: implement notifyPrivacyGranted
+    throw UnimplementedError();
+  }
 
   @override
   Future<void> loginMeeting(String ssoUrl) async {}

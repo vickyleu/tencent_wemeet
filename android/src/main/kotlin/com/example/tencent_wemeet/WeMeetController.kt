@@ -24,8 +24,8 @@ import com.tencent.wemeet.tmsdk.data.JoinParams
 import io.flutter.plugins.DartErrorCode
 
 
-class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,
-    AuthenticationCallback, IWeMeetAidlToMainInterface.Stub(), ServiceConnection {
+class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,AuthenticationCallback{
+    //IWeMeetAidlToMainInterface.Stub(), ServiceConnection
 
 
     internal var isPrivacyNeedGrant: Boolean = true
@@ -64,15 +64,16 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,
         isPrivacyNeedGrant = false
         if (::mFlutterBindingContext.isInitialized) {
             TMSDK.notifyPrivacyGranted(mFlutterBindingContext)
-            mBinderMap.values.forEach {
+           /* mBinderMap.values.forEach {
                 it.notifyPrivacyGranted()
-            }
+            }*/
         }
+//        loaded()
     }
 
     fun attach(application: Application) {
         mFlutterBindingContext = application
-        TMSDK.initOnApplicationCreate(application, isPrivacyNeedGrant)
+        /*TMSDK.initOnApplicationCreate(application, isPrivacyNeedGrant)
 //        ignoreBatteryOptimization(application)
 
         val listenService = Intent(application, WeMeetAidlListenService::class.java)
@@ -93,7 +94,7 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,
         } else {
             application.startService(listenService)
             application.startService(listenWebService)
-        }
+        }*/
 //        application.startService(listenService)
 //        application.startService(listenWebService)
     }
@@ -133,23 +134,23 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,
     }
 
 
-    private val mBinderMap = hashMapOf<String, IWeMeetAidlToServiceInterface>()
+//    private val mBinderMap = hashMapOf<String, IWeMeetAidlToServiceInterface>()
 
-    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-        val cName = name ?: return
-        val binder = IWeMeetAidlToServiceInterface.Stub.asInterface(service ?: return)
-        binder.launchService(this@WeMeetController, isPrivacyNeedGrant)
-        mBinderMap[cName.shortClassName] = binder
-    }
-
-    override fun onServiceDisconnected(name: ComponentName?) {
-        val cName = name ?: return
-        mBinderMap.remove(cName.shortClassName)
-    }
-
-    override fun loaded() {
-
-    }
+//    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+//        val cName = name ?: return
+//        val binder = IWeMeetAidlToServiceInterface.Stub.asInterface(service ?: return)
+//        binder.launchService(this@WeMeetController, isPrivacyNeedGrant)
+//        mBinderMap[cName.shortClassName] = binder
+//    }
+//
+//    override fun onServiceDisconnected(name: ComponentName?) {
+//        val cName = name ?: return
+//        mBinderMap.remove(cName.shortClassName)
+//    }
+//
+//    override fun loaded() {
+//
+//    }
 
     fun deAttach() {
         try {
@@ -158,9 +159,9 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,
         }
         try {
             val app = AppGlobals.application
-            app.unbindService(this)
+           /* app.unbindService(this)
             app.stopService(Intent(app, WeMeetAidlListenService::class.java))
-            app.stopService(Intent(app, WeMeetAidlListenWebService::class.java))
+            app.stopService(Intent(app, WeMeetAidlListenWebService::class.java))*/
             val callback = AppGlobals::class.java.getDeclaredField("mActivityLifecycleCallbacks")
                 .get(null) as Application.ActivityLifecycleCallbacks
             app.unregisterActivityLifecycleCallbacks(callback)
