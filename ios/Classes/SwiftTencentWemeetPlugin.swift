@@ -2,6 +2,10 @@ import Flutter
 import UIKit
 import TencentMeetingSDK
 public class SwiftTencentWemeetPlugin: NSObject, FlutterPlugin, WeMeetApi {
+    func jumpToHistory() {
+        
+    }
+    
     func notifyPrivacyGranted() {
      //only for android
     }
