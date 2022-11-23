@@ -50,6 +50,9 @@ abstract class TencentWemeetPlatform extends PlatformInterface {
     throw UnimplementedError('joinMeeting(param) has not been implemented.');
   }
 
+  Future<void> notifyPrivacyGranted() {
+    throw UnimplementedError('notifyPrivacyGranted has not been implemented.');
+  }
   Future<bool> isInitialized() {
     throw UnimplementedError('isInitialized has not been implemented.');
   }

@@ -40,6 +40,9 @@ class TencentWemeet {
     return TencentWemeetPlatform.instance.jumpToHistory();
   }
 
+  Future<void> notifyPrivacyGranted() {
+    return TencentWemeetPlatform.instance.notifyPrivacyGranted();
+  }
   Future<bool> isInitialized() {
     return TencentWemeetPlatform.instance.isInitialized();
   }

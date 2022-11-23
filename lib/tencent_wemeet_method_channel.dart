@@ -23,6 +23,10 @@ class MethodChannelTencentWemeet extends TencentWemeetPlatform {
   Future<void> initWeMeet(DartInitParams params) async {
     return wemeetApi.initWeMeet(params);
   }
+  @override
+  Future<void> notifyPrivacyGranted() async {
+    return wemeetApi.notifyPrivacyGranted();
+  }
 
   @override
   Future<void> jumpToHistory() async{

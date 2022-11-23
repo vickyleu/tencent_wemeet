@@ -68,11 +68,12 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,
                 it.notifyPrivacyGranted()
             }
         }
+        loaded()
     }
 
     fun attach(application: Application) {
         mFlutterBindingContext = application
-        TMSDK.initOnApplicationCreate(application, isPrivacyNeedGrant)
+        /*TMSDK.initOnApplicationCreate(application, isPrivacyNeedGrant)
 //        ignoreBatteryOptimization(application)
 
         val listenService = Intent(application, WeMeetAidlListenService::class.java)
@@ -93,7 +94,7 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,
         } else {
             application.startService(listenService)
             application.startService(listenWebService)
-        }
+        }*/
 //        application.startService(listenService)
 //        application.startService(listenWebService)
     }
@@ -158,9 +159,9 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,
         }
         try {
             val app = AppGlobals.application
-            app.unbindService(this)
+           /* app.unbindService(this)
             app.stopService(Intent(app, WeMeetAidlListenService::class.java))
-            app.stopService(Intent(app, WeMeetAidlListenWebService::class.java))
+            app.stopService(Intent(app, WeMeetAidlListenWebService::class.java))*/
             val callback = AppGlobals::class.java.getDeclaredField("mActivityLifecycleCallbacks")
                 .get(null) as Application.ActivityLifecycleCallbacks
             app.unregisterActivityLifecycleCallbacks(callback)
