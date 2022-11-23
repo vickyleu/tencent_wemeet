@@ -87,6 +87,15 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi { //,IWeMeet
         return WeMeetController.get().refreshSDKToken(newSdkToken)
     }
 
+    override fun showMeetingDetailView(
+        meetingId: String,
+        currentSubMeetingId: String,
+        startTime: String,
+        isHistory: Boolean
+    ) {
+        WeMeetController.get().showMeetingDetailView(meetingId, currentSubMeetingId, startTime, isHistory)
+    }
+
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         releaseWeMeet()
     }

@@ -242,6 +242,11 @@ class WeMeetApi {
   virtual std::optional<FlutterError> Logout() = 0;
   // 更新SDK Token，替换掉过期或快过期的SDK Token。
   virtual ErrorOr<int64_t> RefreshSDKToken(const std::string& new_sdk_token) = 0;
+  // 显示某一个具体会议的界面。
+  // 登陆完成后，才可调用。
+  // 如果输入错误的meeting_id或者current_sub_meeting_id，会议页面中有的字段则会显示’-‘；
+  // 如果输入错误的start_time可能导致页面加载失败，设置准确的start_time参数接口执行效率更高；
+  virtual std::optional<FlutterError> ShowMeetingDetailView(const std::string& meeting_id, const std::string& current_sub_meeting_id, const std::string& start_time, bool is_history) = 0;
 
   // The codec used by WeMeetApi.
   static const flutter::StandardMessageCodec& GetCodec();

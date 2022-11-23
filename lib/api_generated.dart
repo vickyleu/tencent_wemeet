@@ -373,6 +373,22 @@ class WeMeetApi {
       return (replyMap['result'] as int?)!;
     }
   }
+
+  /// 显示某一个具体会议的界面。
+  /// 登陆完成后，才可调用。
+  /// 如果输入错误的meeting_id或者current_sub_meeting_id，会议页面中有的字段则会显示’-‘；
+  /// 如果输入错误的start_time可能导致页面加载失败，设置准确的start_time参数接口执行效率更高；
+  Future<void> showMeetingDetailView(String arg_meetingId, String arg_currentSubMeetingId, String arg_startTime, bool arg_isHistory) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.showMeetingDetailView', codec, binaryMessenger: _binaryMessenger);
+     await ((channel.send(<Object?>[arg_meetingId, arg_currentSubMeetingId, arg_startTime, arg_isHistory]))..catchError((error){
+			throw PlatformException(
+				code: (error['code'] as String?)!,
+				message: error['message'] as String?,
+				details: error['details'],
+			);
+     })) as Map<Object?, Object?>?;
+  }
 }
 
 abstract class WeMeetHostApi {

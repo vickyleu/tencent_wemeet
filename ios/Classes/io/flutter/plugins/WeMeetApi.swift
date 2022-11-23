@@ -204,6 +204,11 @@ protocol WeMeetApi {
   func logout()
   /// 更新SDK Token，替换掉过期或快过期的SDK Token。
   func refreshSDKToken(newSdkToken: String) -> Int32
+  /// 显示某一个具体会议的界面。
+  /// 登陆完成后，才可调用。
+  /// 如果输入错误的meeting_id或者current_sub_meeting_id，会议页面中有的字段则会显示’-‘；
+  /// 如果输入错误的start_time可能导致页面加载失败，设置准确的start_time参数接口执行效率更高；
+  func showMeetingDetailView(meetingId: String, currentSubMeetingId: String, startTime: String, isHistory: Bool)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -333,6 +338,24 @@ class WeMeetApiSetup {
       }
     } else {
       refreshSDKTokenChannel.setMessageHandler(nil)
+    }
+    /// 显示某一个具体会议的界面。
+    /// 登陆完成后，才可调用。
+    /// 如果输入错误的meeting_id或者current_sub_meeting_id，会议页面中有的字段则会显示’-‘；
+    /// 如果输入错误的start_time可能导致页面加载失败，设置准确的start_time参数接口执行效率更高；
+    let showMeetingDetailViewChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.showMeetingDetailView", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      showMeetingDetailViewChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let meetingIdArg = args[0] as! String
+        let currentSubMeetingIdArg = args[1] as! String
+        let startTimeArg = args[2] as! String
+        let isHistoryArg = args[3] as! Bool
+        api.showMeetingDetailView(meetingId: meetingIdArg, currentSubMeetingId: currentSubMeetingIdArg, startTime: startTimeArg, isHistory: isHistoryArg)
+        reply(nil)
+      }
+    } else {
+      showMeetingDetailViewChannel.setMessageHandler(nil)
     }
   }
 }

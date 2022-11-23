@@ -197,6 +197,13 @@ interface WeMeetApi {
   fun logout()
   /** 更新SDK Token，替换掉过期或快过期的SDK Token。 */
   fun refreshSDKToken(newSdkToken: String): Long
+  /**
+   * 显示某一个具体会议的界面。
+   * 登陆完成后，才可调用。
+   * 如果输入错误的meeting_id或者current_sub_meeting_id，会议页面中有的字段则会显示’-‘；
+   * 如果输入错误的start_time可能导致页面加载失败，设置准确的start_time参数接口执行效率更高；
+   */
+  fun showMeetingDetailView(meetingId: String, currentSubMeetingId: String, startTime: String, isHistory: Boolean)
 
   companion object {
     /** The codec used by WeMeetApi. */
@@ -389,6 +396,28 @@ interface WeMeetApi {
               val args = message as List<Any?>
               val newSdkTokenArg = args[0] as String
               wrapped["result"] = api.refreshSDKToken(newSdkTokenArg)
+            } catch (exception: Error) {
+              wrapped["error"] = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.showMeetingDetailView", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val wrapped = hashMapOf<String, Any?>()
+            try {
+              val args = message as List<Any?>
+              val meetingIdArg = args[0] as String
+              val currentSubMeetingIdArg = args[1] as String
+              val startTimeArg = args[2] as String
+              val isHistoryArg = args[3] as Boolean
+              api.showMeetingDetailView(meetingIdArg, currentSubMeetingIdArg, startTimeArg, isHistoryArg)
+              wrapped["result"] = null
             } catch (exception: Error) {
               wrapped["error"] = wrapError(exception)
             }

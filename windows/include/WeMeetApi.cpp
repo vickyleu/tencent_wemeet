@@ -478,6 +478,58 @@ void WeMeetApi::SetUp(flutter::BinaryMessenger* binary_messenger, WeMeetApi* api
       channel->SetMessageHandler(nullptr);
     }
   }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.showMeetingDetailView", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          const auto& args = std::get<flutter::EncodableList>(message);
+          const auto& encodable_meeting_id_arg = args.at(0);
+          if (encodable_meeting_id_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("meeting_id_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& meeting_id_arg = std::get<std::string>(encodable_meeting_id_arg);
+          const auto& encodable_current_sub_meeting_id_arg = args.at(1);
+          if (encodable_current_sub_meeting_id_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("current_sub_meeting_id_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& current_sub_meeting_id_arg = std::get<std::string>(encodable_current_sub_meeting_id_arg);
+          const auto& encodable_start_time_arg = args.at(2);
+          if (encodable_start_time_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("start_time_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& start_time_arg = std::get<std::string>(encodable_start_time_arg);
+          const auto& encodable_is_history_arg = args.at(3);
+          if (encodable_is_history_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("is_history_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& is_history_arg = std::get<bool>(encodable_is_history_arg);
+          std::optional<FlutterError> output = api->ShowMeetingDetailView(meeting_id_arg, current_sub_meeting_id_arg, start_time_arg, is_history_arg);
+          if (output.has_value()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue());
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
 }
 
 flutter::EncodableMap WeMeetApi::WrapError(std::string_view error_message) {

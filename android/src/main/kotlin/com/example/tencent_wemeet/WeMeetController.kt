@@ -201,6 +201,15 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,
         return TMSDK.refreshSDKToken(newSdkToken).toLong()
     }
 
+    fun showMeetingDetailView(
+        meetingId: String,
+        currentSubMeetingId: String,
+        startTime: String,
+        isHistory: Boolean
+    ) {
+        TMSDK.getPreMeetingService().showMeetingDetailView(meetingId, currentSubMeetingId, startTime, isHistory)
+    }
+
     companion object {
         @SuppressLint("StaticFieldLeak")
         private var instance: WeMeetController? = null

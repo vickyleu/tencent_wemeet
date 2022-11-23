@@ -55,6 +55,10 @@ class WeMeetController: NSObject,TMSDKProtocol, TMPreMeetingProtocol,TMInMeeting
         return TencentMeetingSDK.instance().getAccountService().isLoggedIn()
     }
 
+    func showMeetingDetailView(meetingId: String, currentSubMeetingId: String, startTime: String, isHistory: Bool) {
+        TencentMeetingSDK.instance().getPreMeetingService().showMeetingDetailView(meetingId, currentSubMeetingId: currentSubMeetingId, beginTime: startTime, isHistory: isHistory)
+    }
+
 
     // MARK: - TMAuthenticationProtocol
     func onLogin(_ code: TMSDKResult, msg: String) {

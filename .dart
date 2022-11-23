@@ -3,8 +3,10 @@ import 'package:pigeon/pigeon.dart';
 class DartInitParams {
   /// sdk的id
   final String sdkId;
+
   /// sdk的token,不是登录的idToken
   final String sdkToken;
+
   /// 应用名称
   final String appName;
   // 私有化部署才会用到的参数
@@ -22,18 +24,25 @@ class DartInitParams {
 class DartJoinParam {
   /// 会议号
   final String meetingCode;
+
   /// 用户名
   final String userDisplayName;
+
   /// 会议密码
   final String password;
+
   /// 邀请链接
   String inviteUrl;
+
   /// 是否开启麦克风
   bool micOn;
+
   /// 是否开启摄像头
   bool cameraOn;
+
   /// 是否开启扬声器
   bool speakerOn;
+
   /// 是否开启美颜
   bool faceBeautyOn;
 
@@ -44,7 +53,6 @@ class DartJoinParam {
       this.speakerOn = true,
       this.faceBeautyOn = true});
 }
-
 
 /// 错误码
 enum DartErrorCode {
@@ -105,35 +113,58 @@ abstract class WeMeetApi {
   /// 除getSDKVersion之外，在调用的所有接口函数之前，必须第一个先调用该函数。
   /// 按照个保法要求，App需要在用户同意了隐私协议之后才可以调用该初始化函数。
   void initWeMeet(DartInitParams param);
+
   /// 跳转历史会议界面
   void jumpToHistory();
+
   /// 通知android隐私协议已授权
   void notifyPrivacyGranted();
+
   /// 判断是否已初始化SDK成功
   bool isInitialized();
+
   /// 发起登录请求，登录结果会在回调AuthenticationCallback.onLogin返回。
   void loginWeMeet(String ssoUrl);
+
   /// 判断是否已登录
   bool isLoggedIn();
+
   /// 发起入会请求，结果会在回调PreMeetingCallback.onJoinMeeting返回。登录完成后，才可调用。
   /// 如果想使用JoinParam参数中缺省的默认值，请使用joinMeetingByJSON函数
   void joinMeeting(DartJoinParam joinParam);
+
   /// 发起离会请求，结果会在回调InMeetingCallback.onLeaveMeeting返回
   void leaveMeeting();
+
   /// 释放资源
   void releaseWeMeet();
+
   /// 发起登出请求，登出结果会在回调AuthenticationCallback.onLogout返回。
   void logout();
+
   /// 更新SDK Token，替换掉过期或快过期的SDK Token。
   int refreshSDKToken(String newSdkToken);
+
+  /// 显示某一个具体会议的界面。
+  /// 登陆完成后，才可调用。
+  /// 如果输入错误的meeting_id或者current_sub_meeting_id，会议页面中有的字段则会显示’-‘；
+  /// 如果输入错误的start_time可能导致页面加载失败，设置准确的start_time参数接口执行效率更高；
+  void showMeetingDetailView(
+    String meetingId,
+    String currentSubMeetingId,
+    String startTime,
+    bool isHistory,
+  );
 }
 
 @FlutterApi()
 abstract class WeMeetHostApi {
   /// 当前登录失效了
   void sdkTokenInvalid();
+
   /// 非阻塞通知sdk初始化成功
   void sdkInitSuccess();
+
   /// 非住宿通知登录成功
   void loginSuccess();
 }

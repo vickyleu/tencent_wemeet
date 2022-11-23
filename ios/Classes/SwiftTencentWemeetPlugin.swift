@@ -2,6 +2,7 @@ import Flutter
 import UIKit
 import TencentMeetingSDK
 public class SwiftTencentWemeetPlugin: NSObject, FlutterPlugin, WeMeetApi {
+    
     func jumpToHistory() {
         
     }
@@ -56,7 +57,10 @@ public class SwiftTencentWemeetPlugin: NSObject, FlutterPlugin, WeMeetApi {
     func isLoggedIn() -> Bool {
         return WeMeetController.instance.isLoggedIn()
     }
-
+    
+    func showMeetingDetailView(meetingId: String, currentSubMeetingId: String, startTime: String, isHistory: Bool) {
+        WeMeetController.instance.showMeetingDetailView(meetingId: meetingId, currentSubMeetingId: currentSubMeetingId, startTime: startTime, isHistory: isHistory)
+    }
 }
 
 func toSwift(_ p:DartInitParams)->TMInitParam {
