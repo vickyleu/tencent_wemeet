@@ -504,19 +504,6 @@ const flutter::StandardMessageCodec& WeMeetHostApi::GetCodec() {
   return flutter::StandardMessageCodec::GetInstance(&flutter::StandardCodecSerializer::GetInstance());
 }
 
-void WeMeetHostApi::initPrivacyNeedGrant(std::function<void(bool)>&& callback) {
-  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
-      binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.initPrivacyNeedGrant", &GetCodec());
-  channel->Send(flutter::EncodableValue(), [callback](const uint8_t* reply, size_t reply_size) {
-    std::unique_ptr<flutter::EncodableValue> decoded_reply = GetCodec().DecodeMessage(reply, reply_size);
-    flutter::EncodableValue args = *(flutter::EncodableValue*)(decoded_reply.release());
-    bool output{};
-    if (const bool* pointer_output = std::get_if<bool>(&args)) {
-      output = *pointer_output;
-    }
-    callback(output);
-  });
-}
 void WeMeetHostApi::sdkTokenInvalid(std::function<void(void)>&& callback) {
   auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
       binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.sdkTokenInvalid", &GetCodec());
@@ -536,6 +523,28 @@ void WeMeetHostApi::loginSuccess(std::function<void(void)>&& callback) {
       binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.loginSuccess", &GetCodec());
   channel->Send(flutter::EncodableValue(), [callback](const uint8_t* reply, size_t reply_size) {
     callback();
+  });
+}
+// Generated class from Pigeon that represents Flutter messages that can be called from C++.
+WeMeetAndroidGrantedHostApi::WeMeetAndroidGrantedHostApi(flutter::BinaryMessenger* binary_messenger) {
+  this->binary_messenger_ = binary_messenger;
+}
+
+const flutter::StandardMessageCodec& WeMeetAndroidGrantedHostApi::GetCodec() {
+  return flutter::StandardMessageCodec::GetInstance(&flutter::StandardCodecSerializer::GetInstance());
+}
+
+void WeMeetAndroidGrantedHostApi::initPrivacyNeedGrant(std::function<void(bool)>&& callback) {
+  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+      binary_messenger_, "dev.flutter.pigeon.WeMeetAndroidGrantedHostApi.initPrivacyNeedGrant", &GetCodec());
+  channel->Send(flutter::EncodableValue(), [callback](const uint8_t* reply, size_t reply_size) {
+    std::unique_ptr<flutter::EncodableValue> decoded_reply = GetCodec().DecodeMessage(reply, reply_size);
+    flutter::EncodableValue args = *(flutter::EncodableValue*)(decoded_reply.release());
+    bool output{};
+    if (const bool* pointer_output = std::get_if<bool>(&args)) {
+      output = *pointer_output;
+    }
+    callback(output);
   });
 }
 }  // namespace pigeon

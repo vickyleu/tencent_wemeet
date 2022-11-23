@@ -1,49 +1,66 @@
 import 'package:tencent_wemeet/api_generated.dart';
 
 import 'tencent_wemeet_platform_interface.dart';
+export 'package:tencent_wemeet/api_generated.dart';
 
 class TencentWemeet {
-  static Future registerCallback(WeMeetHostApi api) async{
+
+  TencentWemeet._();
+
+  static TencentWemeet? _shareInstance;
+
+  /// 采用单例模式,插件需要在合适的时候释放
+  factory TencentWemeet.instance(){
+    _shareInstance ??= TencentWemeet._();
+    return _shareInstance!;
+  }
+
+  Future registerCallback(WeMeetHostApi api) async{
      await TencentWemeetPlatform.instance.registerNativeCallback(api);
      print("onAttachedToActivity onAttachedToEngine attach:registerCallback");
   }
 
-  static Future<void> initWeMeet(DartInitParams params) {
+  Future registerGrantedCallback(WeMeetAndroidGrantedHostApi grantedHostApi) async{
+     await TencentWemeetPlatform.instance.registerGrantedNativeCallback(grantedHostApi);
+     print("onAttachedToActivity onAttachedToEngine attach:registerGrantedCallback");
+  }
+
+  Future<void> initWeMeet(DartInitParams params) {
     return TencentWemeetPlatform.instance.initWeMeet(params);
   }
 
-  static Future<void> loginMeeting(String ssoUrl) {
+  Future<void> loginMeeting(String ssoUrl) {
     return TencentWemeetPlatform.instance.loginMeeting(ssoUrl);
   }
 
-  static Future<void> joinMeeting(DartJoinParam param) {
+  Future<void> joinMeeting(DartJoinParam param) {
     return TencentWemeetPlatform.instance.joinMeeting(param);
   }
-  static Future<void> jumpToHistory() {
+  Future<void> jumpToHistory() {
     return TencentWemeetPlatform.instance.jumpToHistory();
   }
 
-  static Future<bool> isInitialized() {
+  Future<bool> isInitialized() {
     return TencentWemeetPlatform.instance.isInitialized();
   }
 
-  static Future<bool> isLoggedIn() {
+  Future<bool> isLoggedIn() {
     return TencentWemeetPlatform.instance.isLoggedIn();
   }
 
-  static Future<void> leaveMeeting() {
+  Future<void> leaveMeeting() {
     return TencentWemeetPlatform.instance.leaveMeeting();
   }
 
-  static Future<void> releaseWeMeet() {
+  Future<void> releaseWeMeet() {
     return TencentWemeetPlatform.instance.releaseWeMeet();
   }
 
-  static Future<void> logout() {
+  Future<void> logout() {
     return TencentWemeetPlatform.instance.logout();
   }
 
-  static Future<int> refreshSDKToken(String newSdkToken) {
+  Future<int> refreshSDKToken(String newSdkToken) {
     return TencentWemeetPlatform.instance.refreshSDKToken(newSdkToken);
   }
 }

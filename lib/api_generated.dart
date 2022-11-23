@@ -378,8 +378,6 @@ class WeMeetApi {
 abstract class WeMeetHostApi {
   static const MessageCodec<Object?> codec = StandardMessageCodec();
 
-  /// 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
-  Future<bool> initPrivacyNeedGrant();
   /// 当前登录失效了
   void sdkTokenInvalid();
   /// 非阻塞通知sdk初始化成功
@@ -387,19 +385,6 @@ abstract class WeMeetHostApi {
   /// 非住宿通知登录成功
   void loginSuccess();
   static void setup(WeMeetHostApi? api, {BinaryMessenger? binaryMessenger}) {
-    {
-      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.WeMeetHostApi.initPrivacyNeedGrant', codec, binaryMessenger: binaryMessenger);
-      if (api == null) {
-        channel.setMessageHandler(null);
-      } else {
-        channel.setMessageHandler((Object? message) async {
-          // ignore message
-          final bool output = await api.initPrivacyNeedGrant();
-          return output;
-        });
-      }
-    }
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
           'dev.flutter.pigeon.WeMeetHostApi.sdkTokenInvalid', codec, binaryMessenger: binaryMessenger);
@@ -436,6 +421,28 @@ abstract class WeMeetHostApi {
           // ignore message
           api.loginSuccess();
           return;
+        });
+      }
+    }
+  }
+}
+
+abstract class WeMeetAndroidGrantedHostApi {
+  static const MessageCodec<Object?> codec = StandardMessageCodec();
+
+  /// 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
+  Future<bool> initPrivacyNeedGrant();
+  static void setup(WeMeetAndroidGrantedHostApi? api, {BinaryMessenger? binaryMessenger}) {
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.WeMeetAndroidGrantedHostApi.initPrivacyNeedGrant', codec, binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          // ignore message
+          final bool output = await api.initPrivacyNeedGrant();
+          return output;
         });
       }
     }

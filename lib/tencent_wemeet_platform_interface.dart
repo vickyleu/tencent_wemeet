@@ -33,6 +33,11 @@ abstract class TencentWemeetPlatform extends PlatformInterface {
         'registerNativeCallback(api) has not been implemented.');
   }
 
+  Future<void> registerGrantedNativeCallback(WeMeetAndroidGrantedHostApi api) {
+    throw UnimplementedError(
+        'registerGrantedNativeCallback(api) has not been implemented.');
+  }
+
   Future<void> initWeMeet(DartInitParams params) {
     throw UnimplementedError('initWeMeet(params) has not been implemented.');
   }

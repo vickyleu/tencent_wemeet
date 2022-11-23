@@ -410,14 +410,6 @@ class WeMeetHostApi(private val binaryMessenger: BinaryMessenger) {
       StandardMessageCodec()
     }
   }
-  /** 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好 */
-  fun initPrivacyNeedGrant(callback: (Boolean) -> Unit) {
-    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetHostApi.initPrivacyNeedGrant", codec)
-    channel.send(null) {
-      val result = it as Boolean
-      callback(result)
-    }
-  }
   /** 当前登录失效了 */
   fun sdkTokenInvalid(callback: () -> Unit) {
     val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetHostApi.sdkTokenInvalid", codec)
@@ -437,6 +429,24 @@ class WeMeetHostApi(private val binaryMessenger: BinaryMessenger) {
     val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetHostApi.loginSuccess", codec)
     channel.send(null) {
       callback()
+    }
+  }
+}
+/** Generated class from Pigeon that represents Flutter messages that can be called from Kotlin. */
+@Suppress("UNCHECKED_CAST")
+class WeMeetAndroidGrantedHostApi(private val binaryMessenger: BinaryMessenger) {
+  companion object {
+    /** The codec used by WeMeetAndroidGrantedHostApi. */
+    val codec: MessageCodec<Any?> by lazy {
+      StandardMessageCodec()
+    }
+  }
+  /** 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好 */
+  fun initPrivacyNeedGrant(callback: (Boolean) -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetAndroidGrantedHostApi.initPrivacyNeedGrant", codec)
+    channel.send(null) {
+      val result = it as Boolean
+      callback(result)
     }
   }
 }
