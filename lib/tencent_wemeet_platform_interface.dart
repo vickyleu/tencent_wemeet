@@ -8,6 +8,7 @@ import 'tencent_wemeet_method_channel.dart';
 abstract class TencentWemeetPlatform extends PlatformInterface {
   /// Constructs a TencentWemeetPlatform.
   final BinaryMessenger? binaryMessenger;
+
   TencentWemeetPlatform({required this.binaryMessenger}) : super(token: _token);
 
   static final Object _token = Object();
@@ -53,6 +54,7 @@ abstract class TencentWemeetPlatform extends PlatformInterface {
   Future<void> notifyPrivacyGranted() {
     throw UnimplementedError('notifyPrivacyGranted has not been implemented.');
   }
+
   Future<bool> isInitialized() {
     throw UnimplementedError('isInitialized has not been implemented.');
   }
@@ -82,7 +84,9 @@ abstract class TencentWemeetPlatform extends PlatformInterface {
         'refreshSDKToken(String newSdkToken) has not been implemented.');
   }
 
-  Future<void> showMeetingDetailView(String meetingId, String currentSubMeetingId, String startTime, bool isHistory) {
+  Future<void> showMeetingDetailView(String meetingId,
+      String currentSubMeetingId, String startTime, bool isHistory) {
     throw UnimplementedError(
         'showMeetingDetailView() has not been implemented.');
   }
+}
