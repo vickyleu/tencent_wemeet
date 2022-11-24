@@ -211,6 +211,14 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,Auth
         TMSDK.getPreMeetingService().showMeetingDetailView(meetingId, currentSubMeetingId, startTime, isHistory)
     }
 
+    fun jumpUrlWithLoginStatus(targetUrl: String) {
+        TMSDK.getAccountService().jumpUrlWithLoginStatus(targetUrl)
+    }
+
+    fun getUrlWithLoginStatus(targetUrl: String): String {
+       return TMSDK.getAccountService().getUrlWithLoginStatus(targetUrl)
+    }
+
     companion object {
         @SuppressLint("StaticFieldLeak")
         private var instance: WeMeetController? = null

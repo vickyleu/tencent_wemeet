@@ -96,6 +96,14 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi { //,IWeMeet
         WeMeetController.get().showMeetingDetailView(meetingId, currentSubMeetingId, startTime, isHistory)
     }
 
+    override fun jumpUrlWithLoginStatus(targetUrl: String) {
+        WeMeetController.get().jumpUrlWithLoginStatus(targetUrl)
+    }
+
+    override fun getUrlWithLoginStatus(targetUrl: String): String {
+        return WeMeetController.get().getUrlWithLoginStatus(targetUrl)
+    }
+
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         releaseWeMeet()
     }

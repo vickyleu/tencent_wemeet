@@ -247,6 +247,10 @@ class WeMeetApi {
   // 如果输入错误的meeting_id或者current_sub_meeting_id，会议页面中有的字段则会显示’-‘；
   // 如果输入错误的start_time可能导致页面加载失败，设置准确的start_time参数接口执行效率更高；
   virtual std::optional<FlutterError> ShowMeetingDetailView(const std::string& meeting_id, const std::string& current_sub_meeting_id, const std::string& start_time, bool is_history) = 0;
+  // 带登录态去打开目标地址，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+  virtual std::optional<FlutterError> JumpUrlWithLoginStatus(const std::string& target_url) = 0;
+  // 获取一个带登录态的URL链接，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+  virtual ErrorOr<std::string> GetUrlWithLoginStatus(const std::string& target_url) = 0;
 
   // The codec used by WeMeetApi.
   static const flutter::StandardMessageCodec& GetCodec();

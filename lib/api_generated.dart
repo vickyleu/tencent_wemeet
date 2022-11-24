@@ -389,6 +389,48 @@ class WeMeetApi {
 			);
      })) as Map<Object?, Object?>?;
   }
+
+  /// 带登录态去打开目标地址，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+  Future<void> jumpUrlWithLoginStatus(String arg_targetUrl) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.jumpUrlWithLoginStatus', codec, binaryMessenger: _binaryMessenger);
+     await ((channel.send(<Object?>[arg_targetUrl]))..catchError((error){
+			throw PlatformException(
+				code: (error['code'] as String?)!,
+				message: error['message'] as String?,
+				details: error['details'],
+			);
+     })) as Map<Object?, Object?>?;
+  }
+
+  /// 获取一个带登录态的URL链接，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+  Future<String> getUrlWithLoginStatus(String arg_targetUrl) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.WeMeetApi.getUrlWithLoginStatus', codec, binaryMessenger: _binaryMessenger);
+                final Map<Object?, Object?>? replyMap =
+        await channel.send(<Object?>[arg_targetUrl]) as Map<Object?, Object?>?;
+    if (replyMap == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyMap['error'] != null) {
+      final Map<Object?, Object?> error = (replyMap['error'] as Map<Object?, Object?>?)!;
+      throw PlatformException(
+        code: (error['code'] as String?)!,
+        message: error['message'] as String?,
+        details: error['details'],
+      );
+                
+    } else if (replyMap['result'] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (replyMap['result'] as String?)!;
+    }
+  }
 }
 
 abstract class WeMeetHostApi {

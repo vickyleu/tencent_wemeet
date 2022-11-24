@@ -76,4 +76,12 @@ class TencentWemeet {
     return TencentWemeetPlatform.instance.showMeetingDetailView(
         meetingId, currentSubMeetingId, startTime, isHistory);
   }
+
+  Future<void> jumpUrlWithLoginStatus(String targetUrl) {
+    return TencentWemeetPlatform.instance.jumpUrlWithLoginStatus(targetUrl);
+  }
+
+  Future<String> getUrlWithLoginStatus(String targetUrl) {
+    return TencentWemeetPlatform.instance.getUrlWithLoginStatus(targetUrl);
+  }
 }

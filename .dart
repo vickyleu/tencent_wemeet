@@ -155,6 +155,12 @@ abstract class WeMeetApi {
     String startTime,
     bool isHistory,
   );
+
+  /// 带登录态去打开目标地址，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+  void jumpUrlWithLoginStatus(String targetUrl);
+
+  /// 获取一个带登录态的URL链接，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+  String getUrlWithLoginStatus(String targetUrl);
 }
 
 @FlutterApi()

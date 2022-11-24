@@ -209,6 +209,10 @@ protocol WeMeetApi {
   /// 如果输入错误的meeting_id或者current_sub_meeting_id，会议页面中有的字段则会显示’-‘；
   /// 如果输入错误的start_time可能导致页面加载失败，设置准确的start_time参数接口执行效率更高；
   func showMeetingDetailView(meetingId: String, currentSubMeetingId: String, startTime: String, isHistory: Bool)
+  /// 带登录态去打开目标地址，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+  func jumpUrlWithLoginStatus(targetUrl: String)
+  /// 获取一个带登录态的URL链接，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+  func getUrlWithLoginStatus(targetUrl: String) -> String
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -356,6 +360,30 @@ class WeMeetApiSetup {
       }
     } else {
       showMeetingDetailViewChannel.setMessageHandler(nil)
+    }
+    /// 带登录态去打开目标地址，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+    let jumpUrlWithLoginStatusChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.jumpUrlWithLoginStatus", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      jumpUrlWithLoginStatusChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let targetUrlArg = args[0] as! String
+        api.jumpUrlWithLoginStatus(targetUrl: targetUrlArg)
+        reply(nil)
+      }
+    } else {
+      jumpUrlWithLoginStatusChannel.setMessageHandler(nil)
+    }
+    /// 获取一个带登录态的URL链接，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。
+    let getUrlWithLoginStatusChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetApi.getUrlWithLoginStatus", binaryMessenger: binaryMessenger, codec: codec)
+    if let api = api {
+      getUrlWithLoginStatusChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let targetUrlArg = args[0] as! String
+        let result = api.getUrlWithLoginStatus(targetUrl: targetUrlArg)
+        reply(wrapResult(result))
+      }
+    } else {
+      getUrlWithLoginStatusChannel.setMessageHandler(nil)
     }
   }
 }

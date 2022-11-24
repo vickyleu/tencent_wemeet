@@ -89,4 +89,14 @@ abstract class TencentWemeetPlatform extends PlatformInterface {
     throw UnimplementedError(
         'showMeetingDetailView() has not been implemented.');
   }
+
+  Future<void> jumpUrlWithLoginStatus(String targetUrl) {
+    throw UnimplementedError(
+        'jumpUrlWithLoginStatus() has not been implemented.');
+  }
+
+  Future<String> getUrlWithLoginStatus(String targetUrl) {
+    throw UnimplementedError(
+        'getUrlWithLoginStatus() has not been implemented.');
+  }
 }

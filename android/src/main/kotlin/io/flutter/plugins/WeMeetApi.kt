@@ -204,6 +204,10 @@ interface WeMeetApi {
    * 如果输入错误的start_time可能导致页面加载失败，设置准确的start_time参数接口执行效率更高；
    */
   fun showMeetingDetailView(meetingId: String, currentSubMeetingId: String, startTime: String, isHistory: Boolean)
+  /** 带登录态去打开目标地址，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。 */
+  fun jumpUrlWithLoginStatus(targetUrl: String)
+  /** 获取一个带登录态的URL链接，该地址必须是会议相关的、并支持登录态方式的页面，必须登录成功才可调用。 */
+  fun getUrlWithLoginStatus(targetUrl: String): String
 
   companion object {
     /** The codec used by WeMeetApi. */
@@ -418,6 +422,43 @@ interface WeMeetApi {
               val isHistoryArg = args[3] as Boolean
               api.showMeetingDetailView(meetingIdArg, currentSubMeetingIdArg, startTimeArg, isHistoryArg)
               wrapped["result"] = null
+            } catch (exception: Error) {
+              wrapped["error"] = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.jumpUrlWithLoginStatus", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val wrapped = hashMapOf<String, Any?>()
+            try {
+              val args = message as List<Any?>
+              val targetUrlArg = args[0] as String
+              api.jumpUrlWithLoginStatus(targetUrlArg)
+              wrapped["result"] = null
+            } catch (exception: Error) {
+              wrapped["error"] = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetApi.getUrlWithLoginStatus", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val wrapped = hashMapOf<String, Any?>()
+            try {
+              val args = message as List<Any?>
+              val targetUrlArg = args[0] as String
+              wrapped["result"] = api.getUrlWithLoginStatus(targetUrlArg)
             } catch (exception: Error) {
               wrapped["error"] = wrapError(exception)
             }

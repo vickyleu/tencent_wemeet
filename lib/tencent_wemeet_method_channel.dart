@@ -15,23 +15,27 @@ class MethodChannelTencentWemeet extends TencentWemeetPlatform {
   }
 
   @override
-  Future<void> registerGrantedNativeCallback(WeMeetAndroidGrantedHostApi api) async{
-    return WeMeetAndroidGrantedHostApi.setup(api, binaryMessenger: binaryMessenger);
+  Future<void> registerGrantedNativeCallback(
+      WeMeetAndroidGrantedHostApi api) async {
+    return WeMeetAndroidGrantedHostApi.setup(api,
+        binaryMessenger: binaryMessenger);
   }
 
   @override
   Future<void> initWeMeet(DartInitParams params) async {
     return wemeetApi.initWeMeet(params);
   }
+
   @override
   Future<void> notifyPrivacyGranted() async {
     return wemeetApi.notifyPrivacyGranted();
   }
 
   @override
-  Future<void> jumpToHistory() async{
+  Future<void> jumpToHistory() async {
     wemeetApi.jumpToHistory();
   }
+
   @override
   Future<void> loginMeeting(String ssoUrl) {
     return wemeetApi.loginWeMeet(ssoUrl);
@@ -70,5 +74,22 @@ class MethodChannelTencentWemeet extends TencentWemeetPlatform {
   @override
   Future<int> refreshSDKToken(String newSdkToken) {
     return wemeetApi.refreshSDKToken(newSdkToken);
+  }
+
+  @override
+  Future<void> showMeetingDetailView(String meetingId,
+      String currentSubMeetingId, String startTime, bool isHistory) {
+    return wemeetApi.showMeetingDetailView(
+        meetingId, currentSubMeetingId, startTime, isHistory);
+  }
+
+  @override
+  Future<void> jumpUrlWithLoginStatus(String targetUrl) {
+    return wemeetApi.jumpUrlWithLoginStatus(targetUrl);
+  }
+
+  @override
+  Future<String> getUrlWithLoginStatus(String targetUrl) {
+    return wemeetApi.getUrlWithLoginStatus(targetUrl);
   }
 }

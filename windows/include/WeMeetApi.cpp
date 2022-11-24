@@ -530,6 +530,68 @@ void WeMeetApi::SetUp(flutter::BinaryMessenger* binary_messenger, WeMeetApi* api
       channel->SetMessageHandler(nullptr);
     }
   }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.jumpUrlWithLoginStatus", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          const auto& args = std::get<flutter::EncodableList>(message);
+          const auto& encodable_target_url_arg = args.at(0);
+          if (encodable_target_url_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("target_url_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& target_url_arg = std::get<std::string>(encodable_target_url_arg);
+          std::optional<FlutterError> output = api->JumpUrlWithLoginStatus(target_url_arg);
+          if (output.has_value()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.value()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue());
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
+  {
+    auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+        binary_messenger, "dev.flutter.pigeon.WeMeetApi.getUrlWithLoginStatus", &GetCodec());
+    if (api != nullptr) {
+      channel->SetMessageHandler([api](const flutter::EncodableValue& message, const flutter::MessageReply<flutter::EncodableValue>& reply) {
+        flutter::EncodableMap wrapped;
+        try {
+          const auto& args = std::get<flutter::EncodableList>(message);
+          const auto& encodable_target_url_arg = args.at(0);
+          if (encodable_target_url_arg.IsNull()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError("target_url_arg unexpectedly null."));
+            reply(wrapped);
+            return;
+          }
+          const auto& target_url_arg = std::get<std::string>(encodable_target_url_arg);
+          ErrorOr<std::string> output = api->GetUrlWithLoginStatus(target_url_arg);
+          if (output.has_error()) {
+            wrapped.emplace(flutter::EncodableValue("error"), WrapError(output.error()));
+          } else {
+            wrapped.emplace(flutter::EncodableValue("result"), flutter::EncodableValue(std::move(output).TakeValue()));
+          }
+        }
+        catch (const std::exception& exception) {
+          wrapped.emplace(flutter::EncodableValue("error"), WrapError(exception.what()));
+        }
+        reply(wrapped);
+      });
+    } else {
+      channel->SetMessageHandler(nullptr);
+    }
+  }
 }
 
 flutter::EncodableMap WeMeetApi::WrapError(std::string_view error_message) {

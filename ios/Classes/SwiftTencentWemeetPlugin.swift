@@ -61,6 +61,14 @@ public class SwiftTencentWemeetPlugin: NSObject, FlutterPlugin, WeMeetApi {
     func showMeetingDetailView(meetingId: String, currentSubMeetingId: String, startTime: String, isHistory: Bool) {
         WeMeetController.instance.showMeetingDetailView(meetingId: meetingId, currentSubMeetingId: currentSubMeetingId, startTime: startTime, isHistory: isHistory)
     }
+    
+    func jumpUrlWithLoginStatus(targetUrl: String) {
+        WeMeetController.instance.jumpUrlWithLoginStatus(targetUrl: targetUrl)
+    }
+    
+    func getUrlWithLoginStatus(targetUrl: String) -> String {
+        WeMeetController.instance.getUrlWithLoginStatus(targetUrl: targetUrl)
+    }
 }
 
 func toSwift(_ p:DartInitParams)->TMInitParam {
