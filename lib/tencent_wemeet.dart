@@ -4,25 +4,27 @@ import 'tencent_wemeet_platform_interface.dart';
 export 'package:tencent_wemeet/api_generated.dart';
 
 class TencentWemeet {
-
   TencentWemeet._();
 
   static TencentWemeet? _shareInstance;
 
   /// 采用单例模式,插件需要在合适的时候释放
-  factory TencentWemeet.instance(){
+  factory TencentWemeet.instance() {
     _shareInstance ??= TencentWemeet._();
     return _shareInstance!;
   }
 
-  Future registerCallback(WeMeetHostApi api) async{
-     await TencentWemeetPlatform.instance.registerNativeCallback(api);
-     print("onAttachedToActivity onAttachedToEngine attach:registerCallback");
+  Future registerCallback(WeMeetHostApi api) async {
+    await TencentWemeetPlatform.instance.registerNativeCallback(api);
+    print("onAttachedToActivity onAttachedToEngine attach:registerCallback");
   }
 
-  Future registerGrantedCallback(WeMeetAndroidGrantedHostApi grantedHostApi) async{
-     await TencentWemeetPlatform.instance.registerGrantedNativeCallback(grantedHostApi);
-     print("onAttachedToActivity onAttachedToEngine attach:registerGrantedCallback");
+  Future registerGrantedCallback(
+      WeMeetAndroidGrantedHostApi grantedHostApi) async {
+    await TencentWemeetPlatform.instance
+        .registerGrantedNativeCallback(grantedHostApi);
+    print(
+        "onAttachedToActivity onAttachedToEngine attach:registerGrantedCallback");
   }
 
   Future<void> initWeMeet(DartInitParams params) {
@@ -36,6 +38,7 @@ class TencentWemeet {
   Future<void> joinMeeting(DartJoinParam param) {
     return TencentWemeetPlatform.instance.joinMeeting(param);
   }
+
   Future<void> jumpToHistory() {
     return TencentWemeetPlatform.instance.jumpToHistory();
   }
@@ -43,6 +46,7 @@ class TencentWemeet {
   Future<void> notifyPrivacyGranted() {
     return TencentWemeetPlatform.instance.notifyPrivacyGranted();
   }
+
   Future<bool> isInitialized() {
     return TencentWemeetPlatform.instance.isInitialized();
   }
@@ -65,5 +69,11 @@ class TencentWemeet {
 
   Future<int> refreshSDKToken(String newSdkToken) {
     return TencentWemeetPlatform.instance.refreshSDKToken(newSdkToken);
+  }
+
+  Future<void> showMeetingDetailView(String meetingId,
+      String currentSubMeetingId, String startTime, bool isHistory) {
+    return TencentWemeetPlatform.instance.showMeetingDetailView(
+        meetingId, currentSubMeetingId, startTime, isHistory);
   }
 }

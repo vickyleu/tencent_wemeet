@@ -81,4 +81,8 @@ abstract class TencentWemeetPlatform extends PlatformInterface {
     throw UnimplementedError(
         'refreshSDKToken(String newSdkToken) has not been implemented.');
   }
-}
+
+  Future<void> showMeetingDetailView(String meetingId, String currentSubMeetingId, String startTime, bool isHistory) {
+    throw UnimplementedError(
+        'showMeetingDetailView() has not been implemented.');
+  }
