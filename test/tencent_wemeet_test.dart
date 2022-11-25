@@ -76,7 +76,7 @@ class MockTencentWemeetPlatform
   }
 
   @override
-  Future<String> getUrlWithLoginStatus(String targetUrl) {
+  Future<String> getUrlWithLoginStatus(String targetUrl) async{
     return '';
   }
 
