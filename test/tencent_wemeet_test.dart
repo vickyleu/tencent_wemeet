@@ -74,6 +74,21 @@ class MockTencentWemeetPlatform
     // TODO: implement releaseWeMeet
     throw UnimplementedError();
   }
+
+  @override
+  Future<String> getUrlWithLoginStatus(String targetUrl) {
+    return '';
+  }
+
+  @override
+  Future<void> jumpUrlWithLoginStatus(String targetUrl) async{
+
+  }
+
+  @override
+  Future<void> showMeetingDetailView(String meetingId, String currentSubMeetingId, String startTime, bool isHistory) async{
+
+  }
 }
 
 void main() {
