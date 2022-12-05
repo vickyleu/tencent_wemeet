@@ -290,7 +290,7 @@ class WeMeetAndroidGrantedHostApi {
   WeMeetAndroidGrantedHostApi(flutter::BinaryMessenger* binary_messenger);
   static const flutter::StandardMessageCodec& GetCodec();
   // 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
-  void initPrivacyNeedGrant(std::function<void(bool)>&& callback);
+  void initPrivacyNeedGrant(std::function<void(std::optional<bool>)>&& callback);
 
 };
 }  // namespace pigeon

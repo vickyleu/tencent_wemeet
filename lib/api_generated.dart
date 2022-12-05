@@ -489,7 +489,7 @@ abstract class WeMeetAndroidGrantedHostApi {
   static const MessageCodec<Object?> codec = StandardMessageCodec();
 
   /// 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好
-  Future<bool> initPrivacyNeedGrant();
+  Future<bool?> initPrivacyNeedGrant();
   static void setup(WeMeetAndroidGrantedHostApi? api, {BinaryMessenger? binaryMessenger}) {
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
@@ -499,7 +499,7 @@ abstract class WeMeetAndroidGrantedHostApi {
       } else {
         channel.setMessageHandler((Object? message) async {
           // ignore message
-          final bool output = await api.initPrivacyNeedGrant();
+          final bool? output = await api.initPrivacyNeedGrant();
           return output;
         });
       }

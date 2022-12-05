@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> with WeMeetHostApi , WeMeetAndroidGranted
   }
 
   @override
-  Future<bool> initPrivacyNeedGrant() async {
+  Future<bool?> initPrivacyNeedGrant() async {
     return isPrivacyNeedGrant;
   }
 }

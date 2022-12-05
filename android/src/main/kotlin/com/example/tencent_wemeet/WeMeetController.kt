@@ -43,9 +43,10 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,Auth
 
 
     fun init(param: InitParams) {
-        android.util.Log.e("onAttachedToActivity", "initWeMeet $isPrivacyNeedGrant")
+        android.util.Log.e("onAttachedToActivity", "initWeMeet init::$isPrivacyNeedGrant")
         if (!isPrivacyNeedGrant) {
             TMSDK.initialize(param, this)
+            android.util.Log.e("${this.javaClass}","TMSDK.initialize(param, this)")
         }
     }
 

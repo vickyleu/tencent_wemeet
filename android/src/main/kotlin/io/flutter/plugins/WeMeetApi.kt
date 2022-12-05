@@ -512,10 +512,10 @@ class WeMeetAndroidGrantedHostApi(private val binaryMessenger: BinaryMessenger) 
     }
   }
   /** 读取隐私协议是否授权,由于插件采用自动配置,初始化速度快于dart端,需要提前准备好 */
-  fun initPrivacyNeedGrant(callback: (Boolean) -> Unit) {
+  fun initPrivacyNeedGrant(callback: (Boolean?) -> Unit) {
     val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetAndroidGrantedHostApi.initPrivacyNeedGrant", codec)
     channel.send(null) {
-      val result = it as Boolean
+      val result = it as? Boolean?
       callback(result)
     }
   }

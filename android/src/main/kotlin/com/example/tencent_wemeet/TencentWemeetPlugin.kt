@@ -39,10 +39,12 @@ class TencentWemeetPlugin : FlutterPlugin, ActivityAware, WeMeetApi { //,IWeMeet
         android.util.Log.e("onAttachedToActivity"," attach:initWeMeet")
         if(::grantedHostApi.isInitialized){
             grantedHostApi.initPrivacyNeedGrant {
+                val newV = it?:false
                 val old = WeMeetController.get().isPrivacyNeedGrant
-                WeMeetController.get().setPrivacyNeedGrant(it)
-                if(!it && old){
+                WeMeetController.get().setPrivacyNeedGrant(newV)
+                if(!newV && old){
                     // 变更隐私合规参数了
+                    android.util.Log.e("onAttachedToActivity"," attach:notifyPrivacyGranted")
                     notifyPrivacyGranted()
                 }
                 android.util.Log.e("onAttachedToActivity","setPrivacyNeedGrant attach:")
