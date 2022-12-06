@@ -105,7 +105,9 @@ class WeMeetController: NSObject,TMSDKProtocol, TMPreMeetingProtocol,TMInMeeting
     }
     // MARK: - TMInMeetingProtocol
     func onLeaveMeeting(_ type: TMLeaveType, code: TMSDKResult, msg: String, meetingCode: String) {
-       
+        SwiftTencentWemeetPlugin.hostApi?.onLeaveMeeting(type: Int32(type.rawValue), code: Int32(code.rawValue), msg: msg, meetingCode: meetingCode, completion: {
+            
+        })
     }
     
     func onInviteMeeting(_ invite_info: String) {

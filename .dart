@@ -173,6 +173,10 @@ abstract class WeMeetHostApi {
 
   /// 非住宿通知登录成功
   void loginSuccess();
+
+  /// 离开会议： 离会类型，1：用户自身操作离会；2：被踢出会议；3：会议结束
+  /// 结果码：0表示成功；其他值表示失败
+  void onLeaveMeeting(int type, int code, String msg, String meetingCode);
 }
 
 @FlutterApi()

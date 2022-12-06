@@ -278,6 +278,9 @@ class WeMeetHostApi {
   void sdkInitSuccess(std::function<void(void)>&& callback);
   // 非住宿通知登录成功
   void loginSuccess(std::function<void(void)>&& callback);
+  // 离开会议： 离会类型，1：用户自身操作离会；2：被踢出会议；3：会议结束
+  // 结果码：0表示成功；其他值表示失败
+  void onLeaveMeeting(int64_t type_arg, int64_t code_arg, const std::string& msg_arg, const std::string& meeting_code_arg, std::function<void(void)>&& callback);
 
 };
 

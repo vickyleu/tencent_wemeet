@@ -16,7 +16,8 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with WeMeetHostApi , WeMeetAndroidGrantedHostApi{
+class _MyAppState extends State<MyApp>
+    with WeMeetHostApi, WeMeetAndroidGrantedHostApi {
   bool isPrivacyNeedGrant = false;
 
   TencentWemeet wemeet = TencentWemeet.instance();
@@ -32,11 +33,9 @@ class _MyAppState extends State<MyApp> with WeMeetHostApi , WeMeetAndroidGranted
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     try {
-
       final params = DartInitParams(
           sdkId: 'xxxxxxxxx',
-          sdkToken:
-              'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
+          sdkToken: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
           appName: '',
           preferLanguage: '中文');
       await wemeet.initWeMeet(params);
@@ -51,7 +50,8 @@ class _MyAppState extends State<MyApp> with WeMeetHostApi , WeMeetAndroidGranted
   void sdkInitSuccess() {
     print("initWeMeet result");
     Future.delayed(const Duration(seconds: 1)).then((value) async {
-      const host = 'https://meetingxxxxxx-idp.id.meeting.qq.com/cidp/custom/ai-xxxxxxxxx/ai-xxxxxxxxxxx?id_token=';
+      const host =
+          'https://meetingxxxxxx-idp.id.meeting.qq.com/cidp/custom/ai-xxxxxxxxx/ai-xxxxxxxxxxx?id_token=';
       const idToken = 'xxxxxxxxxxxxxxxxxx';
       await wemeet.loginMeeting('$host$idToken');
       print("loginMeeting result");
@@ -60,7 +60,6 @@ class _MyAppState extends State<MyApp> with WeMeetHostApi , WeMeetAndroidGranted
 
   @override
   void loginSuccess() {
-
     /*final joinParam = DartJoinParam(
         meetingCode: 'xxxxx',
         userDisplayName: '哎哟喂',
@@ -104,5 +103,10 @@ class _MyAppState extends State<MyApp> with WeMeetHostApi , WeMeetAndroidGranted
   @override
   Future<bool?> initPrivacyNeedGrant() async {
     return isPrivacyNeedGrant;
+  }
+
+  @override
+  void onLeaveMeeting(int type, int code, String msg, String meetingCode) {
+    // TODO: implement onLeaveMeeting
   }
 }

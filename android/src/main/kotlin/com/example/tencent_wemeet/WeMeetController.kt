@@ -275,6 +275,7 @@ class WeMeetController : SDKCallback, InMeetingCallback, PreMeetingCallback,Auth
 
     override fun onLeaveMeeting(type: Int, code: Int, msg: String, meetingCode: String) {
         isEnterMeeting = false
+        TencentWemeetPlugin.hostApi?.onLeaveMeeting(type.toLong(), code.toLong(), msg, meetingCode, {})
     }
 
     override fun onShowMeetingInfo(meetingInfo: String, retInfo: String) {

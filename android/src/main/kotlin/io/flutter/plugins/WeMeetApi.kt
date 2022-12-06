@@ -501,6 +501,16 @@ class WeMeetHostApi(private val binaryMessenger: BinaryMessenger) {
       callback()
     }
   }
+  /**
+   * 离开会议： 离会类型，1：用户自身操作离会；2：被踢出会议；3：会议结束
+   * 结果码：0表示成功；其他值表示失败
+   */
+  fun onLeaveMeeting(typeArg: Long, codeArg: Long, msgArg: String, meetingCodeArg: String, callback: () -> Unit) {
+    val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting", codec)
+    channel.send(listOf(typeArg, codeArg, msgArg, meetingCodeArg)) {
+      callback()
+    }
+  }
 }
 /** Generated class from Pigeon that represents Flutter messages that can be called from Kotlin. */
 @Suppress("UNCHECKED_CAST")

@@ -414,6 +414,14 @@ class WeMeetHostApi {
       completion()
     }
   }
+  /// 离开会议： 离会类型，1：用户自身操作离会；2：被踢出会议；3：会议结束
+  /// 结果码：0表示成功；其他值表示失败
+  func onLeaveMeeting(type typeArg: Int32, code codeArg: Int32, msg msgArg: String, meetingCode meetingCodeArg: String, completion: @escaping () -> Void) {
+    let channel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting", binaryMessenger: binaryMessenger)
+    channel.sendMessage([typeArg, codeArg, msgArg, meetingCodeArg]) { _ in
+      completion()
+    }
+  }
 }
 ///Generated class from Pigeon that represents Flutter messages that can be called from Swift.
 class WeMeetAndroidGrantedHostApi {

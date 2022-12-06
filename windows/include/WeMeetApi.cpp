@@ -639,6 +639,13 @@ void WeMeetHostApi::loginSuccess(std::function<void(void)>&& callback) {
     callback();
   });
 }
+void WeMeetHostApi::onLeaveMeeting(int64_t type_arg, int64_t code_arg, const std::string& msg_arg, const std::string& meeting_code_arg, std::function<void(void)>&& callback) {
+  auto channel = std::make_unique<flutter::BasicMessageChannel<flutter::EncodableValue>>(
+      binary_messenger_, "dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting", &GetCodec());
+  channel->Send(flutter::EncodableList { flutter::CustomEncodableValue(type_arg), flutter::CustomEncodableValue(code_arg), flutter::CustomEncodableValue(msg_arg), flutter::CustomEncodableValue(meeting_code_arg) }, [callback](const uint8_t* reply, size_t reply_size) {
+    callback();
+  });
+}
 // Generated class from Pigeon that represents Flutter messages that can be called from C++.
 WeMeetAndroidGrantedHostApi::WeMeetAndroidGrantedHostApi(flutter::BinaryMessenger* binary_messenger) {
   this->binary_messenger_ = binary_messenger;

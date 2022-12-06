@@ -442,6 +442,9 @@ abstract class WeMeetHostApi {
   void sdkInitSuccess();
   /// 非住宿通知登录成功
   void loginSuccess();
+  /// 离开会议： 离会类型，1：用户自身操作离会；2：被踢出会议；3：会议结束
+  /// 结果码：0表示成功；其他值表示失败
+  void onLeaveMeeting(int type, int code, String msg, String meetingCode);
   static void setup(WeMeetHostApi? api, {BinaryMessenger? binaryMessenger}) {
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
@@ -478,6 +481,28 @@ abstract class WeMeetHostApi {
         channel.setMessageHandler((Object? message) async {
           // ignore message
           api.loginSuccess();
+          return;
+        });
+      }
+    }
+    {
+      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+          'dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting', codec, binaryMessenger: binaryMessenger);
+      if (api == null) {
+        channel.setMessageHandler(null);
+      } else {
+        channel.setMessageHandler((Object? message) async {
+          assert(message != null, 'Argument for dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting was null.');
+          final List<Object?> args = (message as List<Object?>?)!;
+          final int? arg_type = (args[0] as int?);
+          assert(arg_type != null, 'Argument for dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting was null, expected non-null int.');
+          final int? arg_code = (args[1] as int?);
+          assert(arg_code != null, 'Argument for dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting was null, expected non-null int.');
+          final String? arg_msg = (args[2] as String?);
+          assert(arg_msg != null, 'Argument for dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting was null, expected non-null String.');
+          final String? arg_meetingCode = (args[3] as String?);
+          assert(arg_meetingCode != null, 'Argument for dev.flutter.pigeon.WeMeetHostApi.onLeaveMeeting was null, expected non-null String.');
+          api.onLeaveMeeting(arg_type!, arg_code!, arg_msg!, arg_meetingCode!);
           return;
         });
       }
