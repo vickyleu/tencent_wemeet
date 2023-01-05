@@ -30,12 +30,19 @@ typedef NS_ENUM(NSInteger, TMSDKResult) {
     kTMSDKErrorIsLogining = -1017,
     kTMSDKErrorLoginNetError = -1018,
     kTMSDKErrorTokenVerifyFailed = -1019,
+    kTMSDKErrorChildProcessCrash = -1020,
     kTMSDKErrorMultiAccountLoginConflict = -1021,
     kTMSDKErrorJoinMeetingServiceFailed = -1022,
     kTMSDKErrorActionConflict = -1023,
     kTMSDKErrorInvalidJsonString = -1024,
-    kTMSDKErrorProxySetFailed  = -1025,
-    kTMSDKErrorInvalidSchemaString = -1026
+    kTMSDKErrorProxySetFailed = -1025,
+    kTMSDKErrorInvalidSchemaString = -1026,
+    kTMSDKErrorNotSupportSwitchPip = -1027,
+    kTMSDKErrorInMeetingBackgroundNotSupportSwitchPip = -1028,
+    kTMSDKErrorEnterPipFail = -1029,
+    kTMSDKErrorEnterPipPermissionReject = -1030,
+
+    kTMSDKErrorServerResourceConstraint = -2001,
 };
 
 typedef NS_ENUM(NSInteger, TMSDKActionType) {

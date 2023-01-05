@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onShowLogsResult:(TMSDKResult)code msg:(NSString *)msg;
 - (void)onHandleWemeetAction:(TMSDKWemeetActionType)actionType param:(NSString *)param;
 - (void)onHandleSchemaResult:(TMSDKResult)code msg:(NSString *)msg;
+- (void)onSetProxyInfoResult:(TMSDKResult)code msg:(NSString *)msg;
 @end
 
 @interface TencentMeetingSDK : NSObject
@@ -55,6 +56,11 @@ NS_ASSUME_NONNULL_BEGIN
  * 带登陆态链接入会
  */
 - (void)handleSchema:(NSString *)schemaUrl;
+
+
+/// 设置代理信息
+/// - Parameter proxyInfo: 代理信息
+- (void)setProxyInfo:(NSString *)proxyInfo;
 
 - (TMAccountService *)getAccountService;
 - (TMPreMeetingService *)getPreMeetingService;

@@ -3,15 +3,15 @@
     "ioswrapper": "ModulesDependencyWrapper",
     "preload": 1,
     "dependencies": {
-        "runtime": "3.6.200.20"
+        "runtime": "3.6.302.9"
     },
     "modules": [
         {
             "name": "account",
             "path": "account_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/profile/aboutus",
@@ -42,9 +42,9 @@
         {
             "name": "appbox",
             "path": "appbox_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/web_app"
@@ -63,9 +63,9 @@
         {
             "name": "audio",
             "path": "audio_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [],
             "ioswrapper": "AudioModuleWrapper",
@@ -82,9 +82,9 @@
         {
             "name": "breakout_room",
             "path": "breakout_room_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://breakout_room/init",
@@ -107,9 +107,9 @@
         {
             "name": "call_kit",
             "path": "call_kit_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [],
             "ioswrapper": "WMCallKitModuleWrapper",
@@ -119,9 +119,9 @@
         {
             "name": "caption",
             "path": "caption_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/caption/caption_whole",
@@ -160,9 +160,9 @@
         {
             "name": "chat",
             "path": "chat_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/meeting_notice",
@@ -194,9 +194,9 @@
         {
             "name": "company_contacts",
             "path": "company_contacts_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/company_contacts",
@@ -216,9 +216,9 @@
         {
             "name": "docs",
             "path": "docs_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/docs"
@@ -235,9 +235,9 @@
         {
             "name": "gift",
             "path": "gift_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [],
             "ioswrapper": "WMGiftModuleWrapper",
@@ -249,9 +249,9 @@
         {
             "name": "handsup",
             "path": "handsup_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [],
             "ioswrapper": "HandsupModuleWrapper",
@@ -264,9 +264,9 @@
         {
             "name": "historical_meetings",
             "path": "historical_meetings_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/history/meeting_list",
@@ -279,9 +279,9 @@
         {
             "name": "idea",
             "path": "idea_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/meeting_idea",
@@ -302,9 +302,9 @@
         {
             "name": "invite",
             "path": "invite_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/pstninvite",
@@ -324,9 +324,9 @@
         {
             "name": "join_meeting",
             "path": "join_meeting_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/premeeting/join",
@@ -346,9 +346,9 @@
         {
             "name": "login",
             "path": "login_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/login/password_login",
@@ -384,9 +384,9 @@
         {
             "name": "media_process",
             "path": "media_process_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/inmeeting/setting/facebeauty",
@@ -407,9 +407,9 @@
         {
             "name": "meeting_live",
             "path": "meeting_live_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/watch_live",
@@ -429,9 +429,9 @@
         {
             "name": "meeting_room",
             "path": "meeting_room_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/meeting_room"
@@ -450,9 +450,9 @@
         {
             "name": "member",
             "path": "member_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/inmeeting/member/select_members",
@@ -476,9 +476,9 @@
         {
             "name": "misc",
             "path": "misc_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/webinar_trail"
@@ -497,9 +497,9 @@
         {
             "name": "period_meeting",
             "path": "period_meeting_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/period_meeting_list",
@@ -517,9 +517,9 @@
         {
             "name": "proxy",
             "path": "proxy_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/network_proxy_setting"
@@ -533,9 +533,9 @@
         {
             "name": "question_answer",
             "path": "question_answer_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/question_answer",
@@ -552,9 +552,9 @@
         {
             "name": "quick_meeting",
             "path": "quick_meeting_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/quick_meeting_setting",
@@ -572,9 +572,9 @@
         {
             "name": "record",
             "path": "record_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/history/cloud_record_list",
@@ -609,9 +609,9 @@
         {
             "name": "red_packet",
             "path": "red_packet_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/bonus_pay",
@@ -630,9 +630,9 @@
         {
             "name": "ring",
             "path": "ring_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/ring/ringing"
@@ -644,9 +644,9 @@
         {
             "name": "rooms_meeting",
             "path": "rooms_meeting_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/rooms_meeting_setting",
@@ -666,9 +666,9 @@
         {
             "name": "safety",
             "path": "safety_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/inmeeting/kickout"
@@ -683,9 +683,9 @@
         {
             "name": "scan_qrcode",
             "path": "scan_qrcode_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/scan_qrcode"
@@ -700,9 +700,9 @@
         {
             "name": "schedule_meeting",
             "path": "schedule_meeting_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/premeeting/schedule",
@@ -728,9 +728,9 @@
         {
             "name": "screen_share",
             "path": "screen_share_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/inmeeting/window_share",
@@ -878,9 +878,9 @@
         {
             "name": "settings",
             "path": "settings_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/setting",
@@ -915,9 +915,9 @@
         {
             "name": "sim_interpret",
             "path": "sim_interpret_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/simultaneous",
@@ -940,9 +940,9 @@
         {
             "name": "splash",
             "path": "splash_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/splash",
@@ -958,9 +958,9 @@
         {
             "name": "video",
             "path": "video_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [],
             "ioswrapper": "VideoModuleWrapper",
@@ -976,9 +976,9 @@
         {
             "name": "vote",
             "path": "vote_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/vote_list"
@@ -1010,9 +1010,9 @@
         {
             "name": "warmup_media",
             "path": "warmup_media_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "schemes": [
                 "wemeet://page/warmup_media"
@@ -1024,9 +1024,9 @@
         {
             "name": "web_share",
             "path": "web_share_module",
-            "version": "3.6.200.20",
+            "version": "3.6.302.9",
             "dependencies": {
-                "runtime": "3.6.200.20"
+                "runtime": "3.6.302.9"
             },
             "commands": [],
             "ioswrapper": "WMWebShareModuleWrapper",
@@ -1048,5 +1048,5 @@
     "schemes": [],
     "contributes": {},
     "description": "iOS组件化，多个静态库融合而成的动态库",
-    "version": "3.6.200.20"
+    "version": "3.6.302.9"
 }

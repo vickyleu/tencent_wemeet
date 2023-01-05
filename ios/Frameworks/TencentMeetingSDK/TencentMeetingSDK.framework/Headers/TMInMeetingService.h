@@ -30,6 +30,7 @@ typedef NS_ENUM(NSInteger, TMLeaveType) {
 - (void)enableInviteCallback:(BOOL)enable show:(BOOL)show;
 - (void)enableMeetingInfoCallback:(BOOL)enable show:(BOOL)show;
 - (void)switchPIPModel:(BOOL)isPIPModel;
+- (NSString *)getCurrentMeetingInfo;
 @end
 
 NS_ASSUME_NONNULL_END

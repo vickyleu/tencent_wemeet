@@ -66,7 +66,7 @@ dependencies{
     // https://mvnrepository.com/artifact/com.yqritc/recyclerview-flexibledivider
     implementation 'com.yqritc:recyclerview-flexibledivider:1.4.0' // must provide, because tencent wemeet depend it
 //    api "com.tencent.wemeet:tm-android-sdk:3.6.200.23"
-    api ("com.tencent.wemeet:tm-android-sdk:3.6.203.71"){
+    api ("com.tencent.wemeet:tm-android-sdk:3.6.302.18"){
         exclude group:'com.tencent.bugly',module:'crashreport'
     }
     //noinspection GradleDependency

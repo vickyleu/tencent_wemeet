@@ -31,7 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL cameraOn;
 /// 是否开启扬声器
 @property (nonatomic, assign) BOOL speakerOn;
+/// 是否开启美颜
 @property (nonatomic, assign) BOOL faceBeautyOn;
+/// 会中窗口的标题
+@property (nonatomic, copy) NSString *meetingWindowTitle;
 @end
 
 @interface TMPreMeetingService : NSObject
@@ -100,6 +103,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)quickMeeting;
 
+/**
+ * 快速会议，传入的Json字符串
+ */
+- (void)quickMeetingByJSON:(NSString *)quickMeetingJSON;
 @end
 
 NS_ASSUME_NONNULL_END
